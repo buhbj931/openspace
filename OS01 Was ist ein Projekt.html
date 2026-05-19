@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projekt oder kein Projekt?</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success-bg: #dcfce7;
+      --success-text: #166534;
+      --error-bg: #fee2e2;
+      --error-text: #991b1b;
+      --warning-bg: #fff7ed;
+      --warning-text: #9a3412;
+      --border: #dbe3ef;
+      --shadow: 0 12px 30px rgba(37, 99, 235, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .app {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .header {
+      padding: 28px;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: white;
+    }
+
+    .header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+    }
+
+    .header p {
+      margin: 0;
+      max-width: 850px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.94);
+    }
+
+    .content {
+      padding: 28px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .intro, .scoreboard, .task-list, .feedback-box {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .intro {
+      padding: 20px;
+      background: #f8fbff;
+    }
+
+    .intro h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .criteria {
+      display: grid;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .criteria div {
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .task-list {
+      padding: 20px;
+    }
+
+    .task-list h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fcfdff;
+      margin-bottom: 16px;
+    }
+
+    .item:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-title {
+      font-weight: bold;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .choice {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .choice input {
+      margin: 0;
+    }
+
+    .result {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      line-height: 1.55;
+      font-size: 0.97rem;
+    }
+
+    .result.success {
+      display: block;
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 1px solid #86efac;
+    }
+
+    .result.error {
+      display: block;
+      background: var(--error-bg);
+      color: var(--error-text);
+      border: 1px solid #fca5a5;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.05s ease, opacity 0.2s ease, background 0.2s ease;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .secondary {
+      background: #e5edff;
+      color: var(--primary-dark);
+    }
+
+    .secondary:hover {
+      background: #d9e6ff;
+    }
+
+    .scoreboard {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      background: #f8fbff;
+    }
+
+    .score-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .score-card .value {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-dark);
+      margin-top: 8px;
+    }
+
+    .feedback-box {
+      padding: 18px 20px;
+      background: var(--warning-bg);
+      color: var(--warning-text);
+      border-color: #fdba74;
+      line-height: 1.55;
+    }
+
+    .feedback-box strong {
+      color: #7c2d12;
+    }
+
+    @media (max-width: 820px) {
+      .scoreboard {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 14px; }
+      .header, .content, .task-list, .scoreboard, .intro { padding: 18px; }
+      .scoreboard { grid-template-columns: 1fr; }
+      .choices { flex-direction: column; }
+      .choice { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="header">
+      <h1>Projekt oder kein Projekt?</h1>
+      <p>
+        Entscheide bei jeder Situation, ob es sich um ein Projekt handelt oder nicht. Danach kannst du deine Antworten prüfen.
+        Bei falschen Lösungen wird erklärt, warum die Einordnung nicht passt.
+      </p>
+    </section>
+
+    <section class="content">
+      <section class="intro">
+        <h2>Woran erkennt man ein Projekt?</h2>
+        <div class="criteria">
+          <div><strong>Ein Projekt</strong> hat meist ein klares Ziel, muss geplant werden und entsteht nicht einfach nebenbei.</div>
+          <div><strong>Ein Projekt</strong> ist oft zeitlich begrenzt und besteht aus mehreren Schritten.</div>
+          <div><strong>Ein Projekt</strong> erfordert häufig Zusammenarbeit, Organisation oder eine eigene Idee.</div>
+          <div><strong>Kein Projekt</strong> ist eher eine alltägliche, wiederkehrende oder einzelne Tätigkeit ohne größere Planung.</div>
+        </div>
+      </section>
+
+      <section class="scoreboard">
+        <div class="score-card">Aufgaben<span class="value" id="totalCount">10</span></div>
+        <div class="score-card">Richtig<span class="value" id="correctCount">0</span></div>
+        <div class="score-card">Falsch<span class="value" id="wrongCount">0</span></div>
+        <div class="score-card">Punkte<span class="value" id="percentCount">0 %</span></div>
+      </section>
+
+      <section class="task-list">
+        <h2>Bewerte die folgenden Sachverhalte</h2>
+        <div id="itemsContainer"></div>
+
+        <div class="buttons">
+          <button class="primary" id="checkBtn">Antworten prüfen</button>
+          <button class="secondary" id="resetBtn">Neu bearbeiten</button>
+        </div>
+      </section>
+
+      <section class="feedback-box" id="summaryBox">
+        <strong>Hinweis:</strong> Wähle bei jeder Aussage <em>Projekt</em> oder <em>kein Projekt</em> und prüfe danach deine Ergebnisse.
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const tasks = [
+      {
+        text: 'Einen Kuchenverkauf für einen guten Zweck organisieren',
+        answer: 'projekt',
+        correctReason: 'Richtig. Das ist ein Projekt, weil ein Ziel erreicht werden soll und dafür geplant, organisiert und durchgeführt werden muss.',
+        wrongReason: 'Das ist falsch, weil ein Kuchenverkauf organisiert werden muss: Man braucht Ideen, Aufgaben, Material, Zeitplanung und oft Teamarbeit. Das spricht für ein Projekt.'
+      },
+      {
+        text: 'Ein Comic zusammen mit Mitschülern schreiben und zeichnen',
+        answer: 'projekt',
+        correctReason: 'Richtig. Das ist ein Projekt, weil gemeinsam etwas Eigenes entwickelt und in mehreren Schritten gestaltet wird.',
+        wrongReason: 'Das ist falsch, weil hier etwas Neues entsteht. Dazu gehören Planung, Absprachen, Gestaltung und Zusammenarbeit. Genau das ist typisch für ein Projekt.'
+      },
+      {
+        text: 'Ein Podcast über Gaming produzieren',
+        answer: 'projekt',
+        correctReason: 'Richtig. Das ist ein Projekt, weil Themen ausgewählt, Beiträge vorbereitet, aufgenommen und bearbeitet werden müssen.',
+        wrongReason: 'Das ist falsch, weil ein Podcast nicht einfach spontan fertig ist. Inhalt, Technik, Aufnahme und Bearbeitung müssen vorbereitet werden. Deshalb ist es ein Projekt.'
+      },
+      {
+        text: 'Hausaufgaben machen',
+        answer: 'kein-projekt',
+        correctReason: 'Richtig. Das ist in der Regel kein Projekt, sondern eine normale, wiederkehrende Schulaufgabe ohne größere Projektplanung.',
+        wrongReason: 'Das ist falsch, weil Hausaufgaben normalerweise zum Alltag gehören. Sie sind meist keine umfangreiche, geplante Gemeinschaftsarbeit mit eigenem Projektcharakter.'
+      },
+      {
+        text: 'Eine Müllsammelaktion starten',
+        answer: 'projekt',
+        correctReason: 'Richtig. Das ist ein Projekt, weil eine Aktion mit Ziel, Planung, Organisation und Durchführung vorbereitet wird.',
+        wrongReason: 'Das ist falsch, weil eine Müllsammelaktion organisiert werden muss: Ort, Zeit, Material, Helfer und Ablauf müssen geplant werden. Deshalb ist es ein Projekt.'
+      },
+      {
+        text: 'Eine eigene App programmieren',
+        answer: 'projekt',
+        correctReason: 'Richtig. Das ist ein Projekt, weil eine Idee entwickelt, geplant, programmiert, getestet und verbessert werden muss.',
+        wrongReason: 'Das ist falsch, weil beim Programmieren einer App viele Schritte nötig sind: Idee, Planung, Umsetzung und Test. Das ist klarer Projektcharakter.'
+      },
+      {
+        text: 'Für einen sportlichen Wettkampf zu trainieren und daran teilzunehmen',
+        answer: 'kein-projekt',
+        correctReason: 'Richtig. Das ist meist kein Projekt, sondern eher persönliches Training und Teilnahme an einem Wettbewerb.',
+        wrongReason: 'Das ist falsch, weil persönliches Training und Mitmachen an einem Wettkampf meistens keine geplante Projektarbeit mit mehreren Organisationsbereichen ist. Es ist eher eine persönliche Aktivität.'
+      },
+      {
+        text: 'Ein Lied komponieren und vortragen',
+        answer: 'projekt',
+        correctReason: 'Richtig. Das ist ein Projekt, weil etwas Eigenes entsteht und dafür Ideen, Ausarbeitung, Üben und Präsentation nötig sind.',
+        wrongReason: 'Das ist falsch, weil ein Lied zu komponieren und vorzutragen mehrere Schritte braucht: Idee, Gestaltung, Üben und Aufführung. Daher ist es ein Projekt.'
+      },
+      {
+        text: 'Die Teilnahme an einem Tanzwettbewerb organisieren: Choreographie entwickeln, Training, Transport & Outfit planen',
+        answer: 'projekt',
+        correctReason: 'Richtig. Das ist ein Projekt, weil viele Teilaufgaben zusammenkommen und die Teilnahme umfassend geplant werden muss.',
+        wrongReason: 'Das ist falsch, weil hier sehr viele Dinge organisiert werden: Choreographie, Training, Transport und Outfit. Das geht deutlich über eine einfache Alltagstätigkeit hinaus und ist ein Projekt.'
+      },
+      {
+        text: 'Beim Frühlingskonzert mitspielen',
+        answer: 'kein-projekt',
+        correctReason: 'Richtig. Das ist meist kein eigenes Projekt, sondern die Teilnahme an einer Veranstaltung.',
+        wrongReason: 'Das ist falsch, weil das reine Mitspielen bei einem Konzert normalerweise eine Teilnahme an etwas Bestehendem ist. Allein das ist noch kein eigenes Projekt mit eigener Planung und Organisation.'
+      }
+    ];
+
+    const itemsContainer = document.getElementById('itemsContainer');
+    const checkBtn = document.getElementById('checkBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const correctCount = document.getElementById('correctCount');
+    const wrongCount = document.getElementById('wrongCount');
+    const percentCount = document.getElementById('percentCount');
+    const summaryBox = document.getElementById('summaryBox');
+
+    function renderTasks() {
+      itemsContainer.innerHTML = '';
+
+      tasks.forEach((task, index) => {
+        const item = document.createElement('article');
+        item.className = 'item';
+        item.innerHTML = `
+          <div class="item-title">${index + 1}. ${task.text}</div>
+          <div class="choices">
+            <label class="choice">
+              <input type="radio" name="task-${index}" value="projekt" />
+              Projekt
+            </label>
+            <label class="choice">
+              <input type="radio" name="task-${index}" value="kein-projekt" />
+              Kein Projekt
+            </label>
+          </div>
+          <div class="result" id="result-${index}"></div>
+        `;
+        itemsContainer.appendChild(item);
+      });
+    }
+
+    function checkAnswers() {
+      let correct = 0;
+      let wrong = 0;
+      let unanswered = 0;
+
+      tasks.forEach((task, index) => {
+        const selected = document.querySelector(`input[name="task-${index}"]:checked`);
+        const resultBox = document.getElementById(`result-${index}`);
+
+        if (!selected) {
+          unanswered += 1;
+          resultBox.className = 'result error';
+          resultBox.textContent = 'Noch nicht beantwortet. Bitte wähle „Projekt“ oder „kein Projekt“.';
+          return;
+        }
+
+        if (selected.value === task.answer) {
+          correct += 1;
+          resultBox.className = 'result success';
+          resultBox.textContent = task.correctReason;
+        } else {
+          wrong += 1;
+          resultBox.className = 'result error';
+          resultBox.textContent = task.wrongReason;
+        }
+      });
+
+      const answered = tasks.length - unanswered;
+      const percent = Math.round((correct / tasks.length) * 100);
+
+      correctCount.textContent = correct;
+      wrongCount.textContent = wrong + unanswered;
+      percentCount.textContent = `${percent} %`;
+
+      if (unanswered === 0) {
+        summaryBox.innerHTML = `<strong>Auswertung:</strong> Du hast <strong>${correct} von ${tasks.length}</strong> Aufgaben richtig gelöst. Das entspricht <strong>${percent} %</strong>.`;
+      } else {
+        summaryBox.innerHTML = `<strong>Auswertung:</strong> Du hast bisher <strong>${correct}</strong> richtige Antworten. <strong>${unanswered}</strong> Aufgabe(n) wurden noch nicht beantwortet.`;
+      }
+    }
+
+    function resetQuiz() {
+      document.querySelectorAll('input[type="radio"]').forEach(input => {
+        input.checked = false;
+      });
+
+      document.querySelectorAll('.result').forEach(box => {
+        box.className = 'result';
+        box.textContent = '';
+      });
+
+      correctCount.textContent = '0';
+      wrongCount.textContent = '0';
+      percentCount.textContent = '0 %';
+      summaryBox.innerHTML = '<strong>Hinweis:</strong> Wähle bei jeder Aussage <em>Projekt</em> oder <em>kein Projekt</em> und prüfe danach deine Ergebnisse.';
+    }
+
+    checkBtn.addEventListener('click', checkAnswers);
+    resetBtn.addEventListener('click', resetQuiz);
+
+    renderTasks();
+  </script>
+</body>
+</html>
