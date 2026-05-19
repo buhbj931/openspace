@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projektidee entwickeln · Interaktiver Lernpfad</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --primary: #f59e0b;
+      --primary-dark: #d97706;
+      --blue: #0e7490;
+      --green: #15803d;
+      --red: #b91c1c;
+      --line: #dbe3ef;
+      --soft: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #fff7ed, #f8fafc 45%, #e0f2fe);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+    }
+
+    header p {
+      max-width: 880px;
+      margin: 0.5rem auto 0;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    h2, h3 { margin-top: 0; }
+
+    .hint {
+      background: #eff6ff;
+      border-left: 5px solid var(--blue);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .tip {
+      background: #fff7ed;
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      background: #fbfdff;
+      border-radius: 16px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .step-header {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+    }
+
+    .step-number {
+      width: 2rem;
+      height: 2rem;
+      flex: 0 0 2rem;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      margin: 0.8rem 0 0.35rem;
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
+    .check-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.8rem;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .check-table th, .check-table td {
+      border: 1px solid var(--line);
+      padding: 0.65rem;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .check-table th:first-child, .check-table td:first-child {
+      text-align: left;
+      width: 55%;
+    }
+
+    .check-table th {
+      background: #f1f5f9;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      transform: scale(1.15);
+    }
+
+    .goal-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+
+    .goal-options label {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 600;
+      margin: 0;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.75rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin: 1rem 0;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.85rem 1.15rem;
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    button.secondary { background: #334155; }
+    button.secondary:hover { background: #1e293b; }
+    button.green { background: var(--green); }
+    button.green:hover { background: #166534; }
+
+    .progress-wrap {
+      background: #e2e8f0;
+      border-radius: 999px;
+      height: 16px;
+      overflow: hidden;
+      margin: 0.8rem 0 0.4rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      transition: width 0.25s ease;
+    }
+
+    .status {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .onepager {
+      background: white;
+      border: 1px dashed #94a3b8;
+      border-radius: 16px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .onepager h2 {
+      color: var(--blue);
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.35rem;
+    }
+
+    .onepager-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .onepager-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.8rem;
+      background: #f8fafc;
+    }
+
+    .small {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body { background: white; }
+      header, .intro-card, .steps-card, .button-row, .progress-wrap, .status { display: none; }
+      .card { box-shadow: none; border: none; margin: 0; padding: 0; }
+      .onepager { border: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Projektidee entwickeln</h1>
+    <p>Interaktiver Lernpfad für Open Space · Klasse 7 · Schritt für Schritt zur ausgewählten, machbaren und gut erklärbaren Projektidee</p>
+  </header>
+
+  <main>
+    <section class="card intro-card">
+      <div class="topline">
+        <span class="badge">Open Space Projekte und Ziele 7</span>
+        <span class="small">Bearbeite die 7 Schritte. Speichere am Ende deinen Onepager als Word-Datei.</span>
+      </div>
+      <h2>So arbeitest du mit diesem Lernpfad</h2>
+      <p>Eine gute Projektidee ist interessant, sinnvoll, umsetzbar und in der Schule möglich. Sie muss nicht perfekt sein. Wichtig ist: Sie ist realistisch und gut planbar.</p>
+      <div class="hint">
+        <strong>Merke:</strong> Eine Idee wird oft besser, wenn man sie kleiner macht. Statt „Großes Schulkonzert organisieren“ passt für den Start besser: „Mini-Schulkonzert mit 3 Songs“.
+      </div>
+      <div class="progress-wrap" aria-label="Fortschritt">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div id="progressText" class="status">Fortschritt: 0 von 7 Schritten bearbeitet</div>
+    </section>
+
+    <section class="card steps-card">
+      <h2>Die 7 Fragen aus dem Lernpfad</h2>
+
+      <div class="step" id="step1">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div>
+            <h3>Meine Projektidee</h3>
+            <p>Notiere deine ausgewählte Projektidee und begründe deine Auswahl.</p>
+          </div>
+        </div>
+        <label for="projectIdea">Meine Projektidee</label>
+        <textarea id="projectIdea" placeholder="Zum Beispiel: Wir gestalten eine bemalte Sitzbank für den Schulhof."></textarea>
+        <label for="reason">Warum habe ich diese Idee ausgewählt?</label>
+        <textarea id="reason" placeholder="Warum ist diese Idee interessant, sinnvoll oder wichtig?"></textarea>
+      </div>
+
+      <div class="step" id="step2">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div>
+            <h3>Projektidee überprüfen</h3>
+            <p>Kreuze an, wie gut deine Idee machbar ist.</p>
+          </div>
+        </div>
+        <table class="check-table">
+          <thead>
+            <tr><th>Prüffrage</th><th>Ja</th><th>Vielleicht</th><th>Nein</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ist die Idee in der Schule umsetzbar?</td>
+              <td><input type="radio" name="ideaCheck1" value="Ja"></td>
+              <td><input type="radio" name="ideaCheck1" value="Vielleicht"></td>
+              <td><input type="radio" name="ideaCheck1" value="Nein"></td>
+            </tr>
+            <tr>
+              <td>Können wir das Projekt in 5 Monaten schaffen?</td>
+              <td><input type="radio" name="ideaCheck2" value="Ja"></td>
+              <td><input type="radio" name="ideaCheck2" value="Vielleicht"></td>
+              <td><input type="radio" name="ideaCheck2" value="Nein"></td>
+            </tr>
+            <tr>
+              <td>Gibt es genug Personen für das Projekt?</td>
+              <td><input type="radio" name="ideaCheck3" value="Ja"></td>
+              <td><input type="radio" name="ideaCheck3" value="Vielleicht"></td>
+              <td><input type="radio" name="ideaCheck3" value="Nein"></td>
+            </tr>
+            <tr>
+              <td>Können wir das Material bekommen?</td>
+              <td><input type="radio" name="ideaCheck4" value="Ja"></td>
+              <td><input type="radio" name="ideaCheck4" value="Vielleicht"></td>
+              <td><input type="radio" name="ideaCheck4" value="Nein"></td>
+            </tr>
+            <tr>
+              <td>Verstehen andere die Idee gut?</td>
+              <td><input type="radio" name="ideaCheck5" value="Ja"></td>
+              <td><input type="radio" name="ideaCheck5" value="Vielleicht"></td>
+              <td><input type="radio" name="ideaCheck5" value="Nein"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip">
+          Wenn du viele „Ja“ hast, passt deine Idee gut. Wenn du viele „Vielleicht“ oder „Nein“ hast, überlege: Kannst du die Idee vereinfachen oder verändern?
+        </div>
+        <label for="ideaAdjustment">Muss ich meine Idee kleiner oder einfacher machen?</label>
+        <textarea id="ideaAdjustment" placeholder="Schreibe auf, was du verändern könntest."></textarea>
+      </div>
+
+      <div class="step" id="step3">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div>
+            <h3>Projektziel klären</h3>
+            <p>Beantworte die Fragen zu deinem Ziel.</p>
+          </div>
+        </div>
+        <label for="achieve">Was will ich herstellen oder erreichen?</label>
+        <textarea id="achieve" placeholder="Was soll am Ende entstanden sein?"></textarea>
+        <label for="targetGroup">Für wen ist mein Projekt?</label>
+        <textarea id="targetGroup" placeholder="Zum Beispiel: für unsere Klasse, die Schule, jüngere Schüler, Besucher ..."></textarea>
+        <label for="visibleResult">Was soll am Ende sichtbar sein?</label>
+        <textarea id="visibleResult" placeholder="Zum Beispiel: Plakat, Aktion, Ausstellung, Produkt, Aufführung, Verbesserung ..."></textarea>
+      </div>
+
+      <div class="step" id="step4">
+        <div class="step-header">
+          <div class="step-number">4</div>
+          <div>
+            <h3>Ziel genauer formulieren</h3>
+            <p>Wähle aus, was dein Projekt am Ende leisten soll. Formuliere dein Ziel anschließend genauer.</p>
+          </div>
+        </div>
+        <div class="goal-options">
+          <label><input type="checkbox" name="goalType" value="etwas bauen"> etwas bauen</label>
+          <label><input type="checkbox" name="goalType" value="etwas gestalten"> etwas gestalten</label>
+          <label><input type="checkbox" name="goalType" value="etwas organisieren"> etwas organisieren</label>
+          <label><input type="checkbox" name="goalType" value="etwas zeigen oder präsentieren"> etwas zeigen oder präsentieren</label>
+          <label><input type="checkbox" name="goalType" value="etwas verbessern"> etwas verbessern</label>
+        </div>
+        <label for="preciseGoal">Beschreibe dein Ziel genau</label>
+        <textarea id="preciseGoal" placeholder="Nicht so gut: Ich mache ein Video. Besser: Ich drehe ein 5-minütiges Video über das Schulleben und zeige es beim Gallery Walk."></textarea>
+      </div>
+
+      <div class="step" id="step5">
+        <div class="step-header">
+          <div class="step-number">5</div>
+          <div>
+            <h3>Ziel überprüfen</h3>
+            <p>Kreuze an, ob dein Ziel klar und erreichbar ist.</p>
+          </div>
+        </div>
+        <table class="check-table">
+          <thead>
+            <tr><th>Prüffrage</th><th>Ja</th><th>Vielleicht</th><th>Nein</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ist das Ziel klar formuliert?</td>
+              <td><input type="radio" name="goalCheck1" value="Ja"></td>
+              <td><input type="radio" name="goalCheck1" value="Vielleicht"></td>
+              <td><input type="radio" name="goalCheck1" value="Nein"></td>
+            </tr>
+            <tr>
+              <td>Verstehen andere mein Ziel?</td>
+              <td><input type="radio" name="goalCheck2" value="Ja"></td>
+              <td><input type="radio" name="goalCheck2" value="Vielleicht"></td>
+              <td><input type="radio" name="goalCheck2" value="Nein"></td>
+            </tr>
+            <tr>
+              <td>Ist das Ziel erreichbar?</td>
+              <td><input type="radio" name="goalCheck3" value="Ja"></td>
+              <td><input type="radio" name="goalCheck3" value="Vielleicht"></td>
+              <td><input type="radio" name="goalCheck3" value="Nein"></td>
+            </tr>
+            <tr>
+              <td>Passt das Ziel zu meiner Projektidee?</td>
+              <td><input type="radio" name="goalCheck4" value="Ja"></td>
+              <td><input type="radio" name="goalCheck4" value="Vielleicht"></td>
+              <td><input type="radio" name="goalCheck4" value="Nein"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tip"><strong>Merke:</strong> Ein gutes Ziel zeigt klar, was am Ende entstanden ist.</div>
+      </div>
+
+      <div class="step" id="step6">
+        <div class="step-header">
+          <div class="step-number">6</div>
+          <div>
+            <h3>Stakeholder: Wer ist betroffen?</h3>
+            <p>Stakeholder sind Menschen oder Gruppen, die mit dem Projekt zu tun haben.</p>
+          </div>
+        </div>
+        <div class="hint">
+          Beispiele: Mitschüler, Lehrkräfte, Eltern, Besucher, Gemeinde.
+        </div>
+        <label for="stakeholders">Wer könnte bei deinem Projekt wichtig sein? Warum sind diese Personen oder Gruppen wichtig?</label>
+        <textarea id="stakeholders" placeholder="Zum Beispiel: Lehrkräfte, weil wir einen Raum brauchen. Mitschüler, weil sie das Ergebnis nutzen."></textarea>
+      </div>
+
+      <div class="step" id="step7">
+        <div class="step-header">
+          <div class="step-number">7</div>
+          <div>
+            <h3>Risiken überlegen</h3>
+            <p>Jedes Projekt kann Schwierigkeiten haben. Notiere mögliche Risiken und Probleme.</p>
+          </div>
+        </div>
+        <div class="hint">
+          Beispiele: zu wenig Zeit, fehlendes Material, zu wenig Hilfe.
+        </div>
+        <label for="risks">Mögliche Risiken und Probleme</label>
+        <textarea id="risks" placeholder="Welche Schwierigkeiten könnten entstehen? Was könnte knapp werden? Wo braucht ihr Hilfe?"></textarea>
+      </div>
+
+      <div class="button-row">
+        <button onclick="updateOnepager()">Onepager anzeigen / aktualisieren</button>
+        <button class="green" onclick="downloadWord()">Als Word-Datei speichern</button>
+        <button class="secondary" onclick="window.print()">Onepager drucken</button>
+      </div>
+    </section>
+
+    <section class="card" id="onepagerSection">
+      <div id="onepager" class="onepager">
+        <h2>Onepager: Meine Projektidee</h2>
+        <p class="small">Klicke auf „Onepager anzeigen / aktualisieren“, um deine Eingaben zusammenzufassen.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Open Space · Projektidee entwickeln · Interaktiver Lernpfad Klasse 7
+  </footer>
+
+  <script>
+    const fieldIds = [
+      "projectIdea", "reason", "ideaAdjustment", "achieve", "targetGroup", "visibleResult", "preciseGoal", "stakeholders", "risks"
+    ];
+
+    const radioGroups = [
+      "ideaCheck1", "ideaCheck2", "ideaCheck3", "ideaCheck4", "ideaCheck5", "goalCheck1", "goalCheck2", "goalCheck3", "goalCheck4"
+    ];
+
+    document.addEventListener("input", updateProgress);
+    document.addEventListener("change", updateProgress);
+
+    function getValue(id) {
+      const element = document.getElementById(id);
+      return element && element.value.trim() ? element.value.trim() : "—";
+    }
+
+    function getRadioValue(name) {
+      const selected = document.querySelector(`input[name="${name}"]:checked`);
+      return selected ? selected.value : "—";
+    }
+
+    function getCheckedValues(name) {
+      const checked = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`));
+      return checked.length ? checked.map(item => item.value).join(", ") : "—";
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/\n/g, "<br>");
+    }
+
+    function checkRow(label, groupName) {
+      return `<tr><td>${label}</td><td>${escapeHtml(getRadioValue(groupName))}</td></tr>`;
+    }
+
+    function buildOnepagerHtml() {
+      return `
+        <h2>Onepager: Meine Projektidee</h2>
+        <p><strong>Name:</strong> ___________________________ &nbsp;&nbsp; <strong>Datum:</strong> ___________________________</p>
+
+        <div class="onepager-grid">
+          <div class="onepager-box">
+            <h3>1. Projektidee</h3>
+            <p><strong>Meine Projektidee:</strong><br>${escapeHtml(getValue("projectIdea"))}</p>
+            <p><strong>Warum habe ich diese Idee ausgewählt?</strong><br>${escapeHtml(getValue("reason"))}</p>
+          </div>
+
+          <div class="onepager-box">
+            <h3>2. Machbarkeit der Idee</h3>
+            <table class="check-table">
+              ${checkRow("In der Schule umsetzbar", "ideaCheck1")}
+              ${checkRow("In 5 Monaten schaffbar", "ideaCheck2")}
+              ${checkRow("Genug Personen", "ideaCheck3")}
+              ${checkRow("Material beschaffbar", "ideaCheck4")}
+              ${checkRow("Andere verstehen die Idee", "ideaCheck5")}
+            </table>
+            <p><strong>Vereinfachung / Veränderung:</strong><br>${escapeHtml(getValue("ideaAdjustment"))}</p>
+          </div>
+
+          <div class="onepager-box">
+            <h3>3. Projektziel</h3>
+            <p><strong>Was will ich herstellen oder erreichen?</strong><br>${escapeHtml(getValue("achieve"))}</p>
+            <p><strong>Für wen ist mein Projekt?</strong><br>${escapeHtml(getValue("targetGroup"))}</p>
+            <p><strong>Was soll am Ende sichtbar sein?</strong><br>${escapeHtml(getValue("visibleResult"))}</p>
+          </div>
+
+          <div class="onepager-box">
+            <h3>4. Ziel genauer formuliert</h3>
+            <p><strong>Mein Projekt soll am Ende:</strong><br>${escapeHtml(getCheckedValues("goalType"))}</p>
+            <p><strong>Genaues Ziel:</strong><br>${escapeHtml(getValue("preciseGoal"))}</p>
+          </div>
+
+          <div class="onepager-box">
+            <h3>5. Zielprüfung</h3>
+            <table class="check-table">
+              ${checkRow("Ziel klar formuliert", "goalCheck1")}
+              ${checkRow("Andere verstehen mein Ziel", "goalCheck2")}
+              ${checkRow("Ziel erreichbar", "goalCheck3")}
+              ${checkRow("Ziel passt zur Projektidee", "goalCheck4")}
+            </table>
+          </div>
+
+          <div class="onepager-box">
+            <h3>6. Stakeholder</h3>
+            <p><strong>Wichtige Personen oder Gruppen und warum:</strong><br>${escapeHtml(getValue("stakeholders"))}</p>
+          </div>
+
+          <div class="onepager-box">
+            <h3>7. Risiken</h3>
+            <p><strong>Mögliche Risiken und Probleme:</strong><br>${escapeHtml(getValue("risks"))}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateOnepager() {
+      document.getElementById("onepager").innerHTML = buildOnepagerHtml();
+      updateProgress();
+    }
+
+    function updateProgress() {
+      let completed = 0;
+
+      if (getValue("projectIdea") !== "—" && getValue("reason") !== "—") completed++;
+      if (["ideaCheck1", "ideaCheck2", "ideaCheck3", "ideaCheck4", "ideaCheck5"].every(name => getRadioValue(name) !== "—")) completed++;
+      if (getValue("achieve") !== "—" && getValue("targetGroup") !== "—" && getValue("visibleResult") !== "—") completed++;
+      if (getCheckedValues("goalType") !== "—" && getValue("preciseGoal") !== "—") completed++;
+      if (["goalCheck1", "goalCheck2", "goalCheck3", "goalCheck4"].every(name => getRadioValue(name) !== "—")) completed++;
+      if (getValue("stakeholders") !== "—") completed++;
+      if (getValue("risks") !== "—") completed++;
+
+      const percent = Math.round((completed / 7) * 100);
+      document.getElementById("progressBar").style.width = `${percent}%`;
+      document.getElementById("progressText").textContent = `Fortschritt: ${completed} von 7 Schritten bearbeitet`;
+    }
+
+    function downloadWord() {
+      updateOnepager();
+      const onepager = document.getElementById("onepager").innerHTML;
+      const html = `
+        <!DOCTYPE html>
+        <html lang="de">
+        <head>
+          <meta charset="UTF-8">
+          <title>Onepager Projektidee</title>
+          <style>
+            body { font-family: Arial, Helvetica, sans-serif; color: #1f2937; }
+            h1, h2 { color: #0e7490; }
+            h3 { color: #1f2937; margin-bottom: 6px; }
+            .onepager-grid { display: block; }
+            .onepager-box { border: 1px solid #cbd5e1; padding: 10px; margin: 10px 0; border-radius: 8px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+            td, th { border: 1px solid #cbd5e1; padding: 6px; text-align: left; }
+            .small { color: #64748b; }
+          </style>
+        </head>
+        <body>${onepager}</body>
+        </html>
+      `;
+
+      const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Onepager_Projektidee.doc";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    updateProgress();
+  </script>
+</body>
+</html>
