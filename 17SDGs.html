@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lernpfad: Welche Projekte passen zu den SDGs?</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #15803d;
+      --danger: #b91c1c;
+      --warning: #b45309;
+      --line: #dbe3ef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #e0f2fe, #f8fafc 45%, #eef2ff);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+    }
+
+    header p {
+      max-width: 850px;
+      margin: 0.5rem auto 0;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+
+    .intro, .quiz-card, .helper-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h2 { margin-top: 0; }
+
+    .criteria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .criterion {
+      background: #f8fafc;
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin: 1rem 0;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.8rem 1.1rem;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: #334155;
+    }
+
+    button.secondary:hover {
+      background: #1e293b;
+    }
+
+    .question {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: #fbfdff;
+    }
+
+    .question h3 {
+      margin-top: 0;
+      font-size: 1.08rem;
+    }
+
+    .case-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 0.85rem;
+      margin: 0.75rem 0;
+    }
+
+    .answers {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    label.answer {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.75rem;
+      cursor: pointer;
+    }
+
+    label.answer:hover {
+      background: #f1f5f9;
+    }
+
+    input[type="radio"] {
+      margin-top: 0.25rem;
+    }
+
+    .feedback {
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      border-radius: 12px;
+      display: none;
+    }
+
+    .feedback.correct {
+      display: block;
+      background: #dcfce7;
+      color: var(--success);
+      border: 1px solid #86efac;
+    }
+
+    .feedback.wrong {
+      display: block;
+      background: #fee2e2;
+      color: var(--danger);
+      border: 1px solid #fca5a5;
+    }
+
+    .feedback.missing {
+      display: block;
+      background: #fef3c7;
+      color: var(--warning);
+      border: 1px solid #fcd34d;
+    }
+
+    .score {
+      font-size: 1.15rem;
+      font-weight: 800;
+      padding: 1rem;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      display: none;
+    }
+
+    .sdg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .sdg-box {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      button, .toolbar { display: none; }
+      body { background: white; }
+      .intro, .quiz-card, .helper-card { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lernpfad: Was könnte ein SDG-Projekt sein?</h1>
+    <p>Klasse 7: Du prüfst Beispielprojekte. Du erkennst, welche SDGs durch ein Projekt berührt werden können.</p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Woran erkenne ich ein gutes Projekt?</h2>
+      <p>Ein Projekt ist mehr als eine einzelne Aufgabe. Ein gutes Schülerprojekt ist klein, machbar und hat ein sichtbares Ergebnis.</p>
+      <div class="criteria">
+        <div class="criterion"><strong>Ziel</strong><br />Es ist klar, was verbessert, erforscht oder hergestellt werden soll.</div>
+        <div class="criterion"><strong>Team</strong><br />Mehrere Personen arbeiten mit Rollen und Absprachen zusammen.</div>
+        <div class="criterion"><strong>Plan</strong><br />Es gibt Schritte, Material, Zeit und Zuständigkeiten.</div>
+        <div class="criterion"><strong>Wirkung</strong><br />Am Ende sieht man ein Ergebnis oder kann etwas auswerten.</div>
+      </div>
+    </section>
+
+    <section class="quiz-card">
+      <h2>Fragengenerator: Welche SDGs werden berührt?</h2>
+      <p>Es werden 6 Beispielprojekte zufällig ausgewählt. Jede Frage prüft, welche SDGs durch das Projekt berührt werden.</p>
+      <div class="toolbar">
+        <button onclick="generateQuiz()">Neue Beispiele</button>
+        <button class="secondary" onclick="checkAnswers()">Antworten überprüfen</button>
+      </div>
+      <div id="quiz"></div>
+      <div id="score" class="score"></div>
+    </section>
+
+    <section class="helper-card">
+      <h2>SDG-Merkkarte für eure Projektideen</h2>
+      <div class="sdg-grid">
+        <div class="sdg-box"><span class="badge">SDG 4</span><br /><strong>Bildung</strong><br />Lernen, Erklären, Helfen, Wissen teilen.</div>
+        <div class="sdg-box"><span class="badge">SDG 6</span><br /><strong>Sauberes Wasser</strong><br />Wasser sparen, Trinkwasser, Sauberkeit.</div>
+        <div class="sdg-box"><span class="badge">SDG 7</span><br /><strong>Saubere Energie</strong><br />Strom sparen, Licht, Heizung, erneuerbare Energie.</div>
+        <div class="sdg-box"><span class="badge">SDG 11</span><br /><strong>Nachhaltige Gemeinden</strong><br />Schulweg, Pausenhof, Sicherheit, Orte verbessern.</div>
+        <div class="sdg-box"><span class="badge">SDG 12</span><br /><strong>Nachhaltiger Konsum</strong><br />Tauschen, Reparieren, Müll vermeiden, bewusst kaufen.</div>
+        <div class="sdg-box"><span class="badge">SDG 13</span><br /><strong>Klimaschutz</strong><br />CO₂ sparen, Mobilität, Energie, Klimaaktionen.</div>
+        <div class="sdg-box"><span class="badge">SDG 15</span><br /><strong>Leben an Land</strong><br />Pflanzen, Tiere, Insekten, Schulhofnatur.</div>
+        <div class="sdg-box"><span class="badge">SDG 16</span><br /><strong>Frieden und Gerechtigkeit</strong><br />Fairness, Streit lösen, Beteiligung, Klassengemeinschaft.</div>
+      </div>
+    </section>
+</main>
+
+  <footer>
+    Open Space Lernpfad · Projektlernen · Klasse 7 · SDGs in Beispielprojekten erkennen
+  </footer>
+
+  <script>
+    const questionPool = [
+      {
+        case: "Eine Gruppe möchte eine Woche lang messen, wie viel Verpackungsmüll in den Brotdosen der Klasse entsteht. Danach gestaltet sie Tipps für weniger Müll und testet eine müllarme Pausenwoche.",
+        question: "Welche Einschätzung passt am besten?",
+        answers: [
+          "Das ist ein mögliches Projekt. Es berührt SDG 12 und SDG 13.",
+          "Das ist kein Projekt, weil Müll nichts mit Nachhaltigkeit zu tun hat.",
+          "Das ist nur eine private Aufgabe ohne Ergebnis.",
+          "Das passt nur zu SDG 4 Bildung."
+        ],
+        correct: 0,
+        explanation: "Die Idee hat Ziel, Untersuchung, Aktion und Auswertung. Sie berührt nachhaltigen Konsum und Klimaschutz."
+      },
+      {
+        case: "Zwei Schüler möchten ein Plakat aufhängen: 'Spart Wasser!' Danach machen sie nichts weiter.",
+        question: "Was ist die beste Einschätzung?",
+        answers: [
+          "Das ist schon ein vollständiges Projekt mit klarer Auswertung.",
+          "Das könnte ein Projekt werden, wenn Ziel, Aktionen und Überprüfung ergänzt werden.",
+          "Das berührt kein SDG.",
+          "Das ist nur für Erwachsene erlaubt."
+        ],
+        correct: 1,
+        explanation: "Ein Plakat allein ist eher eine Einzelaktion. Als Projekt bräuchte es zum Beispiel einen Wasser-Check, Spartipps und eine Auswertung. Es könnte SDG 6 berühren."
+      },
+      {
+        case: "Eine Gruppe plant ein Tauschregal für Bücher und Spiele. Sie klärt den Standort, erstellt Regeln, informiert Klassen und prüft nach vier Wochen, ob es genutzt wird.",
+        question: "Welche SDGs werden wahrscheinlich berührt?",
+        answers: [
+          "SDG 12 Nachhaltiger Konsum und SDG 4 Bildung",
+          "Nur SDG 6 Sauberes Wasser",
+          "Nur SDG 15 Leben an Land",
+          "Kein SDG, weil Tauschen nichts verändert"
+        ],
+        correct: 0,
+        explanation: "Tauschen und Wiederverwenden passt zu SDG 12. Bücher und Lernen können zusätzlich SDG 4 berühren."
+      },
+      {
+        case: "Eine Klasse möchte herausfinden, ob der Schulweg sicherer werden kann. Sie sammelt gefährliche Stellen, macht Fotos, erstellt eine Karte und schlägt Verbesserungen vor.",
+        question: "Ist das ein mögliches Projekt?",
+        answers: [
+          "Ja. Es hat Untersuchung, Ergebnis und Verbesserungsvorschläge. Es berührt SDG 11.",
+          "Nein. Ein Schulweg kann nie Thema eines Projekts sein.",
+          "Nein. Es gibt kein sichtbares Ergebnis.",
+          "Ja, aber es passt nur zu SDG 7 Energie."
+        ],
+        correct: 0,
+        explanation: "Die Schulweg-Karte und Verbesserungsvorschläge sind sichtbare Ergebnisse. Das passt besonders zu nachhaltigen Städten und Gemeinden."
+      },
+      {
+        case: "Drei Schüler möchten ein Insektenhotel bauen. Sie prüfen vorher, welche Insekten Hilfe brauchen, suchen einen passenden Standort und erklären anderen Klassen den Nutzen.",
+        question: "Welche Einschätzung passt?",
+        answers: [
+          "Das ist ein Projekt. Es berührt SDG 15 und auch SDG 4.",
+          "Das ist kein Projekt, weil Bauen immer verboten ist.",
+          "Das berührt nur SDG 16 Frieden.",
+          "Das ist nur Kunstunterricht und hat kein Ziel."
+        ],
+        correct: 0,
+        explanation: "Die Idee schützt Lebensräume und vermittelt Wissen. Deshalb passen SDG 15 und SDG 4. Wichtig ist: Standort und Pflege müssen geklärt werden."
+      },
+      {
+        case: "Eine Gruppe möchte einen Wettbewerb machen: Welche Klasse schaltet am zuverlässigsten Licht und Beamer aus? Die Gruppe erstellt Regeln, sammelt Daten und wertet die Ergebnisse aus.",
+        question: "Welche SDGs passen am besten?",
+        answers: [
+          "SDG 7 Saubere Energie und SDG 13 Klimaschutz",
+          "SDG 6 Wasser und SDG 15 Leben an Land",
+          "Nur SDG 16 Frieden",
+          "Kein SDG, weil Strom kein Projektthema ist"
+        ],
+        correct: 0,
+        explanation: "Strom sparen passt zu Energie und Klimaschutz. Durch Datensammlung und Auswertung wird daraus ein gutes Projekt."
+      },
+      {
+        case: "Eine Schülerin sagt: 'Ich will, dass alle netter sind.' Es gibt noch keinen Plan, keine Aktion und kein Ergebnis.",
+        question: "Wie kann daraus ein Projekt werden?",
+        answers: [
+          "Gar nicht. Fairness kann nie ein Projektthema sein.",
+          "Durch ein klares Ziel, zum Beispiel Klassenregeln testen, Streithelfer-Karten entwickeln und Rückmeldungen sammeln.",
+          "Indem die Lehrkraft allein eine Rede hält.",
+          "Indem man nur darüber spricht und nichts ausprobiert."
+        ],
+        correct: 1,
+        explanation: "Fairness berührt SDG 16. Damit es ein Projekt wird, braucht die Idee konkrete Schritte und ein überprüfbares Ergebnis."
+      },
+      {
+        case: "Eine Gruppe möchte eine Ausstellung gestalten: 'So viel Wasser steckt in unserem Essen'. Sie recherchiert, erstellt Infokarten und gibt Tipps für bewussteren Konsum.",
+        question: "Welche SDGs werden berührt?",
+        answers: [
+          "SDG 6 Wasser, SDG 12 Konsum und SDG 4 Bildung",
+          "Nur SDG 7 Energie",
+          "Nur SDG 16 Frieden",
+          "Kein SDG, weil Essen nicht dazugehört"
+        ],
+        correct: 0,
+        explanation: "Das Projekt verbindet Wasserverbrauch, Konsumverhalten und Wissensvermittlung. Deshalb berührt es mehrere SDGs."
+      },
+      {
+        case: "Ein Team will Pflanzen für den Klassenraum organisieren. Es prüft Licht, Pflegeplan und Wirkung auf das Raumklima. Danach wird ausgewertet, ob die Pflege funktioniert.",
+        question: "Warum könnte das ein Projekt sein?",
+        answers: [
+          "Weil es Planung, Verantwortung, Durchführung und Auswertung enthält.",
+          "Weil Pflanzen automatisch alle Probleme lösen.",
+          "Weil niemand eine Aufgabe übernehmen muss.",
+          "Weil es kein Ziel braucht."
+        ],
+        correct: 0,
+        explanation: "Mit Pflegeplan und Auswertung ist die Idee mehr als Dekoration. Sie kann SDG 15, SDG 3 und SDG 11 berühren."
+      },
+      {
+        case: "Vier Schüler wollen eine Umfrage machen: Was wünschen sich Schüler für eine bessere Pause? Danach sortieren sie die Wünsche und stellen zwei realistische Vorschläge der Schulleitung vor.",
+        question: "Welche Einschätzung passt?",
+        answers: [
+          "Das kann ein Projekt sein. Es berührt Beteiligung, Schule und nachhaltige Gemeinschaft.",
+          "Das ist kein Projekt, weil Schüler keine Meinung haben dürfen.",
+          "Das passt nur zu Wasser.",
+          "Das ist fertig, sobald eine Frage gestellt wurde."
+        ],
+        correct: 0,
+        explanation: "Die Idee hat Beteiligung, Datensammlung, Auswertung und Vorschläge. Sie berührt SDG 11 und SDG 16."
+      },
+      {
+        case: "Eine Gruppe möchte einen Kleidertausch-Nachmittag vorbereiten. Sie sammelt Regeln, plant Werbung, organisiert Tische und wertet aus, wie viele Kleidungsstücke weitergegeben wurden.",
+        question: "Welche Antwort ist richtig?",
+        answers: [
+          "Das ist ein Projekt zu SDG 12 und kann zusätzlich SDG 13 berühren.",
+          "Das ist kein Projekt, weil Kleidung nichts mit Nachhaltigkeit zu tun hat.",
+          "Das passt nur zu SDG 6 Wasser.",
+          "Das braucht keine Planung."
+        ],
+        correct: 0,
+        explanation: "Kleidung weitergeben spart Ressourcen. Mit Planung und Auswertung wird daraus ein gutes Projekt."
+      },
+      {
+        case: "Eine Gruppe sagt: 'Wir machen irgendwas mit Klima.' Sie hat noch kein Ziel, keine Aufgabe und keine Idee für ein Ergebnis.",
+        question: "Was fehlt, damit es ein Projekt wird?",
+        answers: [
+          "Ein konkretes Ziel, klare Schritte, Teamaufgaben und ein sichtbares Ergebnis.",
+          "Nur ein längerer Titel.",
+          "Mehr schwierige Wörter.",
+          "Ein Thema ohne Umsetzung."
+        ],
+        correct: 0,
+        explanation: "Ein Thema allein ist noch kein Projekt. Aus 'Klima' könnte zum Beispiel ein Energie-Check, eine Schulweg-Aktion oder eine Klima-Ausstellung werden."
+      }
+    ];
+
+    let currentQuestions = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function generateQuiz() {
+      currentQuestions = shuffle(questionPool).slice(0, 6);
+      const quiz = document.getElementById("quiz");
+      const score = document.getElementById("score");
+      score.style.display = "none";
+      score.textContent = "";
+
+      quiz.innerHTML = currentQuestions.map((q, index) => `
+        <div class="question" id="question-${index}">
+          <h3>Beispiel ${index + 1}: ${q.question}</h3>
+          <div class="case-box"><strong>Idee:</strong><br />${q.case}</div>
+          <div class="answers">
+            ${q.answers.map((answer, answerIndex) => `
+              <label class="answer">
+                <input type="radio" name="q${index}" value="${answerIndex}" />
+                <span>${answer}</span>
+              </label>
+            `).join("")}
+          </div>
+          <div class="feedback" id="feedback-${index}"></div>
+        </div>
+      `).join("");
+    }
+
+    function checkAnswers() {
+      let correctCount = 0;
+
+      currentQuestions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        const feedback = document.getElementById(`feedback-${index}`);
+        feedback.className = "feedback";
+
+        if (!selected) {
+          feedback.classList.add("missing");
+          feedback.innerHTML = `<strong>Keine Antwort ausgewählt.</strong><br />Richtige Lösung: ${q.answers[q.correct]}<br />${q.explanation}`;
+          return;
+        }
+
+        const selectedValue = Number(selected.value);
+        if (selectedValue === q.correct) {
+          correctCount++;
+          feedback.classList.add("correct");
+          feedback.innerHTML = `<strong>Richtig.</strong><br />${q.explanation}`;
+        } else {
+          feedback.classList.add("wrong");
+          feedback.innerHTML = `<strong>Noch nicht richtig.</strong><br />Richtige Lösung: ${q.answers[q.correct]}<br />${q.explanation}`;
+        }
+      });
+
+      const score = document.getElementById("score");
+      score.style.display = "block";
+      let message = "";
+      if (correctCount === 6) message = "Du erkennst gut, wann aus einer Idee ein Projekt werden kann.";
+      else if (correctCount >= 4) message = "Du bist auf einem guten Weg. Lies die Erklärungen und achte auf Ziel, Plan und Ergebnis.";
+      else message = "Lies die Rückmeldungen genau. Ein Projekt braucht Ziel, Schritte, Team und ein sichtbares Ergebnis.";
+      score.textContent = `Ergebnis: ${correctCount} von 6 richtig. ${message}`;
+    }
+
+    generateQuiz();
+  </script>
+</body>
+</html>
