@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projektideen finden · Interaktiver Lernpfad</title>
+  <style>
+    :root {
+      --bg1:#e0f2fe; --bg2:#fff7ed; --dark:#0f172a; --card:#ffffff; --text:#1f2937;
+      --muted:#64748b; --line:#dbe3ef; --primary:#0e7490; --primary2:#f59e0b;
+      --green:#15803d; --red:#b91c1c; --soft:#f8fafc;
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,var(--bg1),#f8fafc 45%,var(--bg2));color:var(--text);line-height:1.5}
+    header{background:var(--dark);color:white;padding:2rem 1rem;text-align:center} header h1{margin:0 0 .5rem;font-size:clamp(1.7rem,4vw,2.5rem)} header p{max-width:920px;margin:.5rem auto 0;color:#cbd5e1;font-size:1.05rem}
+    main{max-width:1120px;margin:0 auto;padding:1.25rem}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,.08);padding:1.25rem;margin-bottom:1.25rem}
+    h2,h3{margin-top:0}.topline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem;align-items:center}.badge{display:inline-block;padding:.3rem .7rem;border-radius:999px;background:#cffafe;color:#155e75;font-size:.9rem;font-weight:800}.small{font-size:.92rem;color:var(--muted)}
+    .hint{background:#eff6ff;border-left:5px solid var(--primary);border-radius:12px;padding:1rem;margin:1rem 0}.tip{background:#fff7ed;border-left:5px solid var(--primary2);border-radius:12px;padding:1rem;margin:1rem 0}
+    .progress-wrap{background:#e2e8f0;border-radius:999px;height:16px;overflow:hidden;margin:.8rem 0 .4rem}.progress-bar{height:100%;width:0%;background:var(--green);transition:width .25s ease}.status{color:var(--muted);font-weight:700}
+    .step{border:1px solid var(--line);background:#fbfdff;border-radius:16px;padding:1rem;margin:1rem 0}.step-header{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.8rem}.step-number{width:2rem;height:2rem;flex:0 0 2rem;border-radius:50%;background:var(--primary2);color:white;display:grid;place-items:center;font-weight:900}
+    label{display:block;font-weight:800;margin:.8rem 0 .35rem} input[type="text"],textarea,select{width:100%;padding:.75rem;border:1px solid #cbd5e1;border-radius:12px;font-size:1rem;background:white} textarea{min-height:95px;resize:vertical}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.75rem}.choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.6rem;margin-top:.6rem}.choice-grid label{display:flex;align-items:center;gap:.55rem;font-weight:600;margin:0;background:white;border:1px solid #e2e8f0;border-radius:12px;padding:.75rem}.choice-grid input{transform:scale(1.12)}
+    .idea-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.75rem;margin-top:.75rem}.idea-card{border:1px solid #e2e8f0;border-radius:14px;padding:1rem;background:#f8fafc}.idea-card button{margin-top:.5rem}
+    .button-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin:1rem 0}button{border:none;border-radius:999px;padding:.85rem 1.15rem;background:var(--primary);color:white;font-weight:800;cursor:pointer;transition:transform .15s ease,background .15s ease}button:hover{background:#155e75;transform:translateY(-1px)}button.secondary{background:#334155}button.secondary:hover{background:#1e293b}button.green{background:var(--green)}button.green:hover{background:#166534}button.orange{background:var(--primary2)}button.orange:hover{background:#d97706}
+    .onepager{background:white;border:1px dashed #94a3b8;border-radius:16px;padding:1rem;margin-top:1rem}.onepager h2{color:var(--primary);border-bottom:2px solid #e2e8f0;padding-bottom:.35rem}.onepager-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem}.onepager-box{border:1px solid #e2e8f0;border-radius:12px;padding:.8rem;background:#f8fafc}
+    footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:.95rem}
+    @media print{body{background:white}header,.intro-card,.steps-card,.button-row,.progress-wrap,.status{display:none}.card{box-shadow:none;border:none;margin:0;padding:0}.onepager{border:none;padding:0}.onepager-grid{display:block}.onepager-box{margin:10px 0}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Projektideen finden</h1>
+  <p>Interaktiver Lernpfad für Open Space · Klasse 7 · Von Interessen, Stärken und Problemen zu ersten realistischen Projektideen</p>
+</header>
+<main>
+  <section class="card intro-card">
+    <div class="topline"><span class="badge">Open Space · Ideenfindung</span><span class="small">Ziel: Am Ende hast du mehrere mögliche Projektideen.</span></div>
+    <h2>So arbeitest du mit dieser Seite</h2>
+    <p>Du beantwortest die Fragen Schritt für Schritt. Die Seite sammelt deine Antworten in einem Onepager. Diesen kannst du als Word-Datei speichern.</p>
+    <div class="hint"><strong>Merke:</strong> Eine gute Projektidee beginnt oft bei dir: Was interessiert dich? Was kannst du gut? Was stört dich? Wo möchtest du etwas verändern?</div>
+    <div class="tip"><strong>Wichtig:</strong> Die Ideen müssen noch nicht perfekt sein. In diesem Lernpfad sammelst du zuerst Möglichkeiten. Im nächsten Lernpfad wählst du eine Idee aus und prüfst sie genauer.</div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div id="progressText" class="status">Fortschritt: 0 von 7 Schritten bearbeitet</div>
+  </section>
+
+  <section class="card steps-card">
+    <h2>7 Schritte zur Projektidee</h2>
+
+    <div class="step">
+      <div class="step-header"><div class="step-number">1</div><div><h3>Meine Interessen</h3><p>Wähle Themen aus, die dich interessieren. Ergänze eigene Themen.</p></div></div>
+      <div class="choice-grid">
+        <label><input type="checkbox" name="interests" value="Sport und Bewegung"> Sport und Bewegung</label>
+        <label><input type="checkbox" name="interests" value="Musik, Kunst und Kultur"> Musik, Kunst und Kultur</label>
+        <label><input type="checkbox" name="interests" value="Natur, Tiere und Umwelt"> Natur, Tiere und Umwelt</label>
+        <label><input type="checkbox" name="interests" value="Technik, Computer und Medien"> Technik, Computer und Medien</label>
+        <label><input type="checkbox" name="interests" value="Schulgemeinschaft und Fairness"> Schulgemeinschaft und Fairness</label>
+        <label><input type="checkbox" name="interests" value="Gesundheit und Wohlbefinden"> Gesundheit und Wohlbefinden</label>
+      </div>
+      <label for="ownInterests">Weitere Interessen</label><textarea id="ownInterests" placeholder="Was interessiert dich noch?"></textarea>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-number">2</div><div><h3>Meine Stärken</h3><p>Was kannst du gut? Was könntest du in ein Projekt einbringen?</p></div></div>
+      <div class="choice-grid">
+        <label><input type="checkbox" name="strengths" value="organisieren"> organisieren</label>
+        <label><input type="checkbox" name="strengths" value="kreativ gestalten"> kreativ gestalten</label>
+        <label><input type="checkbox" name="strengths" value="bauen oder reparieren"> bauen oder reparieren</label>
+        <label><input type="checkbox" name="strengths" value="gut erklären"> gut erklären</label>
+        <label><input type="checkbox" name="strengths" value="mit Menschen sprechen"> mit Menschen sprechen</label>
+        <label><input type="checkbox" name="strengths" value="am Computer arbeiten"> am Computer arbeiten</label>
+      </div>
+      <label for="ownStrengths">Weitere Stärken</label><textarea id="ownStrengths" placeholder="Was kannst du gut? Wobei fragen andere dich um Hilfe?"></textarea>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-number">3</div><div><h3>Probleme und Verbesserungen</h3><p>Gute Projekte lösen oft ein kleines Problem oder verbessern etwas.</p></div></div>
+      <label for="problemsSchool">Was könnte in der Schule besser werden?</label><textarea id="problemsSchool" placeholder="Zum Beispiel: Pausenhof, Müll, Lautstärke, Lernorte, Klassengemeinschaft ..."></textarea>
+      <label for="problemsWorld">Welche Themen aus der Welt findest du wichtig?</label><textarea id="problemsWorld" placeholder="Zum Beispiel: Klima, Wasser, Energie, Fairness, Armut, Tiere, Gesundheit ..."></textarea>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-number">4</div><div><h3>SDGs verbinden</h3><p>Wähle Ziele aus, die zu deinen Interessen und Problemen passen könnten.</p></div></div>
+      <div class="choice-grid">
+        <label><input type="checkbox" name="sdgs" value="SDG 3 Gesundheit und Wohlergehen"> SDG 3 Gesundheit</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 4 Hochwertige Bildung"> SDG 4 Bildung</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 6 Sauberes Wasser"> SDG 6 Wasser</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 7 Saubere Energie"> SDG 7 Energie</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 11 Nachhaltige Städte und Gemeinden"> SDG 11 Gemeinden</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 12 Nachhaltiger Konsum"> SDG 12 Konsum</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 13 Klimaschutz"> SDG 13 Klima</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 15 Leben an Land"> SDG 15 Leben an Land</label>
+        <label><input type="checkbox" name="sdgs" value="SDG 16 Frieden und Gerechtigkeit"> SDG 16 Frieden/Fairness</label>
+      </div>
+      <label for="sdgReason">Warum passen diese SDGs?</label><textarea id="sdgReason" placeholder="Erkläre kurz, warum diese Ziele zu deinen Themen passen."></textarea>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-number">5</div><div><h3>Ideenmaschine</h3><p>Kombiniere Interesse + Stärke + Problem. Klicke auf Beispiele, um sie in deine Sammlung zu übernehmen.</p></div></div>
+      <div class="button-row"><button class="orange" onclick="generateIdeas()">Beispielideen anzeigen</button></div>
+      <div id="ideaExamples" class="idea-list"></div>
+      <label for="collectedIdeas">Meine gesammelten Projektideen</label><textarea id="collectedIdeas" placeholder="Sammle hier mindestens 3 mögliche Projektideen."></textarea>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-number">6</div><div><h3>Ideen kleiner machen</h3><p>Zu große Ideen werden machbarer, wenn man sie verkleinert.</p></div></div>
+      <div class="tip"><strong>Beispiel:</strong> Zu groß: „Die ganze Schule nachhaltiger machen.“ Kleiner: „Eine müllarme Pausenwoche für unsere Klasse planen und auswerten.“</div>
+      <label for="smallIdeas">Welche deiner Ideen kannst du kleiner und realistischer formulieren?</label><textarea id="smallIdeas" placeholder="Formuliere 1–2 Ideen kleiner und genauer."></textarea>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-number">7</div><div><h3>Top 3 Projektideen</h3><p>Wähle drei Ideen aus, die du weiter prüfen möchtest.</p></div></div>
+      <label for="top1">Idee 1</label><input id="top1" type="text" placeholder="Meine erste mögliche Projektidee">
+      <label for="top2">Idee 2</label><input id="top2" type="text" placeholder="Meine zweite mögliche Projektidee">
+      <label for="top3">Idee 3</label><input id="top3" type="text" placeholder="Meine dritte mögliche Projektidee">
+    </div>
+
+    <div class="button-row">
+      <button onclick="updateOnepager()">Onepager anzeigen / aktualisieren</button>
+      <button class="green" onclick="downloadWord()">Als Word-Datei speichern</button>
+      <button class="secondary" onclick="window.print()">Onepager drucken</button>
+    </div>
+  </section>
+
+  <section class="card" id="onepagerSection"><div id="onepager" class="onepager"><h2>Onepager: Projektideen finden</h2><p class="small">Klicke auf „Onepager anzeigen / aktualisieren“, um deine Eingaben zusammenzufassen.</p></div></section>
+</main>
+<footer>Open Space · Projektideen finden · Interaktiver Lernpfad Klasse 7</footer>
+<script>
+  document.addEventListener('input', updateProgress); document.addEventListener('change', updateProgress);
+  function getValue(id){const e=document.getElementById(id);return e&&e.value.trim()?e.value.trim():'—'}
+  function getCheckedValues(name){const c=Array.from(document.querySelectorAll(`input[name="${name}"]:checked`));return c.length?c.map(i=>i.value).join(', '):'—'}
+  function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/\n/g,'<br>')}
+  const examples = [
+    ['Müllarme Pausenbox-Woche','Interesse: Umwelt · Stärke: organisieren · SDGs: 12, 13','Eine Klasse testet eine Woche lang weniger Verpackungsmüll in der Pause.'],
+    ['Mini-Schulgarten für Insekten','Interesse: Natur · Stärke: bauen/gestalten · SDGs: 15, 4','Ein Team plant eine kleine insektenfreundliche Ecke und erklärt ihren Nutzen.'],
+    ['Lernhilfe-Tauschbörse','Interesse: Bildung · Stärke: gut erklären · SDGs: 4, 10','Schüler bieten kurze Hilfen für Themen an, die sie gut können.'],
+    ['Energie-Detektive im Klassenraum','Interesse: Technik/Klima · Stärke: beobachten · SDGs: 7, 13','Ein Team prüft Licht, Beamer, Heizung und entwickelt Spar-Tipps.'],
+    ['Fairness-Woche in der Klasse','Interesse: Gemeinschaft · Stärke: mit Menschen sprechen · SDGs: 16, 4','Eine Gruppe sammelt Regeln für respektvollen Umgang und testet sie eine Woche.'],
+    ['Bewegte Pause','Interesse: Sport · Stärke: anleiten · SDGs: 3, 11','Ein Team entwickelt einfache Pausenspiele und testet sie mit Mitschülern.'],
+    ['Trinkwasser-Aktion','Interesse: Gesundheit/Wasser · Stärke: gestalten · SDGs: 3, 6, 12','Ein Team informiert über Leitungswasser und weniger Einwegflaschen.'],
+    ['Schulweg-Check','Interesse: Gemeinde · Stärke: fotografieren/dokumentieren · SDGs: 11, 16','Schüler sammeln sichere und unsichere Stellen und machen Vorschläge.']
+  ];
+  function generateIdeas(){
+    const wrap=document.getElementById('ideaExamples');
+    wrap.innerHTML=examples.map((x,i)=>`<div class="idea-card"><span class="badge">Beispiel ${i+1}</span><h3>${x[0]}</h3><p><strong>${x[1]}</strong></p><p>${x[2]}</p><button type="button" onclick="addIdea('${encodeURIComponent(x[0])}')">Idee übernehmen</button></div>`).join('');
+  }
+  function addIdea(encoded){
+    const idea=decodeURIComponent(encoded); const box=document.getElementById('collectedIdeas');
+    box.value = box.value.trim() ? box.value.trim()+"\n- "+idea : "- "+idea; updateProgress();
+  }
+  function buildOnepagerHtml(){return `
+    <h2>Onepager: Projektideen finden</h2>
+    <p><strong>Name:</strong> ___________________________ &nbsp;&nbsp; <strong>Datum:</strong> ___________________________</p>
+    <div class="onepager-grid">
+      <div class="onepager-box"><h3>1. Interessen</h3><p><strong>Ausgewählt:</strong><br>${esc(getCheckedValues('interests'))}</p><p><strong>Weitere Interessen:</strong><br>${esc(getValue('ownInterests'))}</p></div>
+      <div class="onepager-box"><h3>2. Stärken</h3><p><strong>Ausgewählt:</strong><br>${esc(getCheckedValues('strengths'))}</p><p><strong>Weitere Stärken:</strong><br>${esc(getValue('ownStrengths'))}</p></div>
+      <div class="onepager-box"><h3>3. Probleme / Verbesserungen</h3><p><strong>In der Schule:</strong><br>${esc(getValue('problemsSchool'))}</p><p><strong>In der Welt:</strong><br>${esc(getValue('problemsWorld'))}</p></div>
+      <div class="onepager-box"><h3>4. Passende SDGs</h3><p><strong>SDGs:</strong><br>${esc(getCheckedValues('sdgs'))}</p><p><strong>Begründung:</strong><br>${esc(getValue('sdgReason'))}</p></div>
+      <div class="onepager-box"><h3>5. Gesammelte Projektideen</h3><p>${esc(getValue('collectedIdeas'))}</p></div>
+      <div class="onepager-box"><h3>6. Kleiner und realistischer</h3><p>${esc(getValue('smallIdeas'))}</p></div>
+      <div class="onepager-box"><h3>7. Top 3 Projektideen</h3><p><strong>Idee 1:</strong> ${esc(getValue('top1'))}</p><p><strong>Idee 2:</strong> ${esc(getValue('top2'))}</p><p><strong>Idee 3:</strong> ${esc(getValue('top3'))}</p></div>
+    </div>`}
+  function updateOnepager(){document.getElementById('onepager').innerHTML=buildOnepagerHtml();updateProgress()}
+  function updateProgress(){
+    let c=0; if(getCheckedValues('interests')!=='—'||getValue('ownInterests')!=='—')c++; if(getCheckedValues('strengths')!=='—'||getValue('ownStrengths')!=='—')c++;
+    if(getValue('problemsSchool')!=='—'||getValue('problemsWorld')!=='—')c++; if(getCheckedValues('sdgs')!=='—'&&getValue('sdgReason')!=='—')c++;
+    if(getValue('collectedIdeas')!=='—')c++; if(getValue('smallIdeas')!=='—')c++; if(getValue('top1')!=='—'&&getValue('top2')!=='—'&&getValue('top3')!=='—')c++;
+    const p=Math.round(c/7*100); document.getElementById('progressBar').style.width=p+'%'; document.getElementById('progressText').textContent=`Fortschritt: ${c} von 7 Schritten bearbeitet`;
+  }
+  function downloadWord(){updateOnepager();const content=document.getElementById('onepager').innerHTML;const html=`<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Onepager Projektideen finden</title><style>body{font-family:Arial,Helvetica,sans-serif;color:#1f2937}h1,h2{color:#0e7490}.onepager-box{border:1px solid #cbd5e1;padding:10px;margin:10px 0;border-radius:8px;background:#f8fafc}.onepager-grid{display:block}.small{color:#64748b}</style></head><body>${content}</body></html>`;const blob=new Blob(['\ufeff',html],{type:'application/msword'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='Onepager_Projektideen_finden.doc';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)}
+  updateProgress();
+</script>
+</body>
+</html>
