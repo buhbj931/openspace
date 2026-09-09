@@ -4,160 +4,182 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projektidee entwickeln · Interaktiver Lernpfad</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
   <style>
-    :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #64748b;
-      --primary: #f59e0b;
-      --primary-dark: #d97706;
-      --blue: #0e7490;
-      --green: #15803d;
-      --red: #b91c1c;
-      --line: #dbe3ef;
-      --soft: #f8fafc;
-    }
+    /* Farben, Schrift und Abstaende kommen aus assets/slp-tokens.css
+       (Corporate Design des Schengen-Lyzeums). Hier stehen nur die
+       Regeln dieser Seite. */
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #fff7ed, #f8fafc 45%, #e0f2fe);
-      color: var(--text);
-      line-height: 1.5;
+      font-family: var(--font-sans);
+      background: var(--surface-page);
+      color: var(--text-body);
+      line-height: var(--leading-normal);
     }
 
     header {
-      background: #0f172a;
-      color: white;
-      padding: 2rem 1rem;
+      background: var(--surface-blue);
+      color: var(--text-on-blue);
+      padding: var(--space-6) var(--space-4);
       text-align: center;
     }
 
     header h1 {
-      margin: 0 0 0.5rem 0;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin: 0 0 var(--space-2) 0;
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
     }
 
     header p {
       max-width: 880px;
-      margin: 0.5rem auto 0;
-      color: #cbd5e1;
-      font-size: 1.05rem;
+      margin: var(--space-2) auto 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: var(--text-md);
     }
 
     main {
-      max-width: 1100px;
+      max-width: var(--container);
       margin: 0 auto;
-      padding: 1.25rem;
+      padding: var(--space-5) var(--space-4);
     }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
     }
 
     .topline {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: var(--space-3);
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: var(--space-4);
     }
 
     .badge {
       display: inline-block;
-      padding: 0.3rem 0.7rem;
-      border-radius: 999px;
-      background: #fef3c7;
-      color: #92400e;
-      font-size: 0.9rem;
-      font-weight: 800;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--slp-blue);
+      font-size: var(--text-sm);
+      font-weight: 700;
     }
 
-    h2, h3 { margin-top: 0; }
+    h2, h3 { margin-top: 0; color: var(--slp-blue); }
+    h2 { font-size: var(--text-xl); letter-spacing: var(--tracking-tight); }
+    h3 { font-size: var(--text-md); }
+
+    .hint, .tip {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
+    }
 
     .hint {
-      background: #eff6ff;
-      border-left: 5px solid var(--blue);
-      border-radius: 12px;
-      padding: 1rem;
-      margin: 1rem 0;
+      background: var(--accent-soft);
+      border-left: var(--rule-accent) solid var(--slp-blue);
     }
 
     .tip {
-      background: #fff7ed;
-      border-left: 5px solid var(--primary);
-      border-radius: 12px;
-      padding: 1rem;
-      margin: 1rem 0;
+      background: var(--accent-2-soft);
+      border-left: var(--rule-accent) solid var(--slp-orange);
+    }
+
+    /* Der Schengen-Stern als Auszeichnung statt eines Icons */
+    .hint::before, .tip::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 1.15em;
+      height: 1.15em;
+      margin-top: 0.15em;
+      background: var(--slp-yellow);
+      -webkit-mask: var(--slp-star-mask) center / contain no-repeat;
+              mask: var(--slp-star-mask) center / contain no-repeat;
     }
 
     .step {
-      border: 1px solid var(--line);
-      background: #fbfdff;
-      border-radius: 16px;
-      padding: 1rem;
-      margin: 1rem 0;
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-page);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
     }
 
     .step-header {
       display: flex;
-      gap: 0.75rem;
+      gap: var(--space-3);
       align-items: flex-start;
-      margin-bottom: 0.8rem;
+      margin-bottom: var(--space-3);
     }
 
     .step-number {
       width: 2rem;
       height: 2rem;
       flex: 0 0 2rem;
-      border-radius: 50%;
-      background: var(--primary);
-      color: white;
+      border-radius: var(--radius-pill);
+      background: var(--slp-orange);
+      color: var(--text-on-orange);
       display: grid;
       place-items: center;
-      font-weight: 900;
+      font-weight: 700;
     }
+
+    .step-header p { margin: var(--space-1) 0 0; color: var(--text-muted); }
 
     label {
       display: block;
-      font-weight: 800;
-      margin: 0.8rem 0 0.35rem;
+      font-weight: 700;
+      margin: var(--space-3) 0 var(--space-1);
+      color: var(--text-body);
     }
 
     input[type="text"], textarea, select {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      font-size: 1rem;
-      background: white;
+      padding: var(--space-3);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: var(--text-base);
+      color: var(--text-body);
+      background: var(--surface-card);
+    }
+
+    input[type="text"]:focus, textarea:focus, select:focus {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 1px;
+      border-color: var(--slp-blue);
     }
 
     textarea {
       min-height: 105px;
       resize: vertical;
+      line-height: var(--leading-normal);
     }
 
     .check-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 0.8rem;
+      margin-top: var(--space-3);
+      border-radius: var(--radius-md);
       overflow: hidden;
-      border-radius: 12px;
     }
 
     .check-table th, .check-table td {
-      border: 1px solid var(--line);
-      padding: 0.65rem;
+      border: 1px solid var(--border-subtle);
+      padding: var(--space-3);
       text-align: center;
       vertical-align: middle;
     }
@@ -168,125 +190,174 @@
     }
 
     .check-table th {
-      background: #f1f5f9;
+      background: var(--surface-sunken);
+      color: var(--text-body);
+      font-size: var(--text-sm);
     }
 
     input[type="radio"], input[type="checkbox"] {
       transform: scale(1.15);
+      accent-color: var(--slp-blue);
     }
 
     .goal-options {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 0.6rem;
-      margin-top: 0.6rem;
+      gap: var(--space-2);
+      margin-top: var(--space-2);
     }
 
     .goal-options label {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
-      font-weight: 600;
+      gap: var(--space-2);
+      font-weight: 400;
       margin: 0;
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 0.75rem;
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      min-height: 44px;
+    }
+
+    .goal-options label:hover { background: var(--accent-soft); }
+
+    /* --- Aktionsbereiche: Abgabe getrennt von der Sicherung --- */
+
+    .aktionen {
+      margin-top: var(--space-5);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .aktionen__text {
+      margin: 0 0 var(--space-4);
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      max-width: 70ch;
     }
 
     .button-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: var(--space-3);
       align-items: center;
-      margin: 1rem 0;
     }
 
     button {
-      border: none;
-      border-radius: 999px;
-      padding: 0.85rem 1.15rem;
-      background: var(--primary);
-      color: white;
-      font-weight: 800;
+      font: inherit;
+      font-weight: 700;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.15s ease;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 0.7rem 1.1rem;
+      min-height: 44px;
+      transition: background var(--dur) var(--ease-out),
+                  border-color var(--dur) var(--ease-out),
+                  color var(--dur) var(--ease-out);
     }
 
-    button:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
+    button:focus { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:focus:not(:focus-visible) { outline: none; }
+    button:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:active { transform: translateY(1px); }
 
-    button.secondary { background: #334155; }
-    button.secondary:hover { background: #1e293b; }
-    button.green { background: var(--green); }
-    button.green:hover { background: #166534; }
+    button.haupt { background: var(--slp-orange); color: var(--text-on-orange); }
+    button.haupt:hover { background: var(--accent-2-hover); }
+
+    button.rand {
+      background: var(--surface-card);
+      color: var(--slp-blue);
+      border-color: var(--border-default);
+    }
+    button.rand:hover { background: var(--accent-soft); border-color: var(--slp-blue); }
+
+    button.still {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border-default);
+    }
+    button.still:hover { background: var(--surface-sunken); color: var(--text-body); }
+
+    @supports not (gap: 1rem) {
+      .button-row > *, .goal-options > * { margin: 0 var(--space-3) var(--space-3) 0; }
+    }
 
     .progress-wrap {
-      background: #e2e8f0;
-      border-radius: 999px;
-      height: 16px;
+      background: var(--surface-sunken);
+      border-radius: var(--radius-pill);
+      height: 14px;
       overflow: hidden;
-      margin: 0.8rem 0 0.4rem;
+      margin: var(--space-3) 0 var(--space-1);
     }
 
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: var(--green);
-      transition: width 0.25s ease;
+      background: var(--slp-blue);
+      transition: width var(--dur) var(--ease-out);
     }
 
     .status {
-      color: var(--muted);
+      color: var(--text-muted);
       font-weight: 700;
+      font-size: var(--text-sm);
     }
 
     .onepager {
-      background: white;
-      border: 1px dashed #94a3b8;
-      border-radius: 16px;
-      padding: 1rem;
-      margin-top: 1rem;
+      background: var(--surface-card);
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-top: var(--space-4);
     }
 
     .onepager h2 {
-      color: var(--blue);
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 0.35rem;
+      color: var(--slp-blue);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: var(--space-2);
     }
 
     .onepager-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
 
     .onepager-box {
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 0.8rem;
-      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-top: 3px solid var(--slp-blue);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      background: var(--surface-page);
     }
 
     .small {
-      font-size: 0.92rem;
-      color: var(--muted);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
     }
 
     footer {
       text-align: center;
-      padding: 2rem 1rem;
-      color: var(--muted);
-      font-size: 0.95rem;
+      padding: var(--space-6) var(--space-4);
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+    }
+
+    @media (max-width: 560px) {
+      main { padding: var(--space-4) var(--space-3); }
+      .card { padding: var(--space-4); }
+      .button-row > button { width: 100%; }
     }
 
     @media print {
       body { background: white; }
-      header, .intro-card, .steps-card, .button-row, .progress-wrap, .status { display: none; }
+      header, .intro-card, .steps-card, .aktionen, .button-row,
+      .progress-wrap, .status, #sicherung { display: none; }
       .card { box-shadow: none; border: none; margin: 0; padding: 0; }
       .onepager { border: none; padding: 0; }
+      .onepager-grid { display: block; }
+      .onepager-box { margin: 10px 0; break-inside: avoid; }
     }
   </style>
 </head>
@@ -312,6 +383,9 @@
       </div>
       <div id="progressText" class="status">Fortschritt: 0 von 7 Schritten bearbeitet</div>
     </section>
+
+    <!-- Inhalt wird von assets/persist.js aufgebaut -->
+    <section class="card" id="sicherung"></section>
 
     <section class="card steps-card">
       <h2>Die 7 Fragen aus dem Lernpfad</h2>
@@ -489,10 +563,18 @@
         <textarea id="risks" placeholder="Welche Schwierigkeiten könnten entstehen? Was könnte knapp werden? Wo braucht ihr Hilfe?"></textarea>
       </div>
 
-      <div class="button-row">
-        <button onclick="updateOnepager()">Onepager anzeigen / aktualisieren</button>
-        <button class="green" onclick="downloadWord()">Als Word-Datei speichern</button>
-        <button class="secondary" onclick="window.print()">Onepager drucken</button>
+      <div class="aktionen">
+        <h3 class="slp-rule">Abgabe in DiLer</h3>
+        <p class="aktionen__text">
+          Wenn du mit den sieben Schritten fertig bist: Erstelle deinen Onepager und gib ihn
+          in DiLer ab – entweder als Word-Datei zum Hochladen oder als Text zum Einfügen.
+        </p>
+        <div class="button-row">
+          <button type="button" class="rand" onclick="updateOnepager()">Onepager anzeigen / aktualisieren</button>
+          <button type="button" class="haupt" onclick="downloadWord()">Als Word-Datei speichern</button>
+          <button type="button" class="rand" onclick="SLPPersist.klartextKopieren()">Text für DiLer kopieren</button>
+          <button type="button" class="still" onclick="window.print()">Onepager drucken</button>
+        </div>
       </div>
     </section>
 
@@ -641,7 +723,7 @@
           <title>Onepager Projektidee</title>
           <style>
             body { font-family: Arial, Helvetica, sans-serif; color: #1f2937; }
-            h1, h2 { color: #0e7490; }
+            h1, h2 { color: #00509E; }
             h3 { color: #1f2937; margin-bottom: 6px; }
             .onepager-grid { display: block; }
             .onepager-box { border: 1px solid #cbd5e1; padding: 10px; margin: 10px 0; border-radius: 8px; }
@@ -666,6 +748,21 @@
     }
 
     updateProgress();
+  </script>
+
+  <script src="assets/persist.js"></script>
+  <script>
+    // Autosave, Wiederherstellung, Sicherung und Import.
+    // Die Feldschluessel kommen aus id bzw. name - siehe fieldIds und
+    // radioGroups oben, die genau diese Felder benennen.
+    SLPPersist.init({
+      seite: 'projektidee',
+      bereich: '.steps-card',
+      ziel: '#sicherung',
+      nachWiederherstellung: updateProgress,
+      klartextQuelle: buildOnepagerHtml,
+      dateiname: 'Projektidee'
+    });
   </script>
 </body>
 </html>

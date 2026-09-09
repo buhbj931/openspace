@@ -1,0 +1,172 @@
+/* ============================================================
+   SLP-DESIGN-TOKENS — Deutsch-Luxemburgisches Schengen-Lyzeum
+   ------------------------------------------------------------
+   Quelle: Design-System "schengen-lyzeum-design" (Farben, Typo,
+   Spacing, Sternmarke). Herkunft der Markenwerte ist das
+   PowerPoint-Theme 2021 der Schule.
+
+   Zwei bewusste Abweichungen vom Original-Design-System:
+
+   1. KEIN Google-Fonts-Import. Das Original laedt Carlito von
+      fonts.googleapis.com. Auf dem Schulwebspace und im
+      iPad-Netz koennen Fremdhosts blockiert sein, deshalb nur
+      der Font-Stack: wo Carlito oder Calibri lokal vorhanden
+      sind, werden sie genutzt, sonst faellt es auf die
+      Systemschrift zurueck (auf dem iPad San Francisco).
+
+   2. KEINE oklch()-Farbwerte. Das Original definiert die
+      Farbabstufungen in oklch; das versteht Safari erst ab
+      15.4. Alle Werte sind hier nach sRGB-Hex umgerechnet,
+      damit auch aeltere verwaltete iPads korrekt darstellen.
+   ============================================================ */
+
+:root {
+  /* ---- Markenfarben (exakt aus dem Office-Theme) ---- */
+  --slp-blue:   #00509E;   /* Primaerfarbe, "Schengen-Blau" */
+  --slp-orange: #EB5B25;   /* Sekundaerfarbe, Aktionen und Akzente */
+  --slp-yellow: #FFDD00;   /* Sternfarbe, nur als Flaeche - nie als Text */
+
+  /* ---- Blau-Abstufungen ---- */
+  --blue-50:  #EDF6FF;
+  --blue-100: #D5EAFF;
+  --blue-700: #003D74;
+  --blue-800: #002E58;
+
+  /* ---- Orange-Abstufungen ---- */
+  --orange-50:  #FFF1EA;
+  --orange-100: #FFDECD;
+  --orange-600: #CD4900;
+  --orange-700: #A43700;
+
+  /* ---- Neutrale Toene ---- */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F8F8F8;   /* Papiergrund */
+  --neutral-100: #F0F1F3;
+  --neutral-200: #E2E4E8;
+  --neutral-300: #CBCED4;
+  --neutral-400: #9A9DA4;
+  --neutral-500: #808080;
+  --neutral-600: #5F5F5F;
+  --neutral-700: #4D4D4D;
+  --neutral-800: #333333;
+  --neutral-900: #1A1A1A;
+
+  /* ---- Text ---- */
+  --text-strong:    var(--neutral-900);
+  --text-body:      var(--neutral-800);
+  --text-muted:     var(--neutral-600);
+  --text-on-blue:   #FFFFFF;
+  --text-on-orange: #FFFFFF;
+
+  /* ---- Flaechen ---- */
+  --surface-page:   var(--neutral-50);
+  --surface-card:   var(--neutral-0);
+  --surface-sunken: var(--neutral-100);
+  --surface-blue:   var(--slp-blue);
+
+  /* ---- Linien ---- */
+  --border-subtle:  var(--neutral-200);
+  --border-default: var(--neutral-300);
+  --border-strong:  var(--neutral-400);
+
+  /* ---- Interaktion ---- */
+  --accent:         var(--slp-blue);
+  --accent-hover:   var(--blue-700);
+  --accent-active:  var(--blue-800);
+  --accent-soft:    var(--blue-50);
+  --accent-2:       var(--slp-orange);
+  --accent-2-hover: var(--orange-600);
+  --accent-2-soft:  var(--orange-50);
+  --focus-ring:     var(--blue-100);
+
+  /* ---- Statusfarben ---- */
+  --success:      #298646;
+  --success-soft: #E8F5ED;
+  --danger:       #CC2827;
+  --danger-soft:  #FDEDEC;
+  --warning:      var(--slp-orange);
+  --warning-soft: var(--orange-50);
+
+  /* ---- Schrift ---- */
+  --font-sans: "Carlito", "Calibri", -apple-system, "Segoe UI", system-ui, sans-serif;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-md:   1.125rem;
+  --text-lg:   1.375rem;
+  --text-xl:   1.75rem;
+  --text-2xl:  2.25rem;
+
+  --leading-tight:  1.08;
+  --leading-snug:   1.25;
+  --leading-normal: 1.5;
+
+  --tracking-tight: -0.01em;
+  --tracking-caps:   0.08em;   /* Grossbuchstaben-Labels */
+
+  /* ---- Abstaende (4px-Raster) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* ---- Radien: zurueckhaltend, ueberwiegend eckig ---- */
+  --radius-sm:   3px;
+  --radius-md:   6px;
+  --radius-lg:  10px;
+  --radius-pill: 999px;   /* nur Badges und die Akzentlinie */
+
+  --rule-accent: 4px;     /* orange Linie unter Ueberschriften */
+
+  /* ---- Schatten: eine einzige weiche Stufe ---- */
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.10), 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.10);
+  --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.14);
+
+  /* ---- Layout ---- */
+  --container: 1080px;
+
+  /* ---- Bewegung: ruhig und funktional ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur:      200ms;
+
+  /* ---- Sternmarke als CSS-Maske (data-URI, keine externe Datei) ---- */
+  --slp-star-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 2 61.8 35.6 97.6 36.3 69 57.9 79.4 92.2 50 71.5 20.6 92.2 31 57.9 2.4 36.3 38.2 35.6Z'/%3E%3C/svg%3E");
+}
+
+/* Der Schengen-Stern. Ersetzt generische Aufzaehlungszeichen und Icons.
+   Farbe ueber --star-color steuerbar. */
+.slp-star {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  background: var(--star-color, var(--slp-yellow));
+  -webkit-mask: var(--slp-star-mask) center / contain no-repeat;
+          mask: var(--slp-star-mask) center / contain no-repeat;
+}
+
+/* Kurze orange Linie unter Ueberschriften - das wiederkehrende
+   Auszeichnungselement der Schulvorlagen. */
+.slp-rule::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: var(--rule-accent);
+  margin-top: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--slp-orange);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
