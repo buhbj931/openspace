@@ -761,9 +761,23 @@
 
     function starten() {
       stilEinfuegen();
-      felder = felderErfassen();
       speicherMoeglich = speicherPruefen();
       bereichAufbauen();
+
+      /* Seiten, die ihre Felder erst per Skript erzeugen (die Quizze),
+         bauen hier ihren Inhalt passend zum gespeicherten Stand auf.
+         Erst danach werden die Felder erfasst - sonst kaeme die
+         Wiederherstellung an Elementen an, die es noch gar nicht gibt. */
+      var paket = geladenesPaket();
+      if (typeof cfg.vorWiederherstellung === 'function') {
+        try {
+          cfg.vorWiederherstellung(paket ? paket.felder : null);
+        } catch (fehler) {
+          console.warn('SLPPersist: Fehler in vorWiederherstellung.', fehler);
+        }
+      }
+
+      felder = felderErfassen();
 
       var wiederhergestellt = wiederherstellen();
       if (wiederhergestellt) { nachAenderung(); }
@@ -790,6 +804,15 @@
   global.SLPPersist = {
     init: init,
     speichern: speichern,
+    /* Nach einem Neuaufbau der Felder per Skript aufrufen, damit der
+       Baustein die neuen Elemente kennt. */
+    felderNeuEinlesen: function () {
+      felder = felderErfassen();
+      return felder.length;
+    },
+    /* Rueckfrage im Seiten-Look, damit Seiten kein confirm() brauchen. */
+    frage: function (optionen) { return dialogOeffnen(optionen || {}); },
+    hinweis: function (text, art) { meldung(text, art); },
     exportObjekt: exportObjekt,
     importiere: importieren,
     zuruecksetzen: zuruecksetzen,
