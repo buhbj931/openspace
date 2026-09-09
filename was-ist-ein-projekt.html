@@ -4,257 +4,174 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projekt oder kein Projekt?</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
   <style>
-    :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --success-bg: #dcfce7;
-      --success-text: #166534;
-      --error-bg: #fee2e2;
-      --error-text: #991b1b;
-      --warning-bg: #fff7ed;
-      --warning-text: #9a3412;
-      --border: #dbe3ef;
-      --shadow: 0 12px 30px rgba(37, 99, 235, 0.08);
-    }
+    /* Farben, Schrift und Abstände: assets/slp-tokens.css (Corporate
+       Design des Schengen-Lyzeums). Hier nur die Regeln dieser Seite. */
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
-      color: var(--text);
+      font-family: var(--font-sans);
+      background: var(--surface-page);
+      color: var(--text-body);
+      line-height: var(--leading-normal);
       min-height: 100vh;
-      padding: 24px;
+      padding: var(--space-5);
     }
 
     .app {
-      width: min(1100px, 100%);
+      width: min(1080px, 100%);
       margin: 0 auto;
-      background: var(--card);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
       overflow: hidden;
-      border: 1px solid var(--border);
     }
 
     .header {
-      padding: 28px;
-      background: linear-gradient(135deg, #2563eb, #3b82f6);
-      color: white;
+      padding: var(--space-6);
+      background: var(--surface-blue);
+      color: var(--text-on-blue);
     }
-
     .header h1 {
-      margin: 0 0 10px;
-      font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+      margin: 0 0 var(--space-2);
+      font-size: clamp(1.6rem, 2.4vw, 2.25rem);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+    }
+    .header p { margin: 0; max-width: 850px; color: rgba(255,255,255,.9); }
+
+    .content { padding: var(--space-6); display: grid; gap: var(--space-5); }
+
+    h2, h3 { margin-top: 0; color: var(--slp-blue); }
+
+    .intro, .scoreboard, .task-list, .feedback-box, .aktionen {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      background: var(--surface-card);
     }
 
-    .header p {
-      margin: 0;
-      max-width: 850px;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.94);
-    }
+    .intro { padding: var(--space-5); background: var(--surface-page); }
+    .intro h2 { margin-bottom: var(--space-3); font-size: var(--text-lg); }
 
-    .content {
-      padding: 28px;
-      display: grid;
-      gap: 24px;
-    }
-
-    .intro, .scoreboard, .task-list, .feedback-box {
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: #fff;
-    }
-
-    .intro {
-      padding: 20px;
-      background: #f8fbff;
-    }
-
-    .intro h2 {
-      margin-top: 0;
-      margin-bottom: 12px;
-      font-size: 1.2rem;
-    }
-
-    .criteria {
-      display: grid;
-      gap: 10px;
-      color: var(--text);
-    }
-
+    .criteria { display: grid; gap: var(--space-2); }
     .criteria div {
-      padding: 10px 12px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      display: flex; gap: var(--space-3); align-items: flex-start;
+      padding: var(--space-3); background: var(--surface-card);
+      border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
     }
-
-    .task-list {
-      padding: 20px;
-    }
-
-    .task-list h2 {
-      margin-top: 0;
-      margin-bottom: 18px;
-      font-size: 1.25rem;
-    }
-
-    .item {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      background: #fcfdff;
-      margin-bottom: 16px;
-    }
-
-    .item:last-child {
-      margin-bottom: 0;
-    }
-
-    .item-title {
-      font-weight: bold;
-      font-size: 1.05rem;
-      margin-bottom: 12px;
-      line-height: 1.45;
-    }
-
-    .choices {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .choice {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      background: #fff;
-    }
-
-    .choice input {
-      margin: 0;
-    }
-
-    .result {
-      display: none;
-      padding: 12px 14px;
-      border-radius: 12px;
-      line-height: 1.55;
-      font-size: 0.97rem;
-    }
-
-    .result.success {
-      display: block;
-      background: var(--success-bg);
-      color: var(--success-text);
-      border: 1px solid #86efac;
-    }
-
-    .result.error {
-      display: block;
-      background: var(--error-bg);
-      color: var(--error-text);
-      border: 1px solid #fca5a5;
-    }
-
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    button {
-      border: none;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.05s ease, opacity 0.2s ease, background 0.2s ease;
-    }
-
-    button:active {
-      transform: translateY(1px);
-    }
-
-    .primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .secondary {
-      background: #e5edff;
-      color: var(--primary-dark);
-    }
-
-    .secondary:hover {
-      background: #d9e6ff;
+    /* Der Schengen-Stern als Auszeichnung statt eines Icons */
+    .criteria div::before {
+      content: ""; flex: 0 0 auto; width: 1.1em; height: 1.1em; margin-top: .2em;
+      background: var(--slp-yellow);
+      -webkit-mask: var(--slp-star-mask) center / contain no-repeat;
+              mask: var(--slp-star-mask) center / contain no-repeat;
     }
 
     .scoreboard {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      background: #f8fbff;
+      padding: var(--space-5); display: grid;
+      grid-template-columns: repeat(4, 1fr); gap: var(--space-4);
+      background: var(--surface-page);
     }
-
     .score-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
+      background: var(--surface-card); border: 1px solid var(--border-subtle);
+      border-top: 3px solid var(--slp-blue); border-radius: var(--radius-md);
+      padding: var(--space-4); text-align: center;
+      font-size: var(--text-sm); color: var(--text-muted); font-weight: 700;
+    }
+    .score-card .value {
+      display: block; font-size: var(--text-xl); font-weight: 700;
+      color: var(--slp-blue); margin-top: var(--space-2);
     }
 
-    .score-card .value {
-      display: block;
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: var(--primary-dark);
-      margin-top: 8px;
+    .task-list { padding: var(--space-5); }
+    .task-list h2 { margin-bottom: var(--space-5); font-size: var(--text-lg); }
+
+    .item {
+      border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+      padding: var(--space-4); background: var(--surface-page); margin-bottom: var(--space-4);
+    }
+    .item:last-child { margin-bottom: 0; }
+    .item-title { font-weight: 700; margin-bottom: var(--space-3); line-height: var(--leading-snug); }
+
+    .choices { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-3); }
+    .choice {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      padding: var(--space-3); min-height: 44px;
+      border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+      background: var(--surface-card); cursor: pointer;
+    }
+    .choice:hover { background: var(--accent-soft); }
+    .choice input { margin: 0; accent-color: var(--slp-blue); }
+
+    .result {
+      display: none; padding: var(--space-3); border-radius: var(--radius-md);
+      line-height: var(--leading-normal); font-size: var(--text-sm);
+    }
+    .result.success {
+      display: block; background: var(--success-soft);
+      color: var(--success); border: 1px solid var(--success);
+    }
+    .result.error {
+      display: block; background: var(--danger-soft);
+      color: var(--danger); border: 1px solid var(--danger);
+    }
+
+    .buttons, .button-row { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+    button {
+      font: inherit; font-weight: 700; cursor: pointer;
+      border: 1px solid transparent; border-radius: var(--radius-md);
+      padding: .7rem 1.1rem; min-height: 44px;
+      transition: background var(--dur) var(--ease-out),
+                  border-color var(--dur) var(--ease-out),
+                  color var(--dur) var(--ease-out);
+    }
+    button:focus { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:focus:not(:focus-visible) { outline: none; }
+    button:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:active { transform: translateY(1px); }
+
+    .primary { background: var(--slp-orange); color: var(--text-on-orange); }
+    .primary:hover { background: var(--accent-2-hover); }
+    .secondary { background: var(--surface-card); color: var(--slp-blue); border-color: var(--border-default); }
+    .secondary:hover { background: var(--accent-soft); border-color: var(--slp-blue); }
+    .rand { background: var(--surface-card); color: var(--slp-blue); border-color: var(--border-default); }
+    .rand:hover { background: var(--accent-soft); border-color: var(--slp-blue); }
+
+    @supports not (gap: 1rem) {
+      .buttons > *, .choices > *, .button-row > * { margin: 0 var(--space-3) var(--space-3) 0; }
     }
 
     .feedback-box {
-      padding: 18px 20px;
-      background: var(--warning-bg);
-      color: var(--warning-text);
-      border-color: #fdba74;
-      line-height: 1.55;
+      padding: var(--space-4) var(--space-5);
+      background: var(--accent-2-soft); color: var(--text-body);
+      border-color: var(--slp-orange); border-left-width: var(--rule-accent);
+      line-height: var(--leading-normal);
     }
+    .feedback-box strong { color: var(--orange-700); }
 
-    .feedback-box strong {
-      color: #7c2d12;
-    }
+    .aktionen { padding: var(--space-5); }
+    .aktionen__text { margin: 0 0 var(--space-4); color: var(--text-muted); font-size: var(--text-sm); max-width: 70ch; }
 
-    @media (max-width: 820px) {
-      .scoreboard {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+    @media (max-width: 820px) { .scoreboard { grid-template-columns: repeat(2, 1fr); } }
 
     @media (max-width: 560px) {
-      body { padding: 14px; }
-      .header, .content, .task-list, .scoreboard, .intro { padding: 18px; }
+      body { padding: var(--space-3); }
+      .header, .content, .task-list, .scoreboard, .intro, .aktionen { padding: var(--space-4); }
       .scoreboard { grid-template-columns: 1fr; }
       .choices { flex-direction: column; }
       .choice { width: 100%; }
+      .buttons > button, .button-row > button { width: 100%; }
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .app { box-shadow: none; border: none; }
+      .buttons, .aktionen, #sicherung { display: none; }
     }
   </style>
 </head>
@@ -299,66 +216,89 @@
       <section class="feedback-box" id="summaryBox">
         <strong>Hinweis:</strong> Wähle bei jeder Aussage <em>Projekt</em> oder <em>kein Projekt</em> und prüfe danach deine Ergebnisse.
       </section>
+
+      <section class="aktionen">
+        <h3 class="slp-rule">Abgabe in DiLer</h3>
+        <p class="aktionen__text">
+          Du kannst deine Antworten als Text kopieren und in DiLer einfügen.
+        </p>
+        <div class="button-row">
+          <button type="button" class="rand" onclick="SLPPersist.klartextKopieren()">Ergebnis für DiLer kopieren</button>
+        </div>
+      </section>
+
+      <!-- Inhalt wird von assets/persist.js aufgebaut -->
+      <section id="sicherung"></section>
     </section>
   </main>
 
   <script>
     const tasks = [
       {
+        id: 'kuchenverkauf',
         text: 'Einen Kuchenverkauf für einen guten Zweck organisieren',
         answer: 'projekt',
         correctReason: 'Richtig. Das ist ein Projekt, weil ein Ziel erreicht werden soll und dafür geplant, organisiert und durchgeführt werden muss.',
         wrongReason: 'Das ist falsch, weil ein Kuchenverkauf organisiert werden muss: Man braucht Ideen, Aufgaben, Material, Zeitplanung und oft Teamarbeit. Das spricht für ein Projekt.'
       },
       {
+        id: 'comic',
         text: 'Ein Comic zusammen mit Mitschülern schreiben und zeichnen',
         answer: 'projekt',
         correctReason: 'Richtig. Das ist ein Projekt, weil gemeinsam etwas Eigenes entwickelt und in mehreren Schritten gestaltet wird.',
         wrongReason: 'Das ist falsch, weil hier etwas Neues entsteht. Dazu gehören Planung, Absprachen, Gestaltung und Zusammenarbeit. Genau das ist typisch für ein Projekt.'
       },
       {
+        id: 'podcast',
         text: 'Ein Podcast über Gaming produzieren',
         answer: 'projekt',
         correctReason: 'Richtig. Das ist ein Projekt, weil Themen ausgewählt, Beiträge vorbereitet, aufgenommen und bearbeitet werden müssen.',
         wrongReason: 'Das ist falsch, weil ein Podcast nicht einfach spontan fertig ist. Inhalt, Technik, Aufnahme und Bearbeitung müssen vorbereitet werden. Deshalb ist es ein Projekt.'
       },
       {
+        id: 'hausaufgaben',
         text: 'Hausaufgaben machen',
         answer: 'kein-projekt',
         correctReason: 'Richtig. Das ist in der Regel kein Projekt, sondern eine normale, wiederkehrende Schulaufgabe ohne größere Projektplanung.',
         wrongReason: 'Das ist falsch, weil Hausaufgaben normalerweise zum Alltag gehören. Sie sind meist keine umfangreiche, geplante Gemeinschaftsarbeit mit eigenem Projektcharakter.'
       },
       {
+        id: 'muellsammelaktion',
         text: 'Eine Müllsammelaktion starten',
         answer: 'projekt',
         correctReason: 'Richtig. Das ist ein Projekt, weil eine Aktion mit Ziel, Planung, Organisation und Durchführung vorbereitet wird.',
         wrongReason: 'Das ist falsch, weil eine Müllsammelaktion organisiert werden muss: Ort, Zeit, Material, Helfer und Ablauf müssen geplant werden. Deshalb ist es ein Projekt.'
       },
       {
+        id: 'app',
         text: 'Eine eigene App programmieren',
         answer: 'projekt',
         correctReason: 'Richtig. Das ist ein Projekt, weil eine Idee entwickelt, geplant, programmiert, getestet und verbessert werden muss.',
         wrongReason: 'Das ist falsch, weil beim Programmieren einer App viele Schritte nötig sind: Idee, Planung, Umsetzung und Test. Das ist klarer Projektcharakter.'
       },
       {
+        id: 'wettkampftraining',
         text: 'Für einen sportlichen Wettkampf zu trainieren und daran teilzunehmen',
         answer: 'kein-projekt',
         correctReason: 'Richtig. Das ist meist kein Projekt, sondern eher persönliches Training und Teilnahme an einem Wettbewerb.',
         wrongReason: 'Das ist falsch, weil persönliches Training und Mitmachen an einem Wettkampf meistens keine geplante Projektarbeit mit mehreren Organisationsbereichen ist. Es ist eher eine persönliche Aktivität.'
       },
       {
+        id: 'lied',
         text: 'Ein Lied komponieren und vortragen',
         answer: 'projekt',
         correctReason: 'Richtig. Das ist ein Projekt, weil etwas Eigenes entsteht und dafür Ideen, Ausarbeitung, Üben und Präsentation nötig sind.',
         wrongReason: 'Das ist falsch, weil ein Lied zu komponieren und vorzutragen mehrere Schritte braucht: Idee, Gestaltung, Üben und Aufführung. Daher ist es ein Projekt.'
       },
       {
+        id: 'tanzwettbewerb',
         text: 'Die Teilnahme an einem Tanzwettbewerb organisieren: Choreographie entwickeln, Training, Transport & Outfit planen',
         answer: 'projekt',
         correctReason: 'Richtig. Das ist ein Projekt, weil viele Teilaufgaben zusammenkommen und die Teilnahme umfassend geplant werden muss.',
         wrongReason: 'Das ist falsch, weil hier sehr viele Dinge organisiert werden: Choreographie, Training, Transport und Outfit. Das geht deutlich über eine einfache Alltagstätigkeit hinaus und ist ein Projekt.'
       },
       {
+        id: 'fruehlingskonzert',
         text: 'Beim Frühlingskonzert mitspielen',
         answer: 'kein-projekt',
         correctReason: 'Richtig. Das ist meist kein eigenes Projekt, sondern die Teilnahme an einer Veranstaltung.',
@@ -384,15 +324,15 @@
           <div class="item-title">${index + 1}. ${task.text}</div>
           <div class="choices">
             <label class="choice">
-              <input type="radio" name="task-${index}" value="projekt" />
+              <input type="radio" name="task-${task.id}" value="projekt" />
               Projekt
             </label>
             <label class="choice">
-              <input type="radio" name="task-${index}" value="kein-projekt" />
+              <input type="radio" name="task-${task.id}" value="kein-projekt" />
               Kein Projekt
             </label>
           </div>
-          <div class="result" id="result-${index}"></div>
+          <div class="result" id="result-${task.id}"></div>
         `;
         itemsContainer.appendChild(item);
       });
@@ -404,8 +344,8 @@
       let unanswered = 0;
 
       tasks.forEach((task, index) => {
-        const selected = document.querySelector(`input[name="task-${index}"]:checked`);
-        const resultBox = document.getElementById(`result-${index}`);
+        const selected = document.querySelector(`input[name="task-${task.id}"]:checked`);
+        const resultBox = document.getElementById(`result-${task.id}`);
 
         if (!selected) {
           unanswered += 1;
@@ -439,11 +379,10 @@
       }
     }
 
-    function resetQuiz() {
-      document.querySelectorAll('input[type="radio"]').forEach(input => {
-        input.checked = false;
-      });
-
+    /* Setzt nur die Auswertung zurueck, nicht die Antworten. Wird auch nach
+       dem Wiederherstellen aufgerufen: die Antworten sind dann wieder da,
+       die Bewertung soll aber erst auf Klick erscheinen. */
+    function anzeigeZuruecksetzen() {
       document.querySelectorAll('.result').forEach(box => {
         box.className = 'result';
         box.textContent = '';
@@ -455,10 +394,41 @@
       summaryBox.innerHTML = '<strong>Hinweis:</strong> Wähle bei jeder Aussage <em>Projekt</em> oder <em>kein Projekt</em> und prüfe danach deine Ergebnisse.';
     }
 
+    /* Zusammenfassung zum Einfuegen in DiLer. */
+    function ergebnisAlsHtml() {
+      const zeilen = tasks.map((task, index) => {
+        const gewaehlt = document.querySelector(`input[name="task-${task.id}"]:checked`);
+        const antwort = gewaehlt
+          ? (gewaehlt.value === 'projekt' ? 'Projekt' : 'Kein Projekt')
+          : 'nicht beantwortet';
+        const bewertung = !gewaehlt ? '' : (gewaehlt.value === task.answer ? ' (richtig)' : ' (noch nicht richtig)');
+        return `<p>${index + 1}. ${task.text}<br>Meine Antwort: ${antwort}${bewertung}</p>`;
+      }).join('');
+      return `<h2>Projekt oder kein Projekt?</h2>${zeilen}`;
+    }
+
     checkBtn.addEventListener('click', checkAnswers);
-    resetBtn.addEventListener('click', resetQuiz);
+    // Loescht Antworten und gespeicherten Stand - mit Rueckfrage im Seiten-Look.
+    resetBtn.addEventListener('click', () => SLPPersist.zuruecksetzen());
 
     renderTasks();
+  </script>
+
+  <script src="assets/persist.js"></script>
+  <script>
+    // Autosave, Wiederherstellung, Sicherung und Import.
+    // Die Feldnamen kommen aus den festen Kennungen im tasks-Array
+    // (task.id), nicht aus der Position - so bleiben gespeicherte
+    // Antworten auch dann richtig zugeordnet, wenn Aufgaben ergaenzt
+    // oder umsortiert werden.
+    SLPPersist.init({
+      seite: 'was-ist-ein-projekt',
+      bereich: '#itemsContainer',
+      ziel: '#sicherung',
+      nachWiederherstellung: anzeigeZuruecksetzen,
+      klartextQuelle: ergebnisAlsHtml,
+      dateiname: 'Projekt_oder_kein_Projekt'
+    });
   </script>
 </body>
 </html>
