@@ -4,26 +4,198 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projektideen finden · Interaktiver Lernpfad</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
   <style>
-    :root {
-      --bg1:#e0f2fe; --bg2:#fff7ed; --dark:#0f172a; --card:#ffffff; --text:#1f2937;
-      --muted:#64748b; --line:#dbe3ef; --primary:#0e7490; --primary2:#f59e0b;
-      --green:#15803d; --red:#b91c1c; --soft:#f8fafc;
+    /* Farben, Schrift und Abstände: assets/slp-tokens.css (Corporate
+       Design des Schengen-Lyzeums). Hier nur die Regeln dieser Seite. */
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--surface-page);
+      color: var(--text-body);
+      line-height: var(--leading-normal);
     }
-    *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,var(--bg1),#f8fafc 45%,var(--bg2));color:var(--text);line-height:1.5}
-    header{background:var(--dark);color:white;padding:2rem 1rem;text-align:center} header h1{margin:0 0 .5rem;font-size:clamp(1.7rem,4vw,2.5rem)} header p{max-width:920px;margin:.5rem auto 0;color:#cbd5e1;font-size:1.05rem}
-    main{max-width:1120px;margin:0 auto;padding:1.25rem}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,.08);padding:1.25rem;margin-bottom:1.25rem}
-    h2,h3{margin-top:0}.topline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem;align-items:center}.badge{display:inline-block;padding:.3rem .7rem;border-radius:999px;background:#cffafe;color:#155e75;font-size:.9rem;font-weight:800}.small{font-size:.92rem;color:var(--muted)}
-    .hint{background:#eff6ff;border-left:5px solid var(--primary);border-radius:12px;padding:1rem;margin:1rem 0}.tip{background:#fff7ed;border-left:5px solid var(--primary2);border-radius:12px;padding:1rem;margin:1rem 0}
-    .progress-wrap{background:#e2e8f0;border-radius:999px;height:16px;overflow:hidden;margin:.8rem 0 .4rem}.progress-bar{height:100%;width:0%;background:var(--green);transition:width .25s ease}.status{color:var(--muted);font-weight:700}
-    .step{border:1px solid var(--line);background:#fbfdff;border-radius:16px;padding:1rem;margin:1rem 0}.step-header{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.8rem}.step-number{width:2rem;height:2rem;flex:0 0 2rem;border-radius:50%;background:var(--primary2);color:white;display:grid;place-items:center;font-weight:900}
-    label{display:block;font-weight:800;margin:.8rem 0 .35rem} input[type="text"],textarea,select{width:100%;padding:.75rem;border:1px solid #cbd5e1;border-radius:12px;font-size:1rem;background:white} textarea{min-height:95px;resize:vertical}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.75rem}.choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.6rem;margin-top:.6rem}.choice-grid label{display:flex;align-items:center;gap:.55rem;font-weight:600;margin:0;background:white;border:1px solid #e2e8f0;border-radius:12px;padding:.75rem}.choice-grid input{transform:scale(1.12)}
-    .idea-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.75rem;margin-top:.75rem}.idea-card{border:1px solid #e2e8f0;border-radius:14px;padding:1rem;background:#f8fafc}.idea-card button{margin-top:.5rem}
-    .button-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin:1rem 0}button{border:none;border-radius:999px;padding:.85rem 1.15rem;background:var(--primary);color:white;font-weight:800;cursor:pointer;transition:transform .15s ease,background .15s ease}button:hover{background:#155e75;transform:translateY(-1px)}button.secondary{background:#334155}button.secondary:hover{background:#1e293b}button.green{background:var(--green)}button.green:hover{background:#166534}button.orange{background:var(--primary2)}button.orange:hover{background:#d97706}
-    .onepager{background:white;border:1px dashed #94a3b8;border-radius:16px;padding:1rem;margin-top:1rem}.onepager h2{color:var(--primary);border-bottom:2px solid #e2e8f0;padding-bottom:.35rem}.onepager-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem}.onepager-box{border:1px solid #e2e8f0;border-radius:12px;padding:.8rem;background:#f8fafc}
-    footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:.95rem}
-    @media print{body{background:white}header,.intro-card,.steps-card,.button-row,.progress-wrap,.status{display:none}.card{box-shadow:none;border:none;margin:0;padding:0}.onepager{border:none;padding:0}.onepager-grid{display:block}.onepager-box{margin:10px 0}}
+
+    header {
+      background: var(--surface-blue);
+      color: var(--text-on-blue);
+      padding: var(--space-6) var(--space-4);
+      text-align: center;
+    }
+    header h1 {
+      margin: 0 0 var(--space-2);
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+    }
+    header p {
+      max-width: 920px;
+      margin: var(--space-2) auto 0;
+      color: rgba(255,255,255,.9);
+      font-size: var(--text-md);
+    }
+
+    main { max-width: var(--container); margin: 0 auto; padding: var(--space-5) var(--space-4); }
+
+    .card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    h2, h3 { margin-top: 0; color: var(--slp-blue); }
+    h2 { font-size: var(--text-xl); letter-spacing: var(--tracking-tight); }
+    h3 { font-size: var(--text-md); }
+
+    .topline {
+      display: flex; flex-wrap: wrap; justify-content: space-between;
+      gap: var(--space-3); align-items: center;
+    }
+
+    .badge {
+      display: inline-block; padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-pill); background: var(--accent-soft);
+      color: var(--slp-blue); font-size: var(--text-sm); font-weight: 700;
+    }
+
+    .small { font-size: var(--text-sm); color: var(--text-muted); }
+
+    .hint, .tip {
+      display: flex; gap: var(--space-3); align-items: flex-start;
+      border-radius: var(--radius-md); padding: var(--space-4); margin: var(--space-4) 0;
+    }
+    .hint { background: var(--accent-soft); border-left: var(--rule-accent) solid var(--slp-blue); }
+    .tip  { background: var(--accent-2-soft); border-left: var(--rule-accent) solid var(--slp-orange); }
+
+    /* Der Schengen-Stern als Auszeichnung statt eines Icons */
+    .hint::before, .tip::before {
+      content: ""; flex: 0 0 auto; width: 1.15em; height: 1.15em; margin-top: .15em;
+      background: var(--slp-yellow);
+      -webkit-mask: var(--slp-star-mask) center / contain no-repeat;
+              mask: var(--slp-star-mask) center / contain no-repeat;
+    }
+
+    .progress-wrap {
+      background: var(--surface-sunken); border-radius: var(--radius-pill);
+      height: 14px; overflow: hidden; margin: var(--space-3) 0 var(--space-1);
+    }
+    .progress-bar {
+      height: 100%; width: 0%; background: var(--slp-blue);
+      transition: width var(--dur) var(--ease-out);
+    }
+    .status { color: var(--text-muted); font-weight: 700; font-size: var(--text-sm); }
+
+    .step {
+      border: 1px solid var(--border-subtle); background: var(--surface-page);
+      border-radius: var(--radius-md); padding: var(--space-4); margin: var(--space-4) 0;
+    }
+    .step-header { display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-3); }
+    .step-number {
+      width: 2rem; height: 2rem; flex: 0 0 2rem; border-radius: var(--radius-pill);
+      background: var(--slp-orange); color: var(--text-on-orange);
+      display: grid; place-items: center; font-weight: 700;
+    }
+    .step-header p { margin: var(--space-1) 0 0; color: var(--text-muted); }
+
+    label { display: block; font-weight: 700; margin: var(--space-3) 0 var(--space-1); color: var(--text-body); }
+
+    input[type="text"], textarea, select {
+      width: 100%; padding: var(--space-3);
+      border: 1px solid var(--border-default); border-radius: var(--radius-md);
+      font-family: inherit; font-size: var(--text-base);
+      color: var(--text-body); background: var(--surface-card);
+    }
+    input[type="text"]:focus, textarea:focus, select:focus {
+      outline: 3px solid var(--focus-ring); outline-offset: 1px; border-color: var(--slp-blue);
+    }
+    textarea { min-height: 95px; resize: vertical; line-height: var(--leading-normal); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
+
+    .choice-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: var(--space-2); margin-top: var(--space-2);
+    }
+    .choice-grid label {
+      display: flex; align-items: center; gap: var(--space-2); font-weight: 400; margin: 0;
+      background: var(--surface-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: var(--space-3); min-height: 44px;
+    }
+    .choice-grid label:hover { background: var(--accent-soft); }
+    .choice-grid input { transform: scale(1.12); accent-color: var(--slp-blue); }
+
+    .idea-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+    .idea-card {
+      border: 1px solid var(--border-subtle); border-top: 3px solid var(--slp-orange);
+      border-radius: var(--radius-md); padding: var(--space-4); background: var(--surface-page);
+    }
+    .idea-card h3 { margin: var(--space-2) 0; }
+    .idea-card button { margin-top: var(--space-2); }
+
+    /* --- Aktionsbereiche: Abgabe getrennt von der Sicherung --- */
+    .aktionen { margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--border-subtle); }
+    .aktionen__text { margin: 0 0 var(--space-4); color: var(--text-muted); font-size: var(--text-sm); max-width: 70ch; }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin: var(--space-4) 0; }
+
+    button {
+      font: inherit; font-weight: 700; cursor: pointer;
+      border: 1px solid transparent; border-radius: var(--radius-md);
+      padding: .7rem 1.1rem; min-height: 44px;
+      transition: background var(--dur) var(--ease-out),
+                  border-color var(--dur) var(--ease-out),
+                  color var(--dur) var(--ease-out);
+    }
+    button:focus { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:focus:not(:focus-visible) { outline: none; }
+    button:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:active { transform: translateY(1px); }
+
+    button.haupt { background: var(--slp-orange); color: var(--text-on-orange); }
+    button.haupt:hover { background: var(--accent-2-hover); }
+    button.rand { background: var(--surface-card); color: var(--slp-blue); border-color: var(--border-default); }
+    button.rand:hover { background: var(--accent-soft); border-color: var(--slp-blue); }
+    button.still { background: transparent; color: var(--text-muted); border-color: var(--border-default); }
+    button.still:hover { background: var(--surface-sunken); color: var(--text-body); }
+
+    @supports not (gap: 1rem) {
+      .button-row > *, .choice-grid > * { margin: 0 var(--space-3) var(--space-3) 0; }
+    }
+
+    .onepager {
+      background: var(--surface-card); border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md); padding: var(--space-4); margin-top: var(--space-4);
+    }
+    .onepager h2 { color: var(--slp-blue); border-bottom: 1px solid var(--border-subtle); padding-bottom: var(--space-2); }
+    .onepager-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3); }
+    .onepager-box {
+      border: 1px solid var(--border-subtle); border-top: 3px solid var(--slp-blue);
+      border-radius: var(--radius-md); padding: var(--space-3); background: var(--surface-page);
+    }
+
+    footer { text-align: center; padding: var(--space-6) var(--space-4); color: var(--text-muted); font-size: var(--text-sm); }
+
+    @media (max-width: 560px) {
+      main { padding: var(--space-4) var(--space-3); }
+      .card { padding: var(--space-4); }
+      .button-row > button { width: 100%; }
+    }
+
+    @media print {
+      body { background: white; }
+      header, .intro-card, .steps-card, .aktionen, .button-row,
+      .progress-wrap, .status, #sicherung { display: none; }
+      .card { box-shadow: none; border: none; margin: 0; padding: 0; }
+      .onepager { border: none; padding: 0; }
+      .onepager-grid { display: block; }
+      .onepager-box { margin: 10px 0; break-inside: avoid; }
+    }
   </style>
 </head>
 <body>
@@ -41,6 +213,9 @@
     <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
     <div id="progressText" class="status">Fortschritt: 0 von 7 Schritten bearbeitet</div>
   </section>
+
+  <!-- Inhalt wird von assets/persist.js aufgebaut -->
+  <section class="card" id="sicherung"></section>
 
   <section class="card steps-card">
     <h2>7 Schritte zur Projektidee</h2>
@@ -95,7 +270,7 @@
 
     <div class="step">
       <div class="step-header"><div class="step-number">5</div><div><h3>Ideenmaschine</h3><p>Kombiniere Interesse + Stärke + Problem. Klicke auf Beispiele, um sie in deine Sammlung zu übernehmen.</p></div></div>
-      <div class="button-row"><button class="orange" onclick="generateIdeas()">Beispielideen anzeigen</button></div>
+      <div class="button-row"><button type="button" class="haupt" onclick="generateIdeas()">Beispielideen anzeigen</button></div>
       <div id="ideaExamples" class="idea-list"></div>
       <label for="collectedIdeas">Meine gesammelten Projektideen</label><textarea id="collectedIdeas" placeholder="Sammle hier mindestens 3 mögliche Projektideen."></textarea>
     </div>
@@ -113,10 +288,18 @@
       <label for="top3">Idee 3</label><input id="top3" type="text" placeholder="Meine dritte mögliche Projektidee">
     </div>
 
-    <div class="button-row">
-      <button onclick="updateOnepager()">Onepager anzeigen / aktualisieren</button>
-      <button class="green" onclick="downloadWord()">Als Word-Datei speichern</button>
-      <button class="secondary" onclick="window.print()">Onepager drucken</button>
+    <div class="aktionen">
+      <h3 class="slp-rule">Abgabe in DiLer</h3>
+      <p class="aktionen__text">
+        Wenn du deine Ideen gesammelt hast: Erstelle deinen Onepager und gib ihn in DiLer ab –
+        entweder als Word-Datei zum Hochladen oder als Text zum Einfügen.
+      </p>
+      <div class="button-row">
+        <button type="button" class="rand" onclick="updateOnepager()">Onepager anzeigen / aktualisieren</button>
+        <button type="button" class="haupt" onclick="downloadWord()">Als Word-Datei speichern</button>
+        <button type="button" class="rand" onclick="SLPPersist.klartextKopieren()">Text für DiLer kopieren</button>
+        <button type="button" class="still" onclick="window.print()">Onepager drucken</button>
+      </div>
     </div>
   </section>
 
@@ -140,11 +323,15 @@
   ];
   function generateIdeas(){
     const wrap=document.getElementById('ideaExamples');
-    wrap.innerHTML=examples.map((x,i)=>`<div class="idea-card"><span class="badge">Beispiel ${i+1}</span><h3>${x[0]}</h3><p><strong>${x[1]}</strong></p><p>${x[2]}</p><button type="button" onclick="addIdea('${encodeURIComponent(x[0])}')">Idee übernehmen</button></div>`).join('');
+    wrap.innerHTML=examples.map((x,i)=>`<div class="idea-card"><span class="badge">Beispiel ${i+1}</span><h3>${x[0]}</h3><p><strong>${x[1]}</strong></p><p>${x[2]}</p><button type="button" class="rand" onclick="addIdea('${encodeURIComponent(x[0])}')">Idee übernehmen</button></div>`).join('');
   }
   function addIdea(encoded){
     const idea=decodeURIComponent(encoded); const box=document.getElementById('collectedIdeas');
-    box.value = box.value.trim() ? box.value.trim()+"\n- "+idea : "- "+idea; updateProgress();
+    box.value = box.value.trim() ? box.value.trim()+"\n- "+idea : "- "+idea;
+    // Loest den Autosave aus - ohne das Ereignis bliebe die uebernommene
+    // Idee ungespeichert, bis der Schueler zufaellig woanders tippt.
+    box.dispatchEvent(new Event('input', { bubbles: true }));
+    updateProgress();
   }
   function buildOnepagerHtml(){return `
     <h2>Onepager: Projektideen finden</h2>
@@ -165,8 +352,21 @@
     if(getValue('collectedIdeas')!=='—')c++; if(getValue('smallIdeas')!=='—')c++; if(getValue('top1')!=='—'&&getValue('top2')!=='—'&&getValue('top3')!=='—')c++;
     const p=Math.round(c/7*100); document.getElementById('progressBar').style.width=p+'%'; document.getElementById('progressText').textContent=`Fortschritt: ${c} von 7 Schritten bearbeitet`;
   }
-  function downloadWord(){updateOnepager();const content=document.getElementById('onepager').innerHTML;const html=`<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Onepager Projektideen finden</title><style>body{font-family:Arial,Helvetica,sans-serif;color:#1f2937}h1,h2{color:#0e7490}.onepager-box{border:1px solid #cbd5e1;padding:10px;margin:10px 0;border-radius:8px;background:#f8fafc}.onepager-grid{display:block}.small{color:#64748b}</style></head><body>${content}</body></html>`;const blob=new Blob(['\ufeff',html],{type:'application/msword'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='Onepager_Projektideen_finden.doc';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)}
+  function downloadWord(){updateOnepager();const content=document.getElementById('onepager').innerHTML;const html=`<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Onepager Projektideen finden</title><style>body{font-family:Arial,Helvetica,sans-serif;color:#1f2937}h1,h2{color:#00509E}.onepager-box{border:1px solid #cbd5e1;padding:10px;margin:10px 0;border-radius:8px;background:#f8fafc}.onepager-grid{display:block}.small{color:#64748b}</style></head><body>${content}</body></html>`;const blob=new Blob(['\ufeff',html],{type:'application/msword'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='Onepager_Projektideen_finden.doc';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)}
   updateProgress();
+</script>
+
+<script src="assets/persist.js"></script>
+<script>
+  // Autosave, Wiederherstellung, Sicherung und Import.
+  SLPPersist.init({
+    seite: 'projektideen-finden',
+    bereich: '.steps-card',
+    ziel: '#sicherung',
+    nachWiederherstellung: updateProgress,
+    klartextQuelle: buildOnepagerHtml,
+    dateiname: 'Projektideen_finden'
+  });
 </script>
 </body>
 </html>
