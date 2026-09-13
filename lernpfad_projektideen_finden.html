@@ -305,7 +305,14 @@
 
   <section class="card" id="onepagerSection"><div id="onepager" class="onepager"><h2>Onepager: Projektideen finden</h2><p class="small">Klicke auf „Onepager anzeigen / aktualisieren“, um deine Eingaben zusammenzufassen.</p></div></section>
 </main>
-<footer>Open Space · Projektideen finden · Interaktiver Lernpfad Klasse 7</footer>
+<footer>Open Space · Projektideen finden · Interaktiver Lernpfad Klasse 7
+  <!-- Rechtslinks slp-tools.de: statisch, absolut, nicht per JavaScript -->
+  <nav aria-label="Rechtliche Angaben" style="margin-top: 0.5em;">
+    <a href="https://slp-tools.de/impressum.html">Impressum</a> ·
+    <a href="https://slp-tools.de/datenschutz.html">Datenschutz</a> ·
+    <a href="https://slp-tools.de/barrierefreiheit.html">Barrierefreiheit</a>
+  </nav>
+</footer>
 <script>
   document.addEventListener('input', updateProgress); document.addEventListener('change', updateProgress);
   function getValue(id){const e=document.getElementById(id);return e&&e.value.trim()?e.value.trim():'—'}
