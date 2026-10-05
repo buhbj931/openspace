@@ -318,23 +318,172 @@
       padding-bottom: var(--space-2);
     }
 
-    .onepager-grid {
+    .small {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+
+    /* --- Teil A / Teil B, Pflichtfelder --- */
+
+    .part-title {
+      margin: var(--space-6) 0 var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--slp-blue);
+      color: var(--text-on-blue);
+      font-size: var(--text-lg);
+    }
+
+    .part-title.a { margin-top: var(--space-2); }
+
+    .must {
+      background: var(--danger-soft);
+      border-left: var(--rule-accent) solid var(--danger);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
+    }
+
+    .must ul { margin: var(--space-2) 0 0; }
+
+    #missingBox { display: none; }
+
+    .req { color: var(--danger); font-weight: 700; }
+
+    .opt { color: var(--text-muted); font-weight: 400; font-size: var(--text-sm); }
+
+    .step.sb { border-color: var(--blue-100); background: var(--accent-soft); }
+
+    .step.sb .step-number { background: var(--slp-blue); color: var(--text-on-blue); }
+
+    input[type="date"] {
+      width: 100%;
+      padding: var(--space-3);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: var(--text-base);
+      color: var(--text-body);
+      background: var(--surface-card);
+    }
+
+    input[type="date"]:focus {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 1px;
+      border-color: var(--slp-blue);
+    }
+
+    input[type="file"] { font: inherit; font-size: var(--text-sm); }
+
+    input.missing, textarea.missing {
+      border: 2px solid var(--danger);
+      background: var(--danger-soft);
+    }
+
+    textarea.short { min-height: 70px; }
+
+    .bullet-inputs input { margin-bottom: var(--space-2); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0 var(--space-4);
+    }
+
+    .inline-check {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 400;
+      margin: var(--space-3) 0 0;
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      min-height: 44px;
+    }
+
+    .inline-check:hover { background: var(--accent-soft); }
+
+    #productBlock { display: none; }
+
+    /* --- Projektsteckbrief (Aufbau wie die Papiervorlage) --- */
+
+    .sb-title {
+      display: flex;
+      align-items: stretch;
+      margin-bottom: var(--space-3);
+      background: var(--surface-sunken);
+    }
+
+    .sb-title-label {
+      background: var(--slp-blue);
+      color: var(--text-on-blue);
+      font-weight: 700;
+      font-size: var(--text-lg);
+      padding: var(--space-1) var(--space-3);
+    }
+
+    .sb-title-value {
+      padding: var(--space-2) var(--space-3);
+      font-weight: 700;
+      font-size: var(--text-md);
+    }
+
+    .sb-section { margin-bottom: var(--space-3); border: 1px solid var(--border-subtle); }
+
+    .sb-head {
+      background: var(--slp-blue);
+      color: var(--text-on-blue);
+      font-weight: 700;
+      padding: var(--space-1) var(--space-2);
+    }
+
+    .sb-row { display: grid; grid-template-columns: 1fr 1fr; }
+
+    .sb-label {
+      background: var(--accent-soft);
+      color: var(--slp-blue);
+      font-size: var(--text-sm);
+      padding: 0.1rem var(--space-2);
+    }
+
+    .sb-field {
+      background: var(--surface-sunken);
+      padding: var(--space-2) var(--space-3);
+      min-height: 2.6rem;
+    }
+
+    .sb-field ul { margin: 0; padding-left: 1.2rem; }
+
+    .sb-field p { margin: 0 0 var(--space-1); }
+
+    .sb-sign {
+      min-height: 4rem;
+      display: flex;
+      align-items: flex-end;
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+
+    .annex {
+      margin-top: var(--space-5);
+      border-top: 1px dashed var(--border-strong);
+      padding-top: var(--space-4);
+    }
+
+    .annex-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: var(--space-3);
     }
 
-    .onepager-box {
+    .annex-box {
       border: 1px solid var(--border-subtle);
       border-top: 3px solid var(--slp-blue);
       border-radius: var(--radius-md);
       padding: var(--space-3);
       background: var(--surface-page);
-    }
-
-    .small {
-      font-size: var(--text-sm);
-      color: var(--text-muted);
     }
 
     footer {
@@ -348,47 +497,60 @@
       main { padding: var(--space-4) var(--space-3); }
       .card { padding: var(--space-4); }
       .button-row > button { width: 100%; }
+      .sb-row { grid-template-columns: 1fr; }
     }
 
     @media print {
       body { background: white; }
       header, .intro-card, .steps-card, .aktionen, .button-row,
-      .progress-wrap, .status, #sicherung { display: none; }
+      .progress-wrap, .status, #sicherung, #missingBox, footer { display: none; }
       .card { box-shadow: none; border: none; margin: 0; padding: 0; }
       .onepager { border: none; padding: 0; }
-      .onepager-grid { display: block; }
-      .onepager-box { margin: 10px 0; break-inside: avoid; }
+      .sb-section, .sb-title, .sb-title-label, .sb-label, .sb-head, .sb-field {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      .sb-section { break-inside: avoid; }
+      .annex { break-before: page; page-break-before: always; border-top: none; }
+      .annex-grid { display: block; }
+      .annex-box { margin: 10px 0; break-inside: avoid; }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Projektidee entwickeln</h1>
-    <p>Interaktiver Lernpfad für Open Space · Klasse 7 · Schritt für Schritt zur ausgewählten, machbaren und gut erklärbaren Projektidee</p>
+    <p>Interaktiver Lernpfad für Open Space · Klasse 7 · Schritt für Schritt von der Idee zum fertigen Projektsteckbrief</p>
   </header>
 
   <main>
     <section class="card intro-card">
       <div class="topline">
         <span class="badge">Open Space Projekte und Ziele 7</span>
-        <span class="small">Bearbeite die 7 Schritte. Speichere am Ende deinen Onepager als Word-Datei.</span>
+        <span class="small">Bearbeite alle 11 Schritte. Speichere am Ende deinen Projektsteckbrief als Word-Datei.</span>
       </div>
       <h2>So arbeitest du mit diesem Lernpfad</h2>
-      <p>Eine gute Projektidee ist interessant, sinnvoll, umsetzbar und in der Schule möglich. Sie muss nicht perfekt sein. Wichtig ist: Sie ist realistisch und gut planbar.</p>
+      <p>Der Lernpfad hat zwei Teile:</p>
+      <ul>
+        <li><strong>Teil A (Schritt 1–7):</strong> Du prüfst deine Projektidee und klärst dein Ziel.</li>
+        <li><strong>Teil B (Schritt 8–11):</strong> Du schreibst deinen <strong>Projektsteckbrief</strong>. Er beantwortet vier Fragen: <strong>WAS</strong> machst du? <strong>WARUM</strong> machst du es? <strong>WER</strong> ist dabei? <strong>WANN</strong> machst du es?</li>
+      </ul>
       <div class="hint">
         <strong>Merke:</strong> Eine Idee wird oft besser, wenn man sie kleiner macht. Statt „Großes Schulkonzert organisieren“ passt für den Start besser: „Mini-Schulkonzert mit 3 Songs“.
+      </div>
+      <div class="must">
+        <strong>Pflichtfelder:</strong> Alle Felder mit <span class="req">*</span> musst du ausfüllen. Erst dann ist dein Projektsteckbrief vollständig und kann von deinem Coach freigegeben werden.
       </div>
       <div class="progress-wrap" aria-label="Fortschritt">
         <div class="progress-bar" id="progressBar"></div>
       </div>
-      <div id="progressText" class="status">Fortschritt: 0 von 7 Schritten bearbeitet</div>
+      <div id="progressText" class="status">Fortschritt: 0 von 11 Schritten bearbeitet</div>
     </section>
 
     <!-- Inhalt wird von assets/persist.js aufgebaut -->
     <section class="card" id="sicherung"></section>
 
     <section class="card steps-card">
-      <h2>Die 7 Fragen aus dem Lernpfad</h2>
+      <h2 class="part-title a">Teil A · Projektidee prüfen und Ziel klären</h2>
 
       <div class="step" id="step1">
         <div class="step-header">
@@ -398,9 +560,9 @@
             <p>Notiere deine ausgewählte Projektidee und begründe deine Auswahl.</p>
           </div>
         </div>
-        <label for="projectIdea">Meine Projektidee</label>
+        <label for="projectIdea">Meine Projektidee <span class="req">*</span></label>
         <textarea id="projectIdea" placeholder="Zum Beispiel: Wir gestalten eine bemalte Sitzbank für den Schulhof."></textarea>
-        <label for="reason">Warum habe ich diese Idee ausgewählt?</label>
+        <label for="reason">Warum habe ich diese Idee ausgewählt? <span class="req">*</span></label>
         <textarea id="reason" placeholder="Warum ist diese Idee interessant, sinnvoll oder wichtig?"></textarea>
       </div>
 
@@ -452,7 +614,7 @@
         <div class="tip">
           Wenn du viele „Ja“ hast, passt deine Idee gut. Wenn du viele „Vielleicht“ oder „Nein“ hast, überlege: Kannst du die Idee vereinfachen oder verändern?
         </div>
-        <label for="ideaAdjustment">Muss ich meine Idee kleiner oder einfacher machen?</label>
+        <label for="ideaAdjustment">Muss ich meine Idee kleiner oder einfacher machen? <span class="opt">(freiwillig)</span></label>
         <textarea id="ideaAdjustment" placeholder="Schreibe auf, was du verändern könntest."></textarea>
       </div>
 
@@ -464,11 +626,11 @@
             <p>Beantworte die Fragen zu deinem Ziel.</p>
           </div>
         </div>
-        <label for="achieve">Was will ich herstellen oder erreichen?</label>
+        <label for="achieve">Was will ich herstellen oder erreichen? <span class="req">*</span></label>
         <textarea id="achieve" placeholder="Was soll am Ende entstanden sein?"></textarea>
-        <label for="targetGroup">Für wen ist mein Projekt?</label>
+        <label for="targetGroup">Für wen ist mein Projekt? <span class="req">*</span></label>
         <textarea id="targetGroup" placeholder="Zum Beispiel: für unsere Klasse, die Schule, jüngere Schüler, Besucher ..."></textarea>
-        <label for="visibleResult">Was soll am Ende sichtbar sein?</label>
+        <label for="visibleResult">Was soll am Ende sichtbar sein? <span class="req">*</span></label>
         <textarea id="visibleResult" placeholder="Zum Beispiel: Plakat, Aktion, Ausstellung, Produkt, Aufführung, Verbesserung ..."></textarea>
       </div>
 
@@ -487,7 +649,7 @@
           <label><input type="checkbox" name="goalType" value="etwas zeigen oder präsentieren"> etwas zeigen oder präsentieren</label>
           <label><input type="checkbox" name="goalType" value="etwas verbessern"> etwas verbessern</label>
         </div>
-        <label for="preciseGoal">Beschreibe dein Ziel genau</label>
+        <label for="preciseGoal">Beschreibe dein Ziel genau <span class="req">*</span></label>
         <textarea id="preciseGoal" placeholder="Nicht so gut: Ich mache ein Video. Besser: Ich drehe ein 5-minütiges Video über das Schulleben und zeige es beim Gallery Walk."></textarea>
       </div>
 
@@ -544,7 +706,7 @@
         <div class="hint">
           Beispiele: Mitschüler, Lehrkräfte, Eltern, Besucher, Gemeinde.
         </div>
-        <label for="stakeholders">Wer könnte bei deinem Projekt wichtig sein? Warum sind diese Personen oder Gruppen wichtig?</label>
+        <label for="stakeholders">Wer könnte bei deinem Projekt wichtig sein? Warum sind diese Personen oder Gruppen wichtig? <span class="req">*</span></label>
         <textarea id="stakeholders" placeholder="Zum Beispiel: Lehrkräfte, weil wir einen Raum brauchen. Mitschüler, weil sie das Ergebnis nutzen."></textarea>
       </div>
 
@@ -559,29 +721,167 @@
         <div class="hint">
           Beispiele: zu wenig Zeit, fehlendes Material, zu wenig Hilfe.
         </div>
-        <label for="risks">Mögliche Risiken und Probleme</label>
+        <label for="risks">Mögliche Risiken und Probleme <span class="req">*</span></label>
         <textarea id="risks" placeholder="Welche Schwierigkeiten könnten entstehen? Was könnte knapp werden? Wo braucht ihr Hilfe?"></textarea>
+      </div>
+
+      <h2 class="part-title">Teil B · Meinen Projektsteckbrief ausarbeiten</h2>
+      <div class="hint">
+        <span>Jetzt schreibst du deinen <strong>Projektsteckbrief</strong>. Er ist wie ein Ausweis für dein Projekt. Dein Coach (und gegebenenfalls dein Auftraggeber) liest ihn und gibt dein Projekt mit einer Unterschrift frei. Nutze dafür deine Antworten aus Teil A.</span>
+      </div>
+
+      <div class="step sb" id="step8">
+        <div class="step-header">
+          <div class="step-number">8</div>
+          <div>
+            <h3>WAS? – Projekt und Projektinhalt</h3>
+            <p>Beschreibe dein Projekt genau: Wo ist das Problem? Wie willst du es lösen? Was brauchst du dazu?</p>
+          </div>
+        </div>
+
+        <label for="projectTitle">Projekttitel <span class="req">*</span></label>
+        <input type="text" id="projectTitle" placeholder="Kurz und klar, z. B. „Bunte Bank für den Schulhof“">
+
+        <label for="problem">Wo ist das Problem? <span class="req">*</span></label>
+        <textarea id="problem" class="short" placeholder="Was fehlt, was stört oder was könnte besser sein? Z. B.: Auf dem Schulhof gibt es zu wenige Sitzplätze, und die alten Bänke sehen grau und kaputt aus."></textarea>
+
+        <label for="solution">Wie willst du es lösen? <span class="req">*</span></label>
+        <textarea id="solution" class="short" placeholder="Was machst du genau? Z. B.: Wir schleifen eine alte Bank ab, reparieren sie und bemalen sie bunt."></textarea>
+
+        <label for="needs">Was brauchst du dazu? <span class="req">*</span></label>
+        <textarea id="needs" class="short" placeholder="Z. B.: Raum, Werkzeug, Hilfe von Lehrkräften, Erlaubnis der Schulleitung, Zeit im Profilbereich ..."></textarea>
+
+        <label class="inline-check"><input type="checkbox" id="isProduct"> Ich stelle ein <strong>&nbsp;Produkt&nbsp;</strong> her (z. B. etwas bauen, basteln, nähen, programmieren).</label>
+
+        <div id="productBlock">
+          <div class="tip">
+            <span><strong>Produktskizze:</strong> Zeichne dein Produkt auf ein Blatt Papier (mit Maßen und Beschriftung) oder lade ein Foto deiner Skizze hoch. Beschreibe sie hier kurz in Worten.</span>
+          </div>
+          <label for="sketchDesc">Beschreibung meiner Produktskizze <span class="req">*</span></label>
+          <textarea id="sketchDesc" class="short" placeholder="Wie sieht dein Produkt aus? Wie groß ist es? Aus welchen Teilen besteht es?"></textarea>
+          <label for="sketchImg">Foto der Skizze hochladen <span class="opt">(freiwillig, erscheint im Ausdruck – wird nicht mitgespeichert)</span></label>
+          <input type="file" id="sketchImg" accept="image/*">
+          <label for="materials">Welche Materialien brauchst du dafür? <span class="req">*</span></label>
+          <textarea id="materials" class="short" placeholder="Liste alles auf, z. B.: 1 alte Holzbank, Schleifpapier, Holzgrundierung, Outdoor-Farbe in 4 Farben, Pinsel ..."></textarea>
+        </div>
+
+        <label for="toLearn">Was musst du noch recherchieren, lernen oder können, damit du dein Projekt durchführen kannst? <span class="req">*</span></label>
+        <textarea id="toLearn" class="short" placeholder="Z. B.: Welche Farbe hält draußen? Wie benutzt man eine Schleifmaschine sicher? Wer muss das erlauben?"></textarea>
+
+        <label for="currentState">Ist-Stand: Was gibt es schon? Was hast du schon geklärt? <span class="req">*</span></label>
+        <textarea id="currentState" class="short" placeholder="Z. B.: Der Hausmeister hat eine alte Bank für uns. Das Material haben wir noch nicht."></textarea>
+      </div>
+
+      <div class="step sb" id="step9">
+        <div class="step-header">
+          <div class="step-number">9</div>
+          <div>
+            <h3>WARUM? – Ziele, Nutzen und Chancen</h3>
+            <p>Erkläre, was du erreichen willst und warum sich dein Projekt lohnt.</p>
+          </div>
+        </div>
+
+        <label for="goal1">Ziele <span class="req">*</span> <span class="opt">(mindestens 1, höchstens 3)</span></label>
+        <div class="bullet-inputs">
+          <input type="text" id="goal1" placeholder="Ziel 1 – z. B.: Bis zum Gallery Walk steht eine bunt bemalte Bank auf dem Schulhof.">
+          <input type="text" id="goal2" placeholder="Ziel 2 (freiwillig)" aria-label="Ziel 2">
+          <input type="text" id="goal3" placeholder="Ziel 3 (freiwillig)" aria-label="Ziel 3">
+        </div>
+        <button type="button" class="rand" onclick="takeGoalFromStep4()">Ziel aus Schritt 4 übernehmen</button>
+
+        <div class="two-col">
+          <div>
+            <label for="benefit1">Nutzen: Wer hat etwas davon und was? <span class="req">*</span></label>
+            <div class="bullet-inputs">
+              <input type="text" id="benefit1" placeholder="Z. B.: Alle Schüler haben mehr Sitzplätze in der Pause.">
+              <input type="text" id="benefit2" placeholder="(freiwillig)" aria-label="Nutzen 2">
+            </div>
+          </div>
+          <div>
+            <label for="chance1">Chancen: Was kann zusätzlich Gutes entstehen? <span class="req">*</span></label>
+            <div class="bullet-inputs">
+              <input type="text" id="chance1" placeholder="Z. B.: Wir lernen, mit Werkzeug umzugehen.">
+              <input type="text" id="chance2" placeholder="Z. B.: Andere Klassen machen mit weiteren Bänken weiter." aria-label="Chance 2">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step sb" id="step10">
+        <div class="step-header">
+          <div class="step-number">10</div>
+          <div>
+            <h3>WER? – Projektleitung, Auftraggeber und Coach</h3>
+            <p>Wer ist für dein Projekt verantwortlich und wer begleitet dich?</p>
+          </div>
+        </div>
+        <div class="hint">
+          <span>
+            <strong>Projektleitung:</strong> Das bist du (bzw. ihr als Team). <br>
+            <strong>Auftraggeber:</strong> Eine Person oder Gruppe, für die ihr das Projekt macht, z. B. Schulleitung, Hausmeister, Gemeinde, ein Verein. Nicht jedes Projekt hat einen Auftraggeber. <br>
+            <strong>Coach:</strong> Die Lehrkraft, die dich im Projekt begleitet und berät.
+          </span>
+        </div>
+        <div class="two-col">
+          <div>
+            <label for="projectLead">Projektleitung (Name/Namen) <span class="req">*</span></label>
+            <input type="text" id="projectLead" placeholder="Vor- und Nachname, ggf. Teammitglieder">
+          </div>
+          <div>
+            <label for="client">Gegebenenfalls Auftraggeber <span class="opt">(falls vorhanden)</span></label>
+            <input type="text" id="client" placeholder="Z. B.: Schulleitung, Hausmeister, Gemeinde Perl ...">
+          </div>
+          <div>
+            <label for="coach">Coach <span class="req">*</span></label>
+            <input type="text" id="coach" placeholder="Name der begleitenden Lehrkraft">
+          </div>
+        </div>
+      </div>
+
+      <div class="step sb" id="step11">
+        <div class="step-header">
+          <div class="step-number">11</div>
+          <div>
+            <h3>WANN? – Start und Ende</h3>
+            <p>Lege fest, wann dein Projekt beginnt und wann es fertig sein soll.</p>
+          </div>
+        </div>
+        <div class="tip">Denke an deine Antwort aus Schritt 2: Das Projekt muss in ca. 5 Monaten zu schaffen sein.</div>
+        <div class="two-col">
+          <div>
+            <label for="startDate">Start <span class="req">*</span></label>
+            <input type="date" id="startDate">
+          </div>
+          <div>
+            <label for="endDate">Ende <span class="req">*</span></label>
+            <input type="date" id="endDate">
+          </div>
+        </div>
       </div>
 
       <div class="aktionen">
         <h3 class="slp-rule">Abgabe in DiLer</h3>
         <p class="aktionen__text">
-          Wenn du mit den sieben Schritten fertig bist: Erstelle deinen Onepager und gib ihn
+          Wenn du mit allen elf Schritten fertig bist: Erstelle deinen Projektsteckbrief und gib ihn
           in DiLer ab – entweder als Word-Datei zum Hochladen oder als Text zum Einfügen.
         </p>
+        <div id="missingBox" class="must">
+          <strong>Dein Projektsteckbrief ist noch nicht vollständig.</strong> Es fehlt noch:
+          <ul id="missingList"></ul>
+        </div>
         <div class="button-row">
-          <button type="button" class="rand" onclick="updateOnepager()">Onepager anzeigen / aktualisieren</button>
+          <button type="button" class="rand" onclick="updateSteckbrief(true)">Projektsteckbrief anzeigen / prüfen</button>
           <button type="button" class="haupt" onclick="downloadWord()">Als Word-Datei speichern</button>
           <button type="button" class="rand" onclick="SLPPersist.klartextKopieren()">Text für DiLer kopieren</button>
-          <button type="button" class="still" onclick="window.print()">Onepager drucken</button>
+          <button type="button" class="still" onclick="window.print()">Projektsteckbrief drucken</button>
         </div>
       </div>
     </section>
 
-    <section class="card" id="onepagerSection">
-      <div id="onepager" class="onepager">
-        <h2>Onepager: Meine Projektidee</h2>
-        <p class="small">Klicke auf „Onepager anzeigen / aktualisieren“, um deine Eingaben zusammenzufassen.</p>
+    <section class="card" id="steckbriefSection">
+      <div id="steckbrief" class="onepager">
+        <h2>Mein Projektsteckbrief</h2>
+        <p class="small">Klicke auf „Projektsteckbrief anzeigen / prüfen“, um deine Eingaben zusammenzufassen.</p>
       </div>
     </section>
   </main>
@@ -597,21 +897,62 @@
   </footer>
 
   <script>
-    const fieldIds = [
-      "projectIdea", "reason", "ideaAdjustment", "achieve", "targetGroup", "visibleResult", "preciseGoal", "stakeholders", "risks"
-    ];
+    let sketchDataUrl = "";
 
-    const radioGroups = [
-      "ideaCheck1", "ideaCheck2", "ideaCheck3", "ideaCheck4", "ideaCheck5", "goalCheck1", "goalCheck2", "goalCheck3", "goalCheck4"
+    // Pflichtfelder: [id, Bezeichnung, Schritt]
+    const requiredFields = [
+      ["projectIdea", "Meine Projektidee", 1],
+      ["reason", "Begründung der Idee", 1],
+      ["achieve", "Was will ich herstellen oder erreichen?", 3],
+      ["targetGroup", "Für wen ist mein Projekt?", 3],
+      ["visibleResult", "Was soll am Ende sichtbar sein?", 3],
+      ["preciseGoal", "Genaues Ziel", 4],
+      ["stakeholders", "Stakeholder", 6],
+      ["risks", "Risiken", 7],
+      ["projectTitle", "WAS: Projekttitel", 8],
+      ["problem", "WAS: Wo ist das Problem?", 8],
+      ["solution", "WAS: Wie willst du es lösen?", 8],
+      ["needs", "WAS: Was brauchst du dazu?", 8],
+      ["toLearn", "WAS: Was musst du noch recherchieren/lernen/können?", 8],
+      ["currentState", "WAS: Ist-Stand", 8],
+      ["goal1", "WARUM: mindestens ein Ziel", 9],
+      ["benefit1", "WARUM: Nutzen", 9],
+      ["chance1", "WARUM: Chancen", 9],
+      ["projectLead", "WER: Projektleitung", 10],
+      ["coach", "WER: Coach", 10],
+      ["startDate", "WANN: Start", 11],
+      ["endDate", "WANN: Ende", 11]
+    ];
+    const productFields = [
+      ["sketchDesc", "WAS: Beschreibung der Produktskizze", 8],
+      ["materials", "WAS: Benötigte Materialien", 8]
     ];
 
     document.addEventListener("input", updateProgress);
     document.addEventListener("change", updateProgress);
 
+    document.getElementById("isProduct").addEventListener("change", toggleProductBlock);
+
+    document.getElementById("sketchImg").addEventListener("change", function () {
+      const file = this.files && this.files[0];
+      if (!file) { sketchDataUrl = ""; return; }
+      const reader = new FileReader();
+      reader.onload = e => { sketchDataUrl = e.target.result; };
+      reader.readAsDataURL(file);
+    });
+
+    function toggleProductBlock() {
+      document.getElementById("productBlock").style.display =
+        document.getElementById("isProduct").checked ? "block" : "none";
+      updateProgress();
+    }
+
     function getValue(id) {
       const element = document.getElementById(id);
       return element && element.value.trim() ? element.value.trim() : "—";
     }
+
+    function filled(id) { return getValue(id) !== "—"; }
 
     function getRadioValue(name) {
       const selected = document.querySelector(`input[name="${name}"]:checked`);
@@ -633,124 +974,314 @@
         .replace(/\n/g, "<br>");
     }
 
+    function formatDate(id) {
+      const v = document.getElementById(id).value;
+      if (!v) return "—";
+      const [y, m, d] = v.split("-");
+      return `${d}.${m}.${y}`;
+    }
+
+    function bulletList(ids) {
+      const items = ids.map(getValue).filter(v => v !== "—");
+      if (!items.length) return "—";
+      return "<ul>" + items.map(v => `<li>${escapeHtml(v)}</li>`).join("") + "</ul>";
+    }
+
+    function takeGoalFromStep4() {
+      const g = document.getElementById("preciseGoal").value.trim();
+      if (!g) return;
+      const target = ["goal1", "goal2", "goal3"].map(id => document.getElementById(id)).find(el => !el.value.trim());
+      if (!target) return;
+      target.value = g;
+      // input-Ereignis, damit Fortschritt und Autosave mitbekommen, dass sich etwas geändert hat
+      target.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
     function checkRow(label, groupName) {
       return `<tr><td>${label}</td><td>${escapeHtml(getRadioValue(groupName))}</td></tr>`;
     }
 
-    function buildOnepagerHtml() {
+    function activeRequired() {
+      return document.getElementById("isProduct").checked ? requiredFields.concat(productFields) : requiredFields;
+    }
+
+    function stepDone(n) {
+      switch (n) {
+        case 1: return filled("projectIdea") && filled("reason");
+        case 2: return ["ideaCheck1", "ideaCheck2", "ideaCheck3", "ideaCheck4", "ideaCheck5"].every(x => getRadioValue(x) !== "—");
+        case 3: return filled("achieve") && filled("targetGroup") && filled("visibleResult");
+        case 4: return getCheckedValues("goalType") !== "—" && filled("preciseGoal");
+        case 5: return ["goalCheck1", "goalCheck2", "goalCheck3", "goalCheck4"].every(x => getRadioValue(x) !== "—");
+        case 6: return filled("stakeholders");
+        case 7: return filled("risks");
+        default: return activeRequired().filter(f => f[2] === n).every(f => filled(f[0]));
+      }
+    }
+
+    function getMissing() {
+      const missing = activeRequired().filter(f => !filled(f[0])).map(f => `Schritt ${f[2]}: ${f[1]}`);
+      if (!stepDone(2)) missing.push("Schritt 2: alle Prüffragen ankreuzen");
+      if (getCheckedValues("goalType") === "—") missing.push("Schritt 4: mindestens ein Feld ankreuzen");
+      if (!stepDone(5)) missing.push("Schritt 5: alle Prüffragen ankreuzen");
+      const s = document.getElementById("startDate").value, e = document.getElementById("endDate").value;
+      if (s && e && e < s) missing.push("Schritt 11: Das Ende liegt vor dem Start");
+      return missing.sort((a, b) => parseInt(a.split(" ")[1]) - parseInt(b.split(" ")[1]));
+    }
+
+    function markMissing(show) {
+      activeRequired().forEach(f => {
+        const el = document.getElementById(f[0]);
+        if (el) el.classList.toggle("missing", show && !filled(f[0]));
+      });
+    }
+
+    // fuerText: für „Text für DiLer kopieren“ – dann kein eingebettetes Foto
+    function buildSteckbriefHtml(fuerText) {
+      const isProduct = document.getElementById("isProduct").checked;
+      let sketchPart = `<p class="small">(Skizze auf Papier liegt bei)</p>`;
+      if (sketchDataUrl) {
+        sketchPart = fuerText
+          ? `<p class="small">(Foto der Skizze im Word-Dokument)</p>`
+          : `<p><img src="${sketchDataUrl}" alt="Produktskizze" style="max-width:100%;max-height:260px;border:1px solid #CBCED4;"></p>`;
+      }
+      const productPart = isProduct ? `
+            <p><strong>Produktskizze:</strong> ${escapeHtml(getValue("sketchDesc"))}</p>
+            ${sketchPart}
+            <p><strong>Materialien:</strong> ${escapeHtml(getValue("materials"))}</p>` : "";
+
       return `
-        <h2>Onepager: Meine Projektidee</h2>
-        <p><strong>Name:</strong> ___________________________ &nbsp;&nbsp; <strong>Datum:</strong> ___________________________</p>
+        <h2>Mein Projektsteckbrief</h2>
+        <div class="sb-title">
+          <div class="sb-title-label">Projekt</div>
+          <div class="sb-title-value">${escapeHtml(getValue("projectTitle"))}</div>
+        </div>
 
-        <div class="onepager-grid">
-          <div class="onepager-box">
-            <h3>1. Projektidee</h3>
-            <p><strong>Meine Projektidee:</strong><br>${escapeHtml(getValue("projectIdea"))}</p>
-            <p><strong>Warum habe ich diese Idee ausgewählt?</strong><br>${escapeHtml(getValue("reason"))}</p>
+        <div class="sb-section">
+          <div class="sb-head">WAS</div>
+          <div class="sb-row">
+            <div class="sb-label">Projektinhalt</div>
+            <div class="sb-label">Ist-Stand</div>
           </div>
-
-          <div class="onepager-box">
-            <h3>2. Machbarkeit der Idee</h3>
-            <table class="check-table">
-              ${checkRow("In der Schule umsetzbar", "ideaCheck1")}
-              ${checkRow("In 5 Monaten schaffbar", "ideaCheck2")}
-              ${checkRow("Genug Personen", "ideaCheck3")}
-              ${checkRow("Material beschaffbar", "ideaCheck4")}
-              ${checkRow("Andere verstehen die Idee", "ideaCheck5")}
-            </table>
-            <p><strong>Vereinfachung / Veränderung:</strong><br>${escapeHtml(getValue("ideaAdjustment"))}</p>
+          <div class="sb-row">
+            <div class="sb-field">
+              <p><strong>Problem:</strong> ${escapeHtml(getValue("problem"))}</p>
+              <p><strong>Lösung:</strong> ${escapeHtml(getValue("solution"))}</p>
+              <p><strong>Was ich dazu brauche:</strong> ${escapeHtml(getValue("needs"))}</p>
+              ${productPart}
+              <p><strong>Was ich noch recherchieren/lernen/können muss:</strong> ${escapeHtml(getValue("toLearn"))}</p>
+            </div>
+            <div class="sb-field">${escapeHtml(getValue("currentState"))}</div>
           </div>
+        </div>
 
-          <div class="onepager-box">
-            <h3>3. Projektziel</h3>
-            <p><strong>Was will ich herstellen oder erreichen?</strong><br>${escapeHtml(getValue("achieve"))}</p>
-            <p><strong>Für wen ist mein Projekt?</strong><br>${escapeHtml(getValue("targetGroup"))}</p>
-            <p><strong>Was soll am Ende sichtbar sein?</strong><br>${escapeHtml(getValue("visibleResult"))}</p>
+        <div class="sb-section">
+          <div class="sb-head">WARUM</div>
+          <div class="sb-row">
+            <div class="sb-label">Ziele</div>
+            <div class="sb-label">Nutzen</div>
           </div>
-
-          <div class="onepager-box">
-            <h3>4. Ziel genauer formuliert</h3>
-            <p><strong>Mein Projekt soll am Ende:</strong><br>${escapeHtml(getCheckedValues("goalType"))}</p>
-            <p><strong>Genaues Ziel:</strong><br>${escapeHtml(getValue("preciseGoal"))}</p>
+          <div class="sb-row">
+            <div class="sb-field">${bulletList(["goal1", "goal2", "goal3"])}</div>
+            <div class="sb-field">${bulletList(["benefit1", "benefit2"])}</div>
           </div>
-
-          <div class="onepager-box">
-            <h3>5. Zielprüfung</h3>
-            <table class="check-table">
-              ${checkRow("Ziel klar formuliert", "goalCheck1")}
-              ${checkRow("Andere verstehen mein Ziel", "goalCheck2")}
-              ${checkRow("Ziel erreichbar", "goalCheck3")}
-              ${checkRow("Ziel passt zur Projektidee", "goalCheck4")}
-            </table>
+          <div class="sb-row">
+            <div class="sb-label"></div>
+            <div class="sb-label">Chancen</div>
           </div>
-
-          <div class="onepager-box">
-            <h3>6. Stakeholder</h3>
-            <p><strong>Wichtige Personen oder Gruppen und warum:</strong><br>${escapeHtml(getValue("stakeholders"))}</p>
+          <div class="sb-row">
+            <div class="sb-field"></div>
+            <div class="sb-field">${bulletList(["chance1", "chance2"])}</div>
           </div>
+        </div>
 
-          <div class="onepager-box">
-            <h3>7. Risiken</h3>
-            <p><strong>Mögliche Risiken und Probleme:</strong><br>${escapeHtml(getValue("risks"))}</p>
+        <div class="sb-section">
+          <div class="sb-head">WER</div>
+          <div class="sb-row">
+            <div class="sb-label">Projektleitung</div>
+            <div class="sb-label">Gegebenenfalls Auftraggeber</div>
+          </div>
+          <div class="sb-row">
+            <div class="sb-field">${escapeHtml(getValue("projectLead"))}</div>
+            <div class="sb-field">${filled("client") ? escapeHtml(getValue("client")) : "– kein Auftraggeber –"}</div>
+          </div>
+          <div class="sb-row">
+            <div class="sb-label"></div>
+            <div class="sb-label">Coach</div>
+          </div>
+          <div class="sb-row">
+            <div class="sb-field"></div>
+            <div class="sb-field">${escapeHtml(getValue("coach"))}</div>
+          </div>
+        </div>
+
+        <div class="sb-section">
+          <div class="sb-head">WANN</div>
+          <div class="sb-row">
+            <div class="sb-label">Start</div>
+            <div class="sb-label">Ende</div>
+          </div>
+          <div class="sb-row">
+            <div class="sb-field">${formatDate("startDate")}</div>
+            <div class="sb-field">${formatDate("endDate")}</div>
+          </div>
+        </div>
+
+        <div class="sb-section">
+          <div class="sb-head">Freigabe</div>
+          <div class="sb-row">
+            <div class="sb-field sb-sign">Unterschrift Auftraggeber / Coach</div>
+            <div class="sb-field sb-sign">Unterschrift Projektleiter</div>
+          </div>
+        </div>
+
+        <div class="annex">
+          <h2>Anhang: Ideenprüfung (Teil A)</h2>
+          <div class="annex-grid">
+            <div class="annex-box">
+              <h3>1. Projektidee</h3>
+              <p><strong>Idee:</strong><br>${escapeHtml(getValue("projectIdea"))}</p>
+              <p><strong>Begründung:</strong><br>${escapeHtml(getValue("reason"))}</p>
+            </div>
+            <div class="annex-box">
+              <h3>2. Machbarkeit</h3>
+              <table class="check-table">
+                ${checkRow("In der Schule umsetzbar", "ideaCheck1")}
+                ${checkRow("In 5 Monaten schaffbar", "ideaCheck2")}
+                ${checkRow("Genug Personen", "ideaCheck3")}
+                ${checkRow("Material beschaffbar", "ideaCheck4")}
+                ${checkRow("Andere verstehen die Idee", "ideaCheck5")}
+              </table>
+              <p><strong>Vereinfachung / Veränderung:</strong><br>${escapeHtml(getValue("ideaAdjustment"))}</p>
+            </div>
+            <div class="annex-box">
+              <h3>3./4. Projektziel</h3>
+              <p><strong>Herstellen / erreichen:</strong><br>${escapeHtml(getValue("achieve"))}</p>
+              <p><strong>Zielgruppe:</strong><br>${escapeHtml(getValue("targetGroup"))}</p>
+              <p><strong>Sichtbares Ergebnis:</strong><br>${escapeHtml(getValue("visibleResult"))}</p>
+              <p><strong>Projekt soll:</strong> ${escapeHtml(getCheckedValues("goalType"))}</p>
+              <p><strong>Genaues Ziel:</strong><br>${escapeHtml(getValue("preciseGoal"))}</p>
+            </div>
+            <div class="annex-box">
+              <h3>5. Zielprüfung</h3>
+              <table class="check-table">
+                ${checkRow("Ziel klar formuliert", "goalCheck1")}
+                ${checkRow("Andere verstehen mein Ziel", "goalCheck2")}
+                ${checkRow("Ziel erreichbar", "goalCheck3")}
+                ${checkRow("Ziel passt zur Projektidee", "goalCheck4")}
+              </table>
+            </div>
+            <div class="annex-box">
+              <h3>6. Stakeholder</h3>
+              <p>${escapeHtml(getValue("stakeholders"))}</p>
+            </div>
+            <div class="annex-box">
+              <h3>7. Risiken</h3>
+              <p>${escapeHtml(getValue("risks"))}</p>
+            </div>
           </div>
         </div>
       `;
     }
 
-    function updateOnepager() {
-      document.getElementById("onepager").innerHTML = buildOnepagerHtml();
+    function updateSteckbrief(showMissing) {
+      document.getElementById("steckbrief").innerHTML = buildSteckbriefHtml();
+      const missing = getMissing();
+      const box = document.getElementById("missingBox");
+      if (showMissing && missing.length) {
+        document.getElementById("missingList").innerHTML = missing.map(m => `<li>${escapeHtml(m)}</li>`).join("");
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";
+      }
+      markMissing(showMissing);
       updateProgress();
     }
 
     function updateProgress() {
       let completed = 0;
-
-      if (getValue("projectIdea") !== "—" && getValue("reason") !== "—") completed++;
-      if (["ideaCheck1", "ideaCheck2", "ideaCheck3", "ideaCheck4", "ideaCheck5"].every(name => getRadioValue(name) !== "—")) completed++;
-      if (getValue("achieve") !== "—" && getValue("targetGroup") !== "—" && getValue("visibleResult") !== "—") completed++;
-      if (getCheckedValues("goalType") !== "—" && getValue("preciseGoal") !== "—") completed++;
-      if (["goalCheck1", "goalCheck2", "goalCheck3", "goalCheck4"].every(name => getRadioValue(name) !== "—")) completed++;
-      if (getValue("stakeholders") !== "—") completed++;
-      if (getValue("risks") !== "—") completed++;
-
-      const percent = Math.round((completed / 7) * 100);
+      for (let n = 1; n <= 11; n++) if (stepDone(n)) completed++;
+      const percent = Math.round((completed / 11) * 100);
       document.getElementById("progressBar").style.width = `${percent}%`;
-      document.getElementById("progressText").textContent = `Fortschritt: ${completed} von 7 Schritten bearbeitet`;
+      document.getElementById("progressText").textContent = `Fortschritt: ${completed} von 11 Schritten bearbeitet`;
+      document.querySelectorAll(".missing").forEach(el => { if (el.value.trim()) el.classList.remove("missing"); });
     }
 
     function downloadWord() {
-      updateOnepager();
-      const onepager = document.getElementById("onepager").innerHTML;
+      updateSteckbrief(true);
+      if (getMissing().length) {
+        document.getElementById("missingBox").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      const content = document.getElementById("steckbrief").innerHTML;
       const html = `
         <!DOCTYPE html>
         <html lang="de">
         <head>
           <meta charset="UTF-8">
-          <title>Onepager Projektidee</title>
+          <title>Projektsteckbrief</title>
           <style>
-            body { font-family: Arial, Helvetica, sans-serif; color: #1f2937; }
+            body { font-family: Calibri, Arial, Helvetica, sans-serif; color: #333333; font-size: 11pt; }
+            .sb-title-label { background: #00509E; color: #ffffff; font-weight: bold; font-size: 18pt; padding: 3px 8px; }
+            .sb-title-value { background: #F0F1F3; font-weight: bold; font-size: 14pt; padding: 4px 8px; }
+            .sb-section { margin: 10px 0; }
+            .sb-head { background: #00509E; color: #ffffff; font-weight: bold; font-size: 13pt; padding: 2px 6px; }
+            table.sb { width: 100%; border-collapse: collapse; }
+            table.sb td { width: 50%; vertical-align: top; padding: 4px 6px; }
+            td.lab { background: #EDF6FF; color: #00509E; font-size: 9pt; padding: 1px 6px; }
+            td.fld { background: #F0F1F3; }
+            td.sign { background: #F0F1F3; height: 50px; vertical-align: bottom; font-size: 9pt; }
+            ul { margin: 0; padding-left: 18px; }
+            p { margin: 0 0 4px; }
             h1, h2 { color: #00509E; }
-            h3 { color: #1f2937; margin-bottom: 6px; }
-            .onepager-grid { display: block; }
-            .onepager-box { border: 1px solid #cbd5e1; padding: 10px; margin: 10px 0; border-radius: 8px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 6px; }
-            td, th { border: 1px solid #cbd5e1; padding: 6px; text-align: left; }
-            .small { color: #64748b; }
+            .annex-box { border: 1px solid #CBCED4; padding: 8px; margin: 8px 0; }
+            .check-table { width: 100%; border-collapse: collapse; }
+            .check-table td { border: 1px solid #CBCED4; padding: 4px; }
+            .small { color: #5F5F5F; }
           </style>
         </head>
-        <body>${onepager}</body>
+        <body>${toWordTables(content)}</body>
         </html>
       `;
 
-      const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+      const blob = new Blob(["﻿", html], { type: "application/msword" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "Onepager_Projektidee.doc";
+      link.download = "Projektsteckbrief.doc";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+    }
+
+    // Word versteht kein CSS-Grid: Steckbrief-Zeilen in Tabellen umwandeln
+    function toWordTables(content) {
+      const wrap = document.createElement("div");
+      wrap.innerHTML = content;
+      const title = wrap.querySelector(".sb-title");
+      if (title) {
+        const t = document.createElement("table");
+        t.className = "sb";
+        t.innerHTML = `<tr><td class="sb-title-label" style="width:20%">Projekt</td><td class="sb-title-value">${title.querySelector(".sb-title-value").innerHTML}</td></tr>`;
+        title.replaceWith(t);
+      }
+      wrap.querySelectorAll(".sb-section").forEach(sec => {
+        const rows = Array.from(sec.querySelectorAll(".sb-row"));
+        const table = document.createElement("table");
+        table.className = "sb";
+        rows.forEach(r => {
+          const tr = document.createElement("tr");
+          Array.from(r.children).forEach(cell => {
+            const td = document.createElement("td");
+            td.className = cell.classList.contains("sb-label") ? "lab" : (cell.classList.contains("sb-sign") ? "sign" : "fld");
+            td.innerHTML = cell.innerHTML;
+            tr.appendChild(td);
+          });
+          table.appendChild(tr);
+          r.remove();
+        });
+        sec.appendChild(table);
+      });
+      return wrap.innerHTML;
     }
 
     updateProgress();
@@ -759,14 +1290,15 @@
   <script src="assets/persist.js"></script>
   <script>
     // Autosave, Wiederherstellung, Sicherung und Import.
-    // Die Feldschluessel kommen aus id bzw. name - siehe fieldIds und
-    // radioGroups oben, die genau diese Felder benennen.
+    // Die Feldschluessel kommen aus id bzw. name der Felder in
+    // .steps-card - diese Kennungen nie nachtraeglich umbenennen.
+    // Das Foto der Produktskizze (Datei-Feld) wird bewusst nicht gespeichert.
     SLPPersist.init({
       seite: 'projektidee',
       bereich: '.steps-card',
       ziel: '#sicherung',
-      nachWiederherstellung: updateProgress,
-      klartextQuelle: buildOnepagerHtml,
+      nachWiederherstellung: toggleProductBlock,
+      klartextQuelle: function () { return buildSteckbriefHtml(true); },
       dateiname: 'Projektidee'
     });
   </script>
