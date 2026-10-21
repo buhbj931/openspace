@@ -500,6 +500,11 @@
       .sb-row { grid-template-columns: 1fr; }
     }
 
+    /* PDF-Export: Layout wie im Ausdruck, unabhängig von der Bildschirmbreite */
+    .pdf-export .sb-row { grid-template-columns: 1fr 1fr; }
+    .pdf-export .annex-grid { display: block; }
+    .pdf-export .annex-box { margin: 10px 0; }
+
     @media print {
       body { background: white; }
       header, .intro-card, .steps-card, .aktionen, .button-row,
@@ -526,7 +531,7 @@
     <section class="card intro-card">
       <div class="topline">
         <span class="badge">Open Space Projekte und Ziele 7</span>
-        <span class="small">Bearbeite alle 11 Schritte. Speichere am Ende deinen Projektsteckbrief als Word-Datei.</span>
+        <span class="small">Bearbeite alle 11 Schritte. Speichere am Ende deinen Projektsteckbrief als PDF.</span>
       </div>
       <h2>So arbeitest du mit diesem Lernpfad</h2>
       <p>Der Lernpfad hat zwei Teile:</p>
@@ -863,7 +868,7 @@
         <h3 class="slp-rule">Abgabe in DiLer</h3>
         <p class="aktionen__text">
           Wenn du mit allen elf Schritten fertig bist: Erstelle deinen Projektsteckbrief und gib ihn
-          in DiLer ab – entweder als Word-Datei zum Hochladen oder als Text zum Einfügen.
+          in DiLer ab – entweder als PDF zum Hochladen oder als Text zum Einfügen.
         </p>
         <div id="missingBox" class="must">
           <strong>Dein Projektsteckbrief ist noch nicht vollständig.</strong> Es fehlt noch:
@@ -871,7 +876,7 @@
         </div>
         <div class="button-row">
           <button type="button" class="rand" onclick="updateSteckbrief(true)">Projektsteckbrief anzeigen / prüfen</button>
-          <button type="button" class="haupt" onclick="downloadWord()">Als Word-Datei speichern</button>
+          <button type="button" class="haupt" id="pdfButton" onclick="downloadPdf()">Als PDF speichern</button>
           <button type="button" class="rand" onclick="SLPPersist.klartextKopieren()">Text für DiLer kopieren</button>
           <button type="button" class="still" onclick="window.print()">Projektsteckbrief drucken</button>
         </div>
@@ -1041,7 +1046,7 @@
       let sketchPart = `<p class="small">(Skizze auf Papier liegt bei)</p>`;
       if (sketchDataUrl) {
         sketchPart = fuerText
-          ? `<p class="small">(Foto der Skizze im Word-Dokument)</p>`
+          ? `<p class="small">(Foto der Skizze im PDF)</p>`
           : `<p><img src="${sketchDataUrl}" alt="Produktskizze" style="max-width:100%;max-height:260px;border:1px solid #CBCED4;"></p>`;
       }
       const productPart = isProduct ? `
@@ -1206,82 +1211,56 @@
       document.querySelectorAll(".missing").forEach(el => { if (el.value.trim()) el.classList.remove("missing"); });
     }
 
-    function downloadWord() {
+    // PDF entsteht im Browser (html2pdf.js liegt lokal in assets/, kein CDN).
+    // Die Bibliothek ist groß und wird deshalb erst beim ersten Klick geladen.
+    let html2pdfLaden = null;
+    function ladeHtml2pdf() {
+      if (window.html2pdf) return Promise.resolve();
+      if (!html2pdfLaden) {
+        html2pdfLaden = new Promise((resolve, reject) => {
+          const s = document.createElement("script");
+          s.src = "assets/html2pdf.bundle.min.js";
+          s.onload = resolve;
+          s.onerror = () => { html2pdfLaden = null; reject(); };
+          document.head.appendChild(s);
+        });
+      }
+      return html2pdfLaden;
+    }
+
+    async function downloadPdf() {
       updateSteckbrief(true);
       if (getMissing().length) {
         document.getElementById("missingBox").scrollIntoView({ behavior: "smooth", block: "center" });
       }
-      const content = document.getElementById("steckbrief").innerHTML;
-      const html = `
-        <!DOCTYPE html>
-        <html lang="de">
-        <head>
-          <meta charset="UTF-8">
-          <title>Projektsteckbrief</title>
-          <style>
-            body { font-family: Calibri, Arial, Helvetica, sans-serif; color: #333333; font-size: 11pt; }
-            .sb-title-label { background: #00509E; color: #ffffff; font-weight: bold; font-size: 18pt; padding: 3px 8px; }
-            .sb-title-value { background: #F0F1F3; font-weight: bold; font-size: 14pt; padding: 4px 8px; }
-            .sb-section { margin: 10px 0; }
-            .sb-head { background: #00509E; color: #ffffff; font-weight: bold; font-size: 13pt; padding: 2px 6px; }
-            table.sb { width: 100%; border-collapse: collapse; }
-            table.sb td { width: 50%; vertical-align: top; padding: 4px 6px; }
-            td.lab { background: #EDF6FF; color: #00509E; font-size: 9pt; padding: 1px 6px; }
-            td.fld { background: #F0F1F3; }
-            td.sign { background: #F0F1F3; height: 50px; vertical-align: bottom; font-size: 9pt; }
-            ul { margin: 0; padding-left: 18px; }
-            p { margin: 0 0 4px; }
-            h1, h2 { color: #00509E; }
-            .annex-box { border: 1px solid #CBCED4; padding: 8px; margin: 8px 0; }
-            .check-table { width: 100%; border-collapse: collapse; }
-            .check-table td { border: 1px solid #CBCED4; padding: 4px; }
-            .small { color: #5F5F5F; }
-          </style>
-        </head>
-        <body>${toWordTables(content)}</body>
-        </html>
-      `;
-
-      const blob = new Blob(["﻿", html], { type: "application/msword" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "Projektsteckbrief.doc";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    }
-
-    // Word versteht kein CSS-Grid: Steckbrief-Zeilen in Tabellen umwandeln
-    function toWordTables(content) {
-      const wrap = document.createElement("div");
-      wrap.innerHTML = content;
-      const title = wrap.querySelector(".sb-title");
-      if (title) {
-        const t = document.createElement("table");
-        t.className = "sb";
-        t.innerHTML = `<tr><td class="sb-title-label" style="width:20%">Projekt</td><td class="sb-title-value">${title.querySelector(".sb-title-value").innerHTML}</td></tr>`;
-        title.replaceWith(t);
+      const button = document.getElementById("pdfButton");
+      const label = button.textContent;
+      button.disabled = true;
+      button.textContent = "PDF wird erstellt …";
+      try {
+        await ladeHtml2pdf();
+        // Die Breite gibt html2pdf vor (A4 abzüglich Rand); .pdf-export hält
+        // auch auf dem Handy das zweispaltige Layout
+        const quelle = document.createElement("div");
+        quelle.className = "onepager pdf-export";
+        quelle.style.border = "none";
+        quelle.style.padding = "0";
+        quelle.innerHTML = document.getElementById("steckbrief").innerHTML;
+        await html2pdf().set({
+          margin: [12, 12, 12, 12],
+          filename: "Projektsteckbrief.pdf",
+          image: { type: "jpeg", quality: 0.92 },
+          // scrollX/scrollY: 0, sonst bleibt das Bild leer, wenn die Seite gescrollt ist
+          html2canvas: { scale: 2, useCORS: true, scrollX: 0, scrollY: 0 },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+          pagebreak: { mode: ["css", "legacy"], before: ".annex", avoid: [".sb-section", ".sb-row", ".annex-box"] }
+        }).from(quelle).save();
+      } catch (e) {
+        alert("Das PDF konnte nicht erstellt werden. Nutze stattdessen „Projektsteckbrief drucken“ und wähle dort „Als PDF speichern“.");
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
       }
-      wrap.querySelectorAll(".sb-section").forEach(sec => {
-        const rows = Array.from(sec.querySelectorAll(".sb-row"));
-        const table = document.createElement("table");
-        table.className = "sb";
-        rows.forEach(r => {
-          const tr = document.createElement("tr");
-          Array.from(r.children).forEach(cell => {
-            const td = document.createElement("td");
-            td.className = cell.classList.contains("sb-label") ? "lab" : (cell.classList.contains("sb-sign") ? "sign" : "fld");
-            td.innerHTML = cell.innerHTML;
-            tr.appendChild(td);
-          });
-          table.appendChild(tr);
-          r.remove();
-        });
-        sec.appendChild(table);
-      });
-      return wrap.innerHTML;
     }
 
     updateProgress();
