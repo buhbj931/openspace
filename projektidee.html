@@ -500,11 +500,6 @@
       .sb-row { grid-template-columns: 1fr; }
     }
 
-    /* PDF-Export: Layout wie im Ausdruck, unabhängig von der Bildschirmbreite */
-    .pdf-export .sb-row { grid-template-columns: 1fr 1fr; }
-    .pdf-export .annex-grid { display: block; }
-    .pdf-export .annex-box { margin: 10px 0; }
-
     @media print {
       body { background: white; }
       header, .intro-card, .steps-card, .aktionen, .button-row,
@@ -1211,21 +1206,255 @@
       document.querySelectorAll(".missing").forEach(el => { if (el.value.trim()) el.classList.remove("missing"); });
     }
 
-    // PDF entsteht im Browser (html2pdf.js liegt lokal in assets/, kein CDN).
-    // Die Bibliothek ist groß und wird deshalb erst beim ersten Klick geladen.
-    let html2pdfLaden = null;
-    function ladeHtml2pdf() {
-      if (window.html2pdf) return Promise.resolve();
-      if (!html2pdfLaden) {
-        html2pdfLaden = new Promise((resolve, reject) => {
-          const s = document.createElement("script");
-          s.src = "assets/html2pdf.bundle.min.js";
-          s.onload = resolve;
-          s.onerror = () => { html2pdfLaden = null; reject(); };
-          document.head.appendChild(s);
-        });
+    // PDF entsteht im Browser mit jsPDF + AutoTable (lokal in assets/, kein CDN)
+    // als echter Text, nicht als Bildschirmfoto. Die Bibliotheken werden erst
+    // beim ersten Klick geladen.
+    let jsPdfLaden = null;
+    function ladeSkript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+    function ladeJsPdf() {
+      if (window.jspdf && window.jspdf.jsPDF.API.autoTable) return Promise.resolve();
+      if (!jsPdfLaden) {
+        // AutoTable braucht jsPDF, deshalb nacheinander
+        jsPdfLaden = ladeSkript("assets/jspdf.umd.min.js")
+          .then(() => ladeSkript("assets/jspdf.plugin.autotable.min.js"))
+          .catch(e => { jsPdfLaden = null; throw e; });
       }
-      return html2pdfLaden;
+      return jsPdfLaden;
+    }
+
+    const PDF_BLAU = [0, 80, 158];
+    const PDF_LABEL = [237, 246, 255];
+    const PDF_FELD = [240, 241, 243];
+    const PDF_TEXT = [51, 51, 51];
+    const PDF_GRAU = [95, 95, 95];
+    const PDF_RAND = 15;
+    const PDF_BREITE = 210 - 2 * PDF_RAND;
+
+    // Die Standardschrift kennt nur Windows-1252 – alles andere (z. B. Emojis) wird zu „?“
+    const CP1252_ZUSATZ = "€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ";
+    function pdfText(text) {
+      return String(text)
+        .replace(/\r\n?/g, "\n")
+        .replace(/\t/g, " ")
+        .replace(/[^\n\x20-\x7E\xA0-\xFF]/gu, ch => CP1252_ZUSATZ.includes(ch) ? ch : "?");
+    }
+
+    function pdfListe(ids) {
+      const items = ids.map(getValue).filter(v => v !== "—");
+      return items.length ? items.map(v => "• " + v).join("\n") : "—";
+    }
+
+    // Zellen: Überschrift eines Feldes (hellblau) und Feldinhalt (grau)
+    function pdfLabel(text, span) {
+      return { content: pdfText(text), colSpan: span || 1,
+        styles: { fillColor: PDF_LABEL, textColor: PDF_BLAU, fontSize: 8, cellPadding: { top: 1.2, bottom: 0.8, left: 2, right: 2 } } };
+    }
+    function pdfFeld(text, span) {
+      return { content: pdfText(text), colSpan: span || 1, styles: { fillColor: PDF_FELD } };
+    }
+
+    // Ein Block wie WAS/WARUM: blaue Kopfzeile, darunter Label- und Inhaltszeilen
+    function pdfBlock(doc, titel, zeilen, extra) {
+      doc.autoTable(Object.assign({
+        startY: doc.lastAutoTable.finalY + 4,
+        margin: { left: PDF_RAND, right: PDF_RAND, top: PDF_RAND, bottom: PDF_RAND + 6 },
+        theme: "plain",
+        head: [[{ content: titel, colSpan: 2,
+          styles: { fillColor: PDF_BLAU, textColor: 255, fontStyle: "bold", fontSize: 11 } }]],
+        body: zeilen,
+        showHead: "firstPage",
+        rowPageBreak: "avoid",
+        pageBreak: "avoid",
+        // weiße Linien trennen die Zellen wie im Raster der Webseite
+        styles: { font: "helvetica", fontSize: 10, textColor: PDF_TEXT, cellPadding: 2, lineColor: 255, lineWidth: 0.6, valign: "top" },
+        columnStyles: { 0: { cellWidth: PDF_BREITE / 2 }, 1: { cellWidth: PDF_BREITE / 2 } }
+      }, extra || {}));
+    }
+
+    // Kasten im Anhang: Titel mit blauer Linie oben, dann Fragen und Antworten
+    function pdfKasten(doc, titel, zeilen) {
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 5,
+        margin: { left: PDF_RAND, right: PDF_RAND, top: PDF_RAND, bottom: PDF_RAND + 6 },
+        theme: "plain",
+        head: [[{ content: pdfText(titel), colSpan: 2,
+          styles: { textColor: PDF_BLAU, fontStyle: "bold", fontSize: 11, lineWidth: { top: 0.8 }, lineColor: PDF_BLAU } }]],
+        body: zeilen,
+        showHead: "firstPage",
+        rowPageBreak: "avoid",
+        pageBreak: "avoid",
+        styles: { font: "helvetica", fontSize: 10, textColor: PDF_TEXT, cellPadding: 2, lineColor: 255, lineWidth: 0.6, valign: "top" },
+        columnStyles: { 0: { cellWidth: 50 }, 1: { cellWidth: PDF_BREITE - 50 } }
+      });
+    }
+
+    // Frage links, Antwort rechts – hält den Anhang kompakt
+    function pdfFrage(label, wert) {
+      const l = pdfLabel(label);
+      l.styles = Object.assign({}, l.styles, { fontSize: 9, cellPadding: 2 });
+      return [[l, pdfFeld(wert)]];
+    }
+
+    function pdfPruefzeile(label, gruppe) {
+      const zeile = pdfFrage(label, getRadioValue(gruppe))[0];
+      zeile[1].styles = Object.assign({}, zeile[1].styles, { fontStyle: "bold" });
+      return zeile;
+    }
+
+    // Skizzenfoto als JPEG neu zeichnen: jsPDF kann nicht jedes Bildformat,
+    // und große Handyfotos würden das PDF unnötig aufblähen
+    function skizzeAlsJpeg() {
+      if (!sketchDataUrl) return Promise.resolve(null);
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => {
+          const f = Math.min(1, 1200 / Math.max(img.width, img.height));
+          const c = document.createElement("canvas");
+          c.width = Math.round(img.width * f);
+          c.height = Math.round(img.height * f);
+          const ctx = c.getContext("2d");
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, c.width, c.height);
+          ctx.drawImage(img, 0, 0, c.width, c.height);
+          resolve({ url: c.toDataURL("image/jpeg", 0.85), w: c.width, h: c.height });
+        };
+        img.onerror = () => resolve(null);
+        img.src = sketchDataUrl;
+      });
+    }
+
+    async function buildSteckbriefPdf() {
+      const doc = new window.jspdf.jsPDF({ unit: "mm", format: "a4" });
+      const titel = getValue("projectTitle");
+      const isProduct = document.getElementById("isProduct").checked;
+      const skizze = isProduct ? await skizzeAlsJpeg() : null;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.setTextColor(...PDF_BLAU);
+      doc.text("Mein Projektsteckbrief", PDF_RAND, PDF_RAND + 5);
+
+      doc.autoTable({
+        startY: PDF_RAND + 10,
+        margin: { left: PDF_RAND, right: PDF_RAND },
+        theme: "plain",
+        body: [[
+          { content: "Projekt", styles: { fillColor: PDF_BLAU, textColor: 255, fontStyle: "bold", fontSize: 14, cellWidth: 30 } },
+          { content: pdfText(titel), styles: { fillColor: PDF_FELD, fontStyle: "bold", fontSize: 13 } }
+        ]],
+        styles: { font: "helvetica", textColor: PDF_TEXT, cellPadding: { top: 2.5, bottom: 2.5, left: 3, right: 3 }, valign: "middle" }
+      });
+
+      const was = [
+        [pdfLabel("Wo ist das Problem?"), pdfLabel("Wie willst du es lösen?")],
+        [pdfFeld(getValue("problem")), pdfFeld(getValue("solution"))],
+        [pdfLabel("Was ich dazu brauche"), pdfLabel("Ist-Stand")],
+        [pdfFeld(getValue("needs")), pdfFeld(getValue("currentState"))]
+      ];
+      if (isProduct) {
+        was.push([pdfLabel("Beschreibung der Produktskizze"), pdfLabel("Benötigte Materialien")]);
+        was.push([pdfFeld(getValue("sketchDesc")), pdfFeld(getValue("materials"))]);
+        if (skizze) {
+          const h = Math.min(60, (PDF_BREITE - 4) * skizze.h / skizze.w);
+          was.push([{ content: "", colSpan: 2, bild: skizze, styles: { fillColor: PDF_FELD, minCellHeight: h + 4 } }]);
+        } else {
+          was.push([pdfFeld("(Skizze auf Papier liegt bei)", 2)]);
+        }
+      }
+      was.push([pdfLabel("Was ich noch recherchieren/lernen/können muss", 2)]);
+      was.push([pdfFeld(getValue("toLearn"), 2)]);
+      pdfBlock(doc, "WAS", was, {
+        pageBreak: "auto",
+        didDrawCell: data => {
+          const bild = data.section === "body" && data.cell.raw && data.cell.raw.bild;
+          if (!bild) return;
+          const h = data.cell.height - 4;
+          const w = Math.min(data.cell.width - 4, h * bild.w / bild.h);
+          doc.addImage(bild.url, "JPEG", data.cell.x + 2, data.cell.y + 2, w, h);
+        }
+      });
+
+      pdfBlock(doc, "WARUM", [
+        [pdfLabel("Ziele"), pdfLabel("Nutzen")],
+        [pdfFeld(pdfListe(["goal1", "goal2", "goal3"])), pdfFeld(pdfListe(["benefit1", "benefit2"]))],
+        [pdfLabel("Chancen", 2)],
+        [pdfFeld(pdfListe(["chance1", "chance2"]), 2)]
+      ]);
+
+      pdfBlock(doc, "WER", [
+        [pdfLabel("Projektleitung"), pdfLabel("Coach")],
+        [pdfFeld(getValue("projectLead")), pdfFeld(getValue("coach"))],
+        [pdfLabel("Gegebenenfalls Auftraggeber", 2)],
+        [pdfFeld(filled("client") ? getValue("client") : "– kein Auftraggeber –", 2)]
+      ]);
+
+      pdfBlock(doc, "WANN", [
+        [pdfLabel("Start"), pdfLabel("Ende")],
+        [pdfFeld(formatDate("startDate")), pdfFeld(formatDate("endDate"))]
+      ]);
+
+      pdfBlock(doc, "Freigabe", [
+        [Object.assign(pdfFeld(""), { styles: { fillColor: PDF_FELD, minCellHeight: 16 } }),
+         Object.assign(pdfFeld(""), { styles: { fillColor: PDF_FELD, minCellHeight: 16 } })],
+        [pdfLabel("Unterschrift Auftraggeber / Coach"), pdfLabel("Unterschrift Projektleiter")]
+      ]);
+
+      // Anhang immer auf neuer Seite
+      doc.addPage();
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(15);
+      doc.setTextColor(...PDF_BLAU);
+      doc.text("Anhang: Ideenprüfung (Teil A)", PDF_RAND, PDF_RAND + 5);
+      doc.lastAutoTable.finalY = PDF_RAND + 6;
+
+      pdfKasten(doc, "1. Projektidee", [
+        ...pdfFrage("Idee", getValue("projectIdea")),
+        ...pdfFrage("Begründung", getValue("reason"))
+      ]);
+      pdfKasten(doc, "2. Machbarkeit", [
+        pdfPruefzeile("In der Schule umsetzbar", "ideaCheck1"),
+        pdfPruefzeile("In 5 Monaten schaffbar", "ideaCheck2"),
+        pdfPruefzeile("Genug Personen", "ideaCheck3"),
+        pdfPruefzeile("Material beschaffbar", "ideaCheck4"),
+        pdfPruefzeile("Andere verstehen die Idee", "ideaCheck5"),
+        ...pdfFrage("Vereinfachung / Veränderung", getValue("ideaAdjustment"))
+      ]);
+      pdfKasten(doc, "3./4. Projektziel", [
+        ...pdfFrage("Herstellen / erreichen", getValue("achieve")),
+        ...pdfFrage("Zielgruppe", getValue("targetGroup")),
+        ...pdfFrage("Sichtbares Ergebnis", getValue("visibleResult")),
+        ...pdfFrage("Projekt soll", getCheckedValues("goalType")),
+        ...pdfFrage("Genaues Ziel", getValue("preciseGoal"))
+      ]);
+      pdfKasten(doc, "5. Zielprüfung", [
+        pdfPruefzeile("Ziel klar formuliert", "goalCheck1"),
+        pdfPruefzeile("Andere verstehen mein Ziel", "goalCheck2"),
+        pdfPruefzeile("Ziel erreichbar", "goalCheck3"),
+        pdfPruefzeile("Ziel passt zur Projektidee", "goalCheck4")
+      ]);
+      pdfKasten(doc, "6. Stakeholder", [[pdfFeld(getValue("stakeholders"), 2)]]);
+      pdfKasten(doc, "7. Risiken", [[pdfFeld(getValue("risks"), 2)]]);
+
+      // Fußzeile auf jeder Seite
+      const seiten = doc.getNumberOfPages();
+      const fuss = pdfText(titel !== "—" ? `Projektsteckbrief · ${titel}` : "Projektsteckbrief");
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(...PDF_GRAU);
+      for (let i = 1; i <= seiten; i++) {
+        doc.setPage(i);
+        doc.text(doc.splitTextToSize(fuss, PDF_BREITE - 30)[0], PDF_RAND, 297 - PDF_RAND + 4);
+        doc.text(`Seite ${i} von ${seiten}`, 210 - PDF_RAND, 297 - PDF_RAND + 4, { align: "right" });
+      }
+      return doc;
     }
 
     async function downloadPdf() {
@@ -1238,23 +1467,9 @@
       button.disabled = true;
       button.textContent = "PDF wird erstellt …";
       try {
-        await ladeHtml2pdf();
-        // Die Breite gibt html2pdf vor (A4 abzüglich Rand); .pdf-export hält
-        // auch auf dem Handy das zweispaltige Layout
-        const quelle = document.createElement("div");
-        quelle.className = "onepager pdf-export";
-        quelle.style.border = "none";
-        quelle.style.padding = "0";
-        quelle.innerHTML = document.getElementById("steckbrief").innerHTML;
-        await html2pdf().set({
-          margin: [12, 12, 12, 12],
-          filename: "Projektsteckbrief.pdf",
-          image: { type: "jpeg", quality: 0.92 },
-          // scrollX/scrollY: 0, sonst bleibt das Bild leer, wenn die Seite gescrollt ist
-          html2canvas: { scale: 2, useCORS: true, scrollX: 0, scrollY: 0 },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-          pagebreak: { mode: ["css", "legacy"], before: ".annex", avoid: [".sb-section", ".sb-row", ".annex-box"] }
-        }).from(quelle).save();
+        await ladeJsPdf();
+        const doc = await buildSteckbriefPdf();
+        doc.save("Projektsteckbrief.pdf");
       } catch (e) {
         alert("Das PDF konnte nicht erstellt werden. Nutze stattdessen „Projektsteckbrief drucken“ und wähle dort „Als PDF speichern“.");
       } finally {
