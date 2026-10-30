@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unsere Projektidee · Open Space</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
+  <style>
+    /* Farben, Schrift und Abstaende kommen aus assets/slp-tokens.css
+       (Corporate Design des Schengen-Lyzeums). Hier stehen nur die
+       Regeln dieser Seite. */
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--surface-page);
+      color: var(--text-body);
+      line-height: var(--leading-normal);
+    }
+
+    header {
+      background: var(--surface-blue);
+      color: var(--text-on-blue);
+      padding: var(--space-6) var(--space-4);
+    }
+
+    .head-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .head-inner img {
+      width: 72px;
+      height: 72px;
+      flex: 0 0 auto;
+      border-radius: var(--radius-md);
+      background: var(--surface-card);
+      padding: var(--space-1);
+    }
+
+    header h1 {
+      margin: 0 0 var(--space-1) 0;
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+    }
+
+    header p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: var(--text-md);
+    }
+
+    main {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--slp-blue);
+      font-size: var(--text-sm);
+      font-weight: 700;
+    }
+
+    h2, h3 { margin-top: 0; color: var(--slp-blue); }
+    h2 { font-size: var(--text-xl); letter-spacing: var(--tracking-tight); }
+    h3 { font-size: var(--text-md); }
+
+    .hint, .tip {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
+    }
+
+    .hint {
+      background: var(--accent-soft);
+      border-left: var(--rule-accent) solid var(--slp-blue);
+    }
+
+    .tip {
+      background: var(--accent-2-soft);
+      border-left: var(--rule-accent) solid var(--slp-orange);
+    }
+
+    /* Der Schengen-Stern als Auszeichnung statt eines Icons */
+    .hint::before, .tip::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 1.15em;
+      height: 1.15em;
+      margin-top: 0.15em;
+      background: var(--slp-yellow);
+      -webkit-mask: var(--slp-star-mask) center / contain no-repeat;
+              mask: var(--slp-star-mask) center / contain no-repeat;
+    }
+
+    .step {
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-page);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
+    }
+
+    .step-header {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+      margin-bottom: var(--space-3);
+    }
+
+    .step-number {
+      width: 2rem;
+      height: 2rem;
+      flex: 0 0 2rem;
+      border-radius: var(--radius-pill);
+      background: var(--slp-orange);
+      color: var(--text-on-orange);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .step-header p { margin: var(--space-1) 0 0; color: var(--text-muted); }
+
+    .step.sb { border-color: var(--blue-100); background: var(--accent-soft); }
+
+    .step.sb .step-number { background: var(--slp-blue); color: var(--text-on-blue); }
+
+    label, legend {
+      display: block;
+      font-weight: 700;
+      margin: var(--space-3) 0 var(--space-1);
+      color: var(--text-body);
+    }
+
+    fieldset { border: none; margin: 0; padding: 0; min-width: 0; }
+
+    legend { padding: 0; }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: var(--space-3);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: var(--text-base);
+      color: var(--text-body);
+      background: var(--surface-card);
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 1px;
+      border-color: var(--slp-blue);
+    }
+
+    textarea {
+      min-height: 105px;
+      resize: vertical;
+      line-height: var(--leading-normal);
+    }
+
+    textarea.short { min-height: 70px; }
+
+    input[type="file"] { font: inherit; font-size: var(--text-sm); }
+
+    input.missing, textarea.missing {
+      border: 2px solid var(--danger);
+      background: var(--danger-soft);
+    }
+
+    .bullet-inputs input { margin-bottom: var(--space-2); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0 var(--space-4);
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      transform: scale(1.15);
+      accent-color: var(--slp-blue);
+    }
+
+    .goal-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+    }
+
+    .goal-options label, .inline-check {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 400;
+      margin: 0;
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      min-height: 44px;
+    }
+
+    .inline-check { margin-top: var(--space-3); }
+
+    .goal-options label:hover, .inline-check:hover { background: var(--accent-soft); }
+
+    #productBlock { display: none; }
+
+    /* --- Gruppentabelle (WER) --- */
+
+    .group-table { width: 100%; border-collapse: collapse; margin-top: var(--space-2); }
+
+    .group-table th {
+      background: var(--surface-sunken);
+      text-align: left;
+      padding: var(--space-2);
+      font-size: var(--text-sm);
+    }
+
+    .group-table td { padding: var(--space-1); border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+
+    .group-table td.nr { width: 2rem; font-weight: 700; color: var(--slp-blue); text-align: center; padding-top: var(--space-4); }
+
+    .group-table input[type="text"] { padding: var(--space-2); }
+
+    .group-table .col-klasse { width: 6.5rem; }
+
+    .group-table td.del { width: 3rem; text-align: center; }
+
+    .group-table tr[hidden] { display: none; }
+
+    /* --- Zielprüfung --- */
+
+    .check-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-3);
+    }
+
+    .check-table th, .check-table td {
+      border: 1px solid var(--border-subtle);
+      padding: var(--space-3);
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .check-table th:first-child, .check-table td:first-child {
+      text-align: left;
+      width: 55%;
+    }
+
+    .check-table th {
+      background: var(--surface-sunken);
+      font-size: var(--text-sm);
+    }
+
+    /* Die ganze Zelle ist Tippfläche, nicht nur der kleine Kreis */
+    .check-table td.wahl { padding: 0; }
+
+    .check-table label.wahl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .check-table label.wahl:hover { background: var(--accent-soft); }
+
+    /* --- Buttons --- */
+
+    .aktionen {
+      margin-top: var(--space-5);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .aktionen__text {
+      margin: 0 0 var(--space-4);
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      max-width: 70ch;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    button {
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 0.7rem 1.1rem;
+      min-height: 44px;
+      transition: background var(--dur) var(--ease-out),
+                  border-color var(--dur) var(--ease-out),
+                  color var(--dur) var(--ease-out);
+    }
+
+    button:focus { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:focus:not(:focus-visible) { outline: none; }
+    button:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+    button:active { transform: translateY(1px); }
+    button:disabled { cursor: not-allowed; opacity: 0.55; }
+
+    button.haupt { background: var(--slp-orange); color: var(--text-on-orange); }
+    button.haupt:hover { background: var(--accent-2-hover); }
+
+    button.rand {
+      background: var(--surface-card);
+      color: var(--slp-blue);
+      border-color: var(--border-default);
+    }
+    button.rand:hover { background: var(--accent-soft); border-color: var(--slp-blue); }
+
+    button.still {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border-default);
+    }
+    button.still:hover { background: var(--surface-sunken); color: var(--text-body); }
+
+    button.del-btn {
+      min-width: 44px;
+      padding: 0.4rem;
+      font-size: var(--text-md);
+      line-height: 1;
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border-subtle);
+    }
+    button.del-btn:hover { background: var(--danger-soft); color: var(--danger); border-color: var(--danger); }
+
+    @supports not (gap: 1rem) {
+      .button-row > *, .goal-options > * { margin: 0 var(--space-3) var(--space-3) 0; }
+    }
+
+    /* --- Fortschritt, Pflichtfelder --- */
+
+    .progress-wrap {
+      background: var(--surface-sunken);
+      border-radius: var(--radius-pill);
+      height: 14px;
+      overflow: hidden;
+      margin: var(--space-3) 0 var(--space-1);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--slp-blue);
+      transition: width var(--dur) var(--ease-out);
+    }
+
+    .status {
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: var(--text-sm);
+    }
+
+    .small {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+
+    .part-title {
+      margin: var(--space-6) 0 var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--slp-blue);
+      color: var(--text-on-blue);
+      font-size: var(--text-lg);
+    }
+
+    .part-title.a { margin-top: var(--space-2); }
+
+    .must {
+      background: var(--danger-soft);
+      border-left: var(--rule-accent) solid var(--danger);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin: var(--space-4) 0;
+    }
+
+    .must ul { margin: var(--space-2) 0 0; }
+
+    #missingBox { display: none; }
+
+    .req { color: var(--danger); font-weight: 700; }
+
+    .opt { color: var(--text-muted); font-weight: 400; font-size: var(--text-sm); }
+
+    /* --- Ausgabe „Unsere Projektidee“ (Aufbau wie die Papiervorlage) --- */
+
+    .onepager {
+      background: var(--surface-card);
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .out-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+
+    .out-head h2 { margin: 0; }
+
+    .out-head img { width: 56px; height: 56px; }
+
+    .sb-title {
+      display: flex;
+      align-items: stretch;
+      margin-bottom: var(--space-3);
+      background: var(--surface-sunken);
+    }
+
+    .sb-title-label {
+      background: var(--slp-blue);
+      color: var(--text-on-blue);
+      font-weight: 700;
+      font-size: var(--text-lg);
+      padding: var(--space-1) var(--space-3);
+      white-space: nowrap;
+    }
+
+    .sb-title-value {
+      padding: var(--space-2) var(--space-3);
+      font-weight: 700;
+      font-size: var(--text-md);
+    }
+
+    .sb-section { margin-bottom: var(--space-3); border: 1px solid var(--border-subtle); }
+
+    .sb-head {
+      background: var(--slp-blue);
+      color: var(--text-on-blue);
+      font-weight: 700;
+      padding: var(--space-1) var(--space-2);
+    }
+
+    .sb-row { display: grid; grid-template-columns: 1fr 1fr; }
+
+    .sb-row.full { grid-template-columns: 1fr; }
+
+    .sb-label {
+      background: var(--accent-soft);
+      color: var(--slp-blue);
+      font-size: var(--text-sm);
+      padding: 0.1rem var(--space-2);
+    }
+
+    .sb-field {
+      background: var(--surface-sunken);
+      padding: var(--space-2) var(--space-3);
+      min-height: 2.6rem;
+    }
+
+    .sb-field ul { margin: 0; padding-left: 1.2rem; }
+
+    .sb-field p { margin: 0 0 var(--space-1); }
+
+    .sb-members, .sb-check { width: 100%; border-collapse: collapse; }
+
+    .sb-members th {
+      background: var(--accent-soft);
+      color: var(--slp-blue);
+      font-weight: 400;
+      font-size: var(--text-sm);
+      text-align: left;
+      padding: 0.1rem var(--space-2);
+    }
+
+    .sb-members td, .sb-check td {
+      background: var(--surface-sunken);
+      padding: var(--space-1) var(--space-2);
+      border-top: 2px solid var(--surface-card);
+      vertical-align: top;
+    }
+
+    .sb-check td:last-child { width: 30%; font-weight: 700; }
+
+    .sb-sign {
+      min-height: 4rem;
+      display: flex;
+      align-items: flex-end;
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: var(--space-6) var(--space-4);
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+    }
+
+    @media (max-width: 680px) {
+      .sb-row { grid-template-columns: 1fr; }
+      .group-table thead { display: none; }
+      /* Zeile 1: Vorname, Name, Entfernen – Zeile 2: Klasse, Warum */
+      .group-table tr { display: grid; grid-template-columns: 2rem 1fr 1fr 3rem; gap: var(--space-1); border-bottom: 1px solid var(--border-subtle); padding: var(--space-2) 0; }
+      .group-table td { border: none; width: auto; }
+      .group-table td.nr { grid-row: 1 / 3; grid-column: 1; }
+      .group-table td:nth-child(2) { grid-row: 1; grid-column: 2; }
+      .group-table td:nth-child(3) { grid-row: 1; grid-column: 3; }
+      .group-table td.del { grid-row: 1; grid-column: 4; width: auto; }
+      .group-table td.col-klasse { grid-row: 2; grid-column: 2; width: auto; }
+      .group-table td:nth-child(5) { grid-row: 2; grid-column: 3 / 5; }
+    }
+
+    @media (max-width: 560px) {
+      main { padding: var(--space-4) var(--space-3); }
+      .card { padding: var(--space-4); }
+      .button-row > button { width: 100%; }
+      .head-inner img { width: 56px; height: 56px; }
+    }
+
+    @media print {
+      body { background: white; }
+      header, .intro-card, .steps-card, #sicherung, footer { display: none !important; }
+      .card { box-shadow: none; border: none; margin: 0; padding: 0; }
+      .onepager { border: none; padding: 0; }
+      .sb-section, .sb-title, .sb-title-label, .sb-label, .sb-head, .sb-field,
+      .sb-members th, .sb-members td, .sb-check td {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      .sb-section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="head-inner">
+      <img id="logo" src="data:image/png;base64,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" alt="Open-Space-Logo" width="72" height="72">
+      <div>
+        <h1>Unsere Projektidee</h1>
+        <p>Open Space · Klasse 7 · Formular für die Projektgruppe</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card intro-card">
+      <div class="topline">
+        <span class="badge">Open Space Projekte und Ziele 7 · Projektgruppe</span>
+        <span class="small">Füllt alle 7 Schritte gemeinsam aus. Speichert am Ende eure Projektidee als PDF.</span>
+      </div>
+      <h2>So arbeitet ihr mit diesem Formular</h2>
+      <p>Jede und jeder von euch hat eine eigene Projektidee entwickelt. Jetzt seid ihr eine <strong>Projektgruppe</strong> und habt euch auf <strong>ein gemeinsames Projekt</strong> geeinigt. Füllt dieses Formular <strong>zusammen</strong> aus.</p>
+      <ul>
+        <li><strong>Teil A:</strong> Projektname, WER ist dabei, WAS macht ihr genau und WARUM macht ihr das Projekt?</li>
+        <li><strong>Teil B:</strong> Ideenprüfung: eure Projektidee, euer Projektziel und die Zielprüfung mit einem Experten.</li>
+      </ul>
+      <div class="hint">
+        <span><strong>Tipp:</strong> Nehmt eure Lernpfade „Projektidee entwickeln“ zur Hand. Viele Antworten könnt ihr dort übernehmen und gemeinsam verbessern.</span>
+      </div>
+      <div class="must">
+        <strong>Pflichtfelder:</strong> Alle Felder mit <span class="req">*</span> müsst ihr ausfüllen.
+      </div>
+      <div class="progress-wrap" id="progress" role="progressbar" aria-label="Fortschritt" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div id="progressText" class="status">Fortschritt: 0 von 7 Schritten bearbeitet</div>
+    </section>
+
+    <!-- Inhalt wird von assets/persist.js aufgebaut -->
+    <section class="card" id="sicherung"></section>
+
+    <section class="card steps-card">
+      <h2 class="part-title a">Teil A · Unser Projekt</h2>
+
+      <div class="step sb" id="step1">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div>
+            <h3>Projektname</h3>
+            <p>Wie heißt euer Projekt? Der Name soll kurz sein und neugierig machen.</p>
+          </div>
+        </div>
+        <label for="projectTitle">Projektname <span class="req">*</span></label>
+        <input type="text" id="projectTitle" placeholder="Z. B.: „Bunte Bänke für unseren Schulhof“">
+      </div>
+
+      <div class="step sb" id="step2">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div>
+            <h3>WER? – Unsere Projektgruppe</h3>
+            <p>Tragt alle Mitglieder eurer Gruppe ein (höchstens 8). Jede und jeder schreibt kurz, warum sie oder er bei diesem Projekt mitmacht.</p>
+          </div>
+        </div>
+        <div class="hint">
+          <span>Eure Gruppe kann aus Schülerinnen und Schülern verschiedener Klassen bestehen. Gebt deshalb bei jedem die Klasse an.</span>
+        </div>
+        <table class="group-table">
+          <thead>
+            <tr><th scope="col"><span class="small">Nr.</span></th><th scope="col">Vorname</th><th scope="col">Name</th><th scope="col" class="col-klasse">Klasse</th><th scope="col">Warum bin ich dabei?</th><th scope="col"><span class="small">Entfernen</span></th></tr>
+          </thead>
+          <!-- Zeilen baut das Skript: immer 8 mit festen ids (m1_vorname …),
+               nicht benötigte sind ausgeblendet. So kann persist.js sie speichern. -->
+          <tbody id="groupBody"></tbody>
+        </table>
+        <div class="button-row" style="margin-top: var(--space-3)">
+          <button type="button" id="addMemberBtn" class="rand" onclick="addMember()">+ Mitglied hinzufügen</button>
+          <span id="memberCount" class="small"></span>
+        </div>
+        <p class="small">Mindestens 2 Mitglieder müssen vollständig eingetragen sein (Vorname, Name, Klasse, Warum). Höchstens 8 Mitglieder.</p>
+      </div>
+
+      <div class="step sb" id="step3">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div>
+            <h3>WAS? – Projektinhalt und Ist-Stand</h3>
+            <p>Beschreibt euer Projekt genau: Wo ist das Problem? Wie wollt ihr es lösen? Was braucht ihr dazu?</p>
+          </div>
+        </div>
+        <label for="problem">Wo ist das Problem? <span class="req">*</span></label>
+        <textarea id="problem" class="short" placeholder="Was fehlt, was stört oder was könnte besser sein?"></textarea>
+        <label for="solution">Wie wollt ihr es lösen? <span class="req">*</span></label>
+        <textarea id="solution" class="short" placeholder="Was macht ihr genau?"></textarea>
+        <label for="needs">Was braucht ihr dazu? <span class="req">*</span></label>
+        <textarea id="needs" class="short" placeholder="Z. B.: Raum, Werkzeug, Hilfe von Lehrkräften, Erlaubnis der Schulleitung, Zeit im Profilbereich ..."></textarea>
+
+        <label class="inline-check"><input type="checkbox" id="isProduct"> <span>Wir stellen ein <strong>Produkt</strong> her (z. B. etwas bauen, basteln, nähen, programmieren).</span></label>
+        <div id="productBlock">
+          <div class="tip">
+            <span><strong>Produktskizze:</strong> Zeichnet euer Produkt auf ein Blatt Papier (mit Maßen und Beschriftung) oder ladet ein Foto eurer Skizze hoch. Beschreibt sie hier kurz in Worten.</span>
+          </div>
+          <label for="sketchDesc">Beschreibung unserer Produktskizze <span class="req">*</span></label>
+          <textarea id="sketchDesc" class="short" placeholder="Wie sieht euer Produkt aus? Wie groß ist es? Aus welchen Teilen besteht es?"></textarea>
+          <label for="sketchImg">Foto der Skizze hochladen <span class="opt">(freiwillig, erscheint im PDF; wird nicht zwischengespeichert)</span></label>
+          <input type="file" id="sketchImg" accept="image/*">
+          <label for="materials">Welche Materialien braucht ihr dafür? <span class="req">*</span></label>
+          <textarea id="materials" class="short" placeholder="Listet alles auf."></textarea>
+        </div>
+
+        <label for="toLearn">Was müsst ihr noch recherchieren, lernen oder können, damit ihr euer Projekt durchführen könnt? <span class="req">*</span></label>
+        <textarea id="toLearn" class="short" placeholder="Z. B.: Welche Farbe hält draußen? Wie benutzt man eine Schleifmaschine sicher?"></textarea>
+        <label for="currentState">Ist-Stand: Was gibt es schon? Was habt ihr schon geklärt? <span class="req">*</span></label>
+        <textarea id="currentState" class="short" placeholder="Z. B.: Der Hausmeister hat zwei alte Bänke für uns. Das Material haben wir noch nicht."></textarea>
+      </div>
+
+      <div class="step sb" id="step4">
+        <div class="step-header">
+          <div class="step-number">4</div>
+          <div>
+            <h3>WARUM? – Ziele, Nutzen und Chancen</h3>
+            <p>Erklärt, was ihr erreichen wollt und warum sich euer Projekt lohnt.</p>
+          </div>
+        </div>
+        <fieldset class="bullet-inputs">
+          <legend>Ziele <span class="req">*</span> <span class="opt">(mindestens 1, höchstens 3)</span></legend>
+          <input type="text" id="goal1" aria-label="Ziel 1" placeholder="Ziel 1 – z. B.: Bis zum 30. Mai 2027 stehen zwei bunt bemalte Bänke auf dem Schulhof.">
+          <input type="text" id="goal2" aria-label="Ziel 2 (freiwillig)" placeholder="Ziel 2 (freiwillig)">
+          <input type="text" id="goal3" aria-label="Ziel 3 (freiwillig)" placeholder="Ziel 3 (freiwillig)">
+        </fieldset>
+        <div class="two-col">
+          <fieldset class="bullet-inputs">
+            <legend>Nutzen: Wer hat etwas davon und was? <span class="req">*</span></legend>
+            <input type="text" id="benefit1" aria-label="Nutzen 1" placeholder="Z. B.: Alle Schüler haben mehr Sitzplätze in der Pause.">
+            <input type="text" id="benefit2" aria-label="Nutzen 2 (freiwillig)" placeholder="(freiwillig)">
+          </fieldset>
+          <fieldset class="bullet-inputs">
+            <legend>Chancen: Was kann zusätzlich Gutes entstehen? <span class="req">*</span></legend>
+            <input type="text" id="chance1" aria-label="Chance 1" placeholder="Z. B.: Wir lernen, mit Werkzeug umzugehen.">
+            <input type="text" id="chance2" aria-label="Chance 2 (freiwillig)" placeholder="(freiwillig)">
+          </fieldset>
+        </div>
+      </div>
+
+      <h2 class="part-title">Teil B · Ideenprüfung</h2>
+
+      <div class="step" id="step5">
+        <div class="step-header">
+          <div class="step-number">5</div>
+          <div>
+            <h3>Unsere Projektidee</h3>
+            <p>Notiert eure gemeinsame Projektidee und begründet eure Auswahl.</p>
+          </div>
+        </div>
+        <label for="projectIdea">Unsere Projektidee <span class="req">*</span></label>
+        <textarea id="projectIdea" placeholder="Zum Beispiel: Wir gestalten zwei bemalte Sitzbänke für den Schulhof."></textarea>
+        <label for="reason">Warum haben wir diese Idee ausgewählt? <span class="req">*</span></label>
+        <textarea id="reason" placeholder="Warum ist diese Idee interessant, sinnvoll oder wichtig? Welche Ideen aus der Gruppe stecken darin?"></textarea>
+      </div>
+
+      <div class="step" id="step6">
+        <div class="step-header">
+          <div class="step-number">6</div>
+          <div>
+            <h3>Unser Projektziel</h3>
+            <p>Klärt euer Ziel und formuliert es anschließend genau.</p>
+          </div>
+        </div>
+        <label for="achieve">Was wollen wir herstellen oder erreichen? <span class="req">*</span></label>
+        <textarea id="achieve" class="short" placeholder="Was soll am Ende entstanden sein?"></textarea>
+        <label for="targetGroup">Für wen ist unser Projekt? <span class="req">*</span></label>
+        <textarea id="targetGroup" class="short" placeholder="Zum Beispiel: für unsere Klasse, die Schule, jüngere Schüler, Besucher ..."></textarea>
+        <label for="visibleResult">Was soll am Ende sichtbar sein? <span class="req">*</span></label>
+        <textarea id="visibleResult" class="short" placeholder="Zum Beispiel: Plakat, Aktion, Ausstellung, Produkt, Aufführung, Verbesserung ..."></textarea>
+        <fieldset>
+          <legend>Unser Projekt soll am Ende … <span class="req">*</span></legend>
+          <div class="goal-options">
+            <label><input type="checkbox" name="goalType" value="etwas bauen"> etwas bauen</label>
+            <label><input type="checkbox" name="goalType" value="etwas gestalten"> etwas gestalten</label>
+            <label><input type="checkbox" name="goalType" value="etwas organisieren"> etwas organisieren</label>
+            <label><input type="checkbox" name="goalType" value="etwas zeigen oder präsentieren"> etwas zeigen oder präsentieren</label>
+            <label><input type="checkbox" name="goalType" value="etwas verbessern"> etwas verbessern</label>
+          </div>
+        </fieldset>
+        <label for="preciseGoal">Beschreibt euer Ziel genau <span class="req">*</span></label>
+        <textarea id="preciseGoal" placeholder="Nicht so gut: Wir machen ein Video. Besser: Wir drehen bis zum 30. Mai 2027 ein 5-minütiges Video über das Schulleben und zeigen es allen 7. Klassen."></textarea>
+        <div class="button-row" style="margin-top: var(--space-3)">
+          <button type="button" class="rand" onclick="takeGoalToWarum()">Genaues Ziel als Ziel bei WARUM eintragen</button>
+        </div>
+      </div>
+
+      <div class="step" id="step7">
+        <div class="step-header">
+          <div class="step-number">7</div>
+          <div>
+            <h3>Zielprüfung mit Experte</h3>
+            <p>Besprecht euer Ziel mit einem Experten (z. B. eurem Projektbegleiter, einer Fachlehrkraft oder einer Person von außen). Kreuzt <strong>gemeinsam mit dem Experten</strong> an.</p>
+          </div>
+        </div>
+        <div class="two-col">
+          <div>
+            <label for="expertName">Name des Experten <span class="req">*</span></label>
+            <input type="text" id="expertName" placeholder="Vor- und Nachname">
+          </div>
+          <div>
+            <label for="expertRole">Funktion / Fachgebiet <span class="opt">(freiwillig)</span></label>
+            <input type="text" id="expertRole" placeholder="Z. B.: Kunstlehrerin, Schreiner, Hausmeister ...">
+          </div>
+        </div>
+        <table class="check-table">
+          <thead>
+            <tr><th scope="col">Prüffrage</th><th scope="col">Ja</th><th scope="col">Vielleicht</th><th scope="col">Nein</th></tr>
+          </thead>
+          <!-- Zeilen baut das Skript aus checkQuestions -->
+          <tbody id="checkBody"></tbody>
+        </table>
+        <label for="expertFeedback">Tipps und Rückmeldung des Experten <span class="req">*</span></label>
+        <textarea id="expertFeedback" class="short" placeholder="Was hat der Experte gesagt? Was sollt ihr noch ändern oder beachten?"></textarea>
+        <div class="tip">
+          <span><strong>Merke:</strong> Ein gutes Ziel zeigt klar, was am Ende entstanden ist. Wenn der Experte „Vielleicht“ oder „Nein“ sagt, verbessert euer Ziel in Schritt 6.</span>
+        </div>
+      </div>
+
+      <div class="aktionen">
+        <h3 class="slp-rule">Abgabe</h3>
+        <p class="aktionen__text">
+          Wenn ihr mit allen sieben Schritten fertig seid: Erstellt eure Projektidee als PDF zum Hochladen
+          oder kopiert sie als Text zum Einfügen in DiLer.
+        </p>
+        <div id="missingBox" class="must" role="alert">
+          <strong>Euer Formular ist noch nicht vollständig.</strong> Es fehlt noch:
+          <ul id="missingList"></ul>
+        </div>
+        <div class="button-row">
+          <button type="button" class="rand" onclick="updateSteckbrief(true)">Unsere Projektidee anzeigen / prüfen</button>
+          <button type="button" class="haupt" id="pdfButton" onclick="downloadPdf()">Als PDF speichern</button>
+          <button type="button" class="rand" onclick="SLPPersist.klartextKopieren()">Text für DiLer kopieren</button>
+          <button type="button" class="still" onclick="downloadWord()">Als Word-Datei speichern</button>
+          <button type="button" class="still" onclick="window.print()">Drucken</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="steckbriefSection">
+      <div id="steckbrief" class="onepager">
+        <h2>Unsere Projektidee</h2>
+        <p class="small">Klickt auf „Unsere Projektidee anzeigen / prüfen“, um eure Eingaben zusammenzufassen.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Open Space · Unsere Projektidee · Projektgruppe Klasse 7
+    <!-- Rechtslinks slp-tools.de: statisch, absolut, nicht per JavaScript -->
+    <nav aria-label="Rechtliche Angaben" style="margin-top: 0.5em;">
+      <a href="https://slp-tools.de/impressum.html">Impressum</a> ·
+      <a href="https://slp-tools.de/datenschutz.html">Datenschutz</a> ·
+      <a href="https://slp-tools.de/barrierefreiheit.html">Barrierefreiheit</a>
+    </nav>
+  </footer>
+
+  <script>
+    const LOGO = document.getElementById("logo").src;
+    const MAX_MEMBERS = 8;
+    const MIN_MEMBERS = 2;
+    const STEPS = 7;
+    let sketchDataUrl = "";
+
+    // ---------- Gruppentabelle ----------
+    // Alle 8 Zeilen stehen fest im DOM (ids m1_vorname … m8_warum), damit
+    // persist.js sie speichern und wiederherstellen kann. Sichtbar sind
+    // nur die ersten shownRows.
+    const groupBody = document.getElementById("groupBody");
+    const memberKeys = ["vorname", "name", "klasse", "warum"];
+    const memberPlaceholders = { vorname: "Vorname", name: "Name", klasse: "z. B. 7B", warum: "Warum bin ich dabei?" };
+    let shownRows = MIN_MEMBERS;
+
+    for (let i = 1; i <= MAX_MEMBERS; i++) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td class="nr">${i}</td>` +
+        memberKeys.map(k => `<td${k === "klasse" ? ' class="col-klasse"' : ""}><input type="text" id="m${i}_${k}" placeholder="${memberPlaceholders[k]}" aria-label="${memberPlaceholders[k] === "z. B. 7B" ? "Klasse" : memberPlaceholders[k]} Mitglied ${i}"></td>`).join("") +
+        `<td class="del"><button type="button" class="del-btn" aria-label="Mitglied ${i} entfernen" title="Mitglied entfernen">×</button></td>`;
+      tr.querySelector(".del-btn").addEventListener("click", () => removeMember(i));
+      groupBody.appendChild(tr);
+    }
+
+    function memberInput(i, k) { return document.getElementById(`m${i}_${k}`); }
+
+    function rowHasValue(i) { return memberKeys.some(k => memberInput(i, k).value.trim()); }
+
+    function showRows() {
+      Array.from(groupBody.children).forEach((tr, idx) => { tr.hidden = idx >= shownRows; });
+      const btn = document.getElementById("addMemberBtn");
+      btn.disabled = shownRows >= MAX_MEMBERS;
+      btn.textContent = shownRows >= MAX_MEMBERS ? "Maximal 8 Mitglieder erreicht" : "+ Mitglied hinzufügen";
+      document.getElementById("memberCount").textContent = `${shownRows} von ${MAX_MEMBERS} Plätzen`;
+    }
+
+    // Nach dem Laden: so viele Zeilen zeigen, wie ausgefüllt sind (mindestens 2)
+    function rowsFromValues() {
+      let last = 0;
+      for (let i = 1; i <= MAX_MEMBERS; i++) if (rowHasValue(i)) last = i;
+      shownRows = Math.max(MIN_MEMBERS, last);
+      showRows();
+    }
+
+    function addMember() {
+      if (shownRows >= MAX_MEMBERS) return;
+      shownRows++;
+      showRows();
+      memberInput(shownRows, "vorname").focus();
+      updateProgress();
+    }
+
+    // Entfernen schiebt die folgenden Zeilen nach oben, damit die ids lückenlos bleiben
+    function removeMember(i) {
+      for (let r = i; r < MAX_MEMBERS; r++) {
+        memberKeys.forEach(k => { memberInput(r, k).value = memberInput(r + 1, k).value; });
+      }
+      memberKeys.forEach(k => { memberInput(MAX_MEMBERS, k).value = ""; });
+      groupBody.querySelectorAll("input").forEach(el => el.classList.remove("missing"));
+      if (shownRows > MIN_MEMBERS) shownRows--;
+      showRows();
+      // input-Ereignis, damit Fortschritt und Autosave die Änderung mitbekommen
+      memberInput(1, "vorname").dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    function memberRows() {
+      const rows = [];
+      for (let i = 1; i <= shownRows; i++) {
+        const inputs = memberKeys.map(k => memberInput(i, k));
+        const vals = inputs.map(el => el.value.trim());
+        rows.push({ i, inputs, vals, any: vals.some(Boolean), complete: vals.every(Boolean) });
+      }
+      return rows;
+    }
+
+    // ---------- Zielprüfung ----------
+    // [name, Frage im Formular, Kurzform in der Ausgabe]
+    const checkQuestions = [
+      ["goalCheck1", "Ist das Ziel klar formuliert?", "Ziel klar formuliert"],
+      ["goalCheck2", "Versteht der Experte unser Ziel?", "Experte versteht unser Ziel"],
+      ["goalCheck3", "Ist das Ziel erreichbar?", "Ziel erreichbar"],
+      ["goalCheck4", "Passt das Ziel zu unserer Projektidee?", "Ziel passt zur Projektidee"]
+    ];
+    const checkGroups = checkQuestions.map(q => q[0]);
+
+    document.getElementById("checkBody").innerHTML = checkQuestions.map(([name, frage]) =>
+      `<tr><th scope="row" style="font-weight:400">${frage}</th>` +
+      ["Ja", "Vielleicht", "Nein"].map(v =>
+        `<td class="wahl"><label class="wahl"><input type="radio" name="${name}" value="${v}" aria-label="${frage} ${v}"></label></td>`).join("") +
+      `</tr>`).join("");
+
+    // ---------- Pflichtfelder ----------
+    // [id, Bezeichnung, Schritt]
+    const requiredFields = [
+      ["projectTitle", "Projektname", 1],
+      ["problem", "WAS: Wo ist das Problem?", 3],
+      ["solution", "WAS: Wie wollt ihr es lösen?", 3],
+      ["needs", "WAS: Was braucht ihr dazu?", 3],
+      ["toLearn", "WAS: Was müsst ihr noch recherchieren/lernen/können?", 3],
+      ["currentState", "WAS: Ist-Stand", 3],
+      ["goal1", "WARUM: mindestens ein Ziel", 4],
+      ["benefit1", "WARUM: Nutzen", 4],
+      ["chance1", "WARUM: Chancen", 4],
+      ["projectIdea", "Unsere Projektidee", 5],
+      ["reason", "Begründung der Idee", 5],
+      ["achieve", "Was wollen wir herstellen oder erreichen?", 6],
+      ["targetGroup", "Für wen ist unser Projekt?", 6],
+      ["visibleResult", "Was soll am Ende sichtbar sein?", 6],
+      ["preciseGoal", "Genaues Ziel", 6],
+      ["expertName", "Name des Experten", 7],
+      ["expertFeedback", "Rückmeldung des Experten", 7]
+    ];
+    const productFields = [
+      ["sketchDesc", "WAS: Beschreibung der Produktskizze", 3],
+      ["materials", "WAS: Benötigte Materialien", 3]
+    ];
+
+    document.addEventListener("input", updateProgress);
+    document.addEventListener("change", updateProgress);
+
+    document.getElementById("isProduct").addEventListener("change", toggleProductBlock);
+
+    document.getElementById("sketchImg").addEventListener("change", function () {
+      const file = this.files && this.files[0];
+      if (!file) { sketchDataUrl = ""; return; }
+      const reader = new FileReader();
+      reader.onload = e => { sketchDataUrl = e.target.result; };
+      reader.readAsDataURL(file);
+    });
+
+    function toggleProductBlock() {
+      document.getElementById("productBlock").style.display =
+        document.getElementById("isProduct").checked ? "block" : "none";
+      updateProgress();
+    }
+
+    function getValue(id) {
+      const el = document.getElementById(id);
+      return el && el.value.trim() ? el.value.trim() : "—";
+    }
+
+    function filled(id) { return getValue(id) !== "—"; }
+
+    function getRadioValue(name) {
+      const s = document.querySelector(`input[name="${name}"]:checked`);
+      return s ? s.value : "—";
+    }
+
+    function getCheckedValues(name) {
+      const c = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`));
+      return c.length ? c.map(i => i.value).join(", ") : "—";
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/\n/g, "<br>");
+    }
+
+    function bulletList(ids) {
+      const items = ids.map(getValue).filter(v => v !== "—");
+      if (!items.length) return "—";
+      return "<ul>" + items.map(v => `<li>${escapeHtml(v)}</li>`).join("") + "</ul>";
+    }
+
+    function takeGoalToWarum() {
+      const g = document.getElementById("preciseGoal").value.trim();
+      if (!g) return;
+      const target = ["goal1", "goal2", "goal3"].map(id => document.getElementById(id)).find(el => !el.value.trim());
+      if (!target) return;
+      target.value = g;
+      // input-Ereignis, damit Fortschritt und Autosave mitbekommen, dass sich etwas geändert hat
+      target.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    function activeRequired() {
+      return document.getElementById("isProduct").checked ? requiredFields.concat(productFields) : requiredFields;
+    }
+
+    function stepDone(n) {
+      if (n === 2) {
+        const rows = memberRows();
+        return rows.filter(r => r.complete).length >= MIN_MEMBERS && rows.every(r => !r.any || r.complete);
+      }
+      const fieldsOk = activeRequired().filter(f => f[2] === n).every(f => filled(f[0]));
+      if (n === 6) return fieldsOk && getCheckedValues("goalType") !== "—";
+      if (n === 7) return fieldsOk && checkGroups.every(g => getRadioValue(g) !== "—");
+      return fieldsOk;
+    }
+
+    function getMissing() {
+      const missing = activeRequired().filter(f => !filled(f[0])).map(f => [f[2], f[1]]);
+      const rows = memberRows();
+      const complete = rows.filter(r => r.complete).length;
+      if (complete < MIN_MEMBERS) missing.push([2, `WER: mindestens ${MIN_MEMBERS} Mitglieder vollständig eintragen (bisher ${complete})`]);
+      rows.filter(r => r.any && !r.complete).forEach(r => missing.push([2, `WER: Zeile ${r.i} ist nicht vollständig (Vorname, Name, Klasse, Warum)`]));
+      if (getCheckedValues("goalType") === "—") missing.push([6, "„Unser Projekt soll am Ende …“ – mindestens ein Feld ankreuzen"]);
+      if (!checkGroups.every(g => getRadioValue(g) !== "—")) missing.push([7, "Zielprüfung: alle Prüffragen mit dem Experten ankreuzen"]);
+      return missing.sort((a, b) => a[0] - b[0]).map(m => `Schritt ${m[0]}: ${m[1]}`);
+    }
+
+    function markMissing(show) {
+      activeRequired().forEach(f => {
+        const el = document.getElementById(f[0]);
+        if (el) el.classList.toggle("missing", show && !filled(f[0]));
+      });
+      let completeSeen = 0;
+      memberRows().forEach(r => {
+        const needRow = r.any || (completeSeen < MIN_MEMBERS);
+        if (r.complete) completeSeen++;
+        r.inputs.forEach(el => {
+          el.classList.toggle("missing", show && needRow && !r.complete && !el.value.trim());
+        });
+      });
+    }
+
+    // fuerText: für „Text für DiLer kopieren“ – dann kein Logo und kein eingebettetes Foto
+    function buildSteckbriefHtml(fuerText) {
+      const isProduct = document.getElementById("isProduct").checked;
+      const members = memberRows().filter(r => r.any);
+      const memberHtml = members.length
+        ? members.map((r, idx) => `<tr><td>${idx + 1}</td>${r.vals.map(v => `<td>${escapeHtml(v || "—")}</td>`).join("")}</tr>`).join("")
+        : `<tr><td colspan="5">—</td></tr>`;
+
+      let sketchPart = `<p class="small">(Skizze auf Papier liegt bei)</p>`;
+      if (sketchDataUrl) {
+        sketchPart = fuerText
+          ? `<p class="small">(Foto der Skizze im PDF)</p>`
+          : `<p><img src="${sketchDataUrl}" alt="Produktskizze" style="max-width:100%;max-height:260px;border:1px solid #CBCED4;"></p>`;
+      }
+      const productPart = isProduct ? `
+            <p><strong>Produktskizze:</strong> ${escapeHtml(getValue("sketchDesc"))}</p>
+            ${sketchPart}
+            <p><strong>Materialien:</strong> ${escapeHtml(getValue("materials"))}</p>` : "";
+
+      const checkRow = (label, g) => `<tr><td>${label}</td><td>${escapeHtml(getRadioValue(g))}</td></tr>`;
+      const expert = getValue("expertName") + (filled("expertRole") ? ` (${getValue("expertRole")})` : "");
+
+      return `
+        <div class="out-head">
+          <h2>Unsere Projektidee</h2>
+          ${fuerText ? "" : `<img src="${LOGO}" alt="Open-Space-Logo" width="56" height="56">`}
+        </div>
+
+        <div class="sb-title">
+          <div class="sb-title-label">Projektname</div>
+          <div class="sb-title-value">${escapeHtml(getValue("projectTitle"))}</div>
+        </div>
+
+        <div class="sb-section">
+          <div class="sb-head">WER – Unsere Projektgruppe</div>
+          <table class="sb-members">
+            <tr><th style="width:2.5rem">Nr.</th><th>Vorname</th><th>Name</th><th style="width:5rem">Klasse</th><th>Warum bin ich dabei?</th></tr>
+            ${memberHtml}
+          </table>
+        </div>
+
+        <div class="sb-section">
+          <div class="sb-head">WAS</div>
+          <div class="sb-row">
+            <div class="sb-label">Projektinhalt</div>
+            <div class="sb-label">Ist-Stand</div>
+          </div>
+          <div class="sb-row">
+            <div class="sb-field">
+              <p><strong>Problem:</strong> ${escapeHtml(getValue("problem"))}</p>
+              <p><strong>Lösung:</strong> ${escapeHtml(getValue("solution"))}</p>
+              <p><strong>Was wir dazu brauchen:</strong> ${escapeHtml(getValue("needs"))}</p>
+              ${productPart}
+              <p><strong>Was wir noch recherchieren/lernen/können müssen:</strong> ${escapeHtml(getValue("toLearn"))}</p>
+            </div>
+            <div class="sb-field">${escapeHtml(getValue("currentState"))}</div>
+          </div>
+        </div>
+
+        <div class="sb-section">
+          <div class="sb-head">WARUM</div>
+          <div class="sb-row">
+            <div class="sb-label">Ziele</div>
+            <div class="sb-label">Nutzen</div>
+          </div>
+          <div class="sb-row">
+            <div class="sb-field">${bulletList(["goal1", "goal2", "goal3"])}</div>
+            <div class="sb-field">${bulletList(["benefit1", "benefit2"])}</div>
+          </div>
+          <div class="sb-row full"><div class="sb-label">Chancen</div></div>
+          <div class="sb-row full"><div class="sb-field">${bulletList(["chance1", "chance2"])}</div></div>
+        </div>
+
+        <div class="sb-section">
+          <div class="sb-head">Ideenprüfung</div>
+          <div class="sb-row">
+            <div class="sb-label">1. Unsere Projektidee</div>
+            <div class="sb-label">2. Unser Projektziel</div>
+          </div>
+          <div class="sb-row">
+            <div class="sb-field">
+              <p><strong>Idee:</strong> ${escapeHtml(getValue("projectIdea"))}</p>
+              <p><strong>Begründung:</strong> ${escapeHtml(getValue("reason"))}</p>
+            </div>
+            <div class="sb-field">
+              <p><strong>Herstellen / erreichen:</strong> ${escapeHtml(getValue("achieve"))}</p>
+              <p><strong>Für wen:</strong> ${escapeHtml(getValue("targetGroup"))}</p>
+              <p><strong>Sichtbares Ergebnis:</strong> ${escapeHtml(getValue("visibleResult"))}</p>
+              <p><strong>Unser Projekt soll:</strong> ${escapeHtml(getCheckedValues("goalType"))}</p>
+              <p><strong>Genaues Ziel:</strong> ${escapeHtml(getValue("preciseGoal"))}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sb-section">
+          <div class="sb-head">Zielprüfung mit Experte</div>
+          <div class="sb-row full"><div class="sb-label">Experte</div></div>
+          <div class="sb-row full"><div class="sb-field">${escapeHtml(expert)}</div></div>
+          <table class="sb-check">
+            ${checkQuestions.map(q => checkRow(q[2], q[0])).join("")}
+          </table>
+          <div class="sb-row full"><div class="sb-label">Tipps und Rückmeldung des Experten</div></div>
+          <div class="sb-row full"><div class="sb-field">${escapeHtml(getValue("expertFeedback"))}</div></div>
+          <div class="sb-row full"><div class="sb-field sb-sign">Unterschrift Experte</div></div>
+        </div>
+      `;
+    }
+
+    function updateSteckbrief(showMissing) {
+      document.getElementById("steckbrief").innerHTML = buildSteckbriefHtml();
+      const missing = getMissing();
+      const box = document.getElementById("missingBox");
+      if (showMissing && missing.length) {
+        document.getElementById("missingList").innerHTML = missing.map(m => `<li>${escapeHtml(m)}</li>`).join("");
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";
+      }
+      markMissing(showMissing);
+      updateProgress();
+    }
+
+    function updateProgress() {
+      let done = 0;
+      for (let n = 1; n <= STEPS; n++) if (stepDone(n)) done++;
+      document.getElementById("progressBar").style.width = `${Math.round(done / STEPS * 100)}%`;
+      document.getElementById("progress").setAttribute("aria-valuenow", done);
+      document.getElementById("progressText").textContent = `Fortschritt: ${done} von ${STEPS} Schritten bearbeitet`;
+      document.querySelectorAll(".missing").forEach(el => { if (el.value.trim()) el.classList.remove("missing"); });
+    }
+
+    // Dateiname: Projektname + Vorname_Nachname aller Gruppenmitglieder
+    function fileBaseName() {
+      const clean = txt => txt.normalize("NFC").replace(/[^\p{L}\p{N}-]+/gu, "_").replace(/^_+|_+$/g, "");
+      const parts = [];
+      const t = getValue("projectTitle");
+      parts.push(t !== "—" ? clean(t).slice(0, 50) : "Unsere_Projektidee");
+      memberRows().forEach(r => {
+        const person = clean([r.vals[0], r.vals[1]].filter(Boolean).join("_"));
+        if (person) parts.push(person);
+      });
+      return parts.join("_").replace(/_+/g, "_").slice(0, 200);
+    }
+
+    // ---------- PDF ----------
+    // PDF entsteht im Browser mit jsPDF + AutoTable (lokal in assets/, kein CDN)
+    // als echter Text, nicht als Bildschirmfoto. Die Bibliotheken werden erst
+    // beim ersten Klick geladen.
+    let jsPdfLaden = null;
+    function ladeSkript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+    function ladeJsPdf() {
+      if (window.jspdf && window.jspdf.jsPDF.API.autoTable) return Promise.resolve();
+      if (!jsPdfLaden) {
+        // AutoTable braucht jsPDF, deshalb nacheinander
+        jsPdfLaden = ladeSkript("assets/jspdf.umd.min.js")
+          .then(() => ladeSkript("assets/jspdf.plugin.autotable.min.js"))
+          .catch(e => { jsPdfLaden = null; throw e; });
+      }
+      return jsPdfLaden;
+    }
+
+    const PDF_BLAU = [0, 80, 158];
+    const PDF_LABEL = [237, 246, 255];
+    const PDF_FELD = [240, 241, 243];
+    const PDF_TEXT = [51, 51, 51];
+    const PDF_GRAU = [95, 95, 95];
+    const PDF_RAND = 15;
+    const PDF_BREITE = 210 - 2 * PDF_RAND;
+
+    // Die Standardschrift kennt nur Windows-1252 – alles andere (z. B. Emojis) wird zu „?“
+    const CP1252_ZUSATZ = "€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ";
+    function pdfText(text) {
+      return String(text)
+        .replace(/\r\n?/g, "\n")
+        .replace(/\t/g, " ")
+        .replace(/[^\n\x20-\x7E\xA0-\xFF]/gu, ch => CP1252_ZUSATZ.includes(ch) ? ch : "?");
+    }
+
+    function pdfListe(ids) {
+      const items = ids.map(getValue).filter(v => v !== "—");
+      return items.length ? items.map(v => "• " + v).join("\n") : "—";
+    }
+
+    // Zellen: Überschrift eines Feldes (hellblau) und Feldinhalt (grau)
+    function pdfLabel(text, span) {
+      return { content: pdfText(text), colSpan: span || 1,
+        styles: { fillColor: PDF_LABEL, textColor: PDF_BLAU, fontSize: 8, cellPadding: { top: 1.2, bottom: 0.8, left: 2, right: 2 } } };
+    }
+    function pdfFeld(text, span) {
+      return { content: pdfText(text), colSpan: span || 1, styles: { fillColor: PDF_FELD } };
+    }
+
+    // Ein Block wie WAS/WARUM: blaue Kopfzeile, darunter Label- und Inhaltszeilen
+    function pdfBlock(doc, titel, zeilen, extra) {
+      doc.autoTable(Object.assign({
+        startY: doc.lastAutoTable.finalY + 4,
+        margin: { left: PDF_RAND, right: PDF_RAND, top: PDF_RAND, bottom: PDF_RAND + 6 },
+        theme: "plain",
+        head: [[{ content: titel, colSpan: 2,
+          styles: { fillColor: PDF_BLAU, textColor: 255, fontStyle: "bold", fontSize: 11 } }]],
+        body: zeilen,
+        showHead: "firstPage",
+        rowPageBreak: "avoid",
+        pageBreak: "avoid",
+        // weiße Linien trennen die Zellen wie im Raster der Webseite
+        styles: { font: "helvetica", fontSize: 10, textColor: PDF_TEXT, cellPadding: 2, lineColor: 255, lineWidth: 0.6, valign: "top" },
+        columnStyles: { 0: { cellWidth: PDF_BREITE / 2 }, 1: { cellWidth: PDF_BREITE / 2 } }
+      }, extra || {}));
+    }
+
+    // Skizzenfoto als JPEG neu zeichnen: jsPDF kann nicht jedes Bildformat,
+    // und große Handyfotos würden das PDF unnötig aufblähen
+    function skizzeAlsJpeg() {
+      if (!sketchDataUrl) return Promise.resolve(null);
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => {
+          const f = Math.min(1, 1200 / Math.max(img.width, img.height));
+          const c = document.createElement("canvas");
+          c.width = Math.round(img.width * f);
+          c.height = Math.round(img.height * f);
+          const ctx = c.getContext("2d");
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, c.width, c.height);
+          ctx.drawImage(img, 0, 0, c.width, c.height);
+          resolve({ url: c.toDataURL("image/jpeg", 0.85), w: c.width, h: c.height });
+        };
+        img.onerror = () => resolve(null);
+        img.src = sketchDataUrl;
+      });
+    }
+
+    async function buildSteckbriefPdf() {
+      const doc = new window.jspdf.jsPDF({ unit: "mm", format: "a4" });
+      const titel = getValue("projectTitle");
+      const isProduct = document.getElementById("isProduct").checked;
+      const skizze = isProduct ? await skizzeAlsJpeg() : null;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.setTextColor(...PDF_BLAU);
+      doc.text("Unsere Projektidee", PDF_RAND, PDF_RAND + 7);
+      doc.addImage(LOGO, "PNG", 210 - PDF_RAND - 14, PDF_RAND - 2, 14, 14 * 180 / 172);
+
+      doc.autoTable({
+        startY: PDF_RAND + 14,
+        margin: { left: PDF_RAND, right: PDF_RAND },
+        theme: "plain",
+        body: [[
+          { content: "Projektname", styles: { fillColor: PDF_BLAU, textColor: 255, fontStyle: "bold", fontSize: 14, cellWidth: 40 } },
+          { content: pdfText(titel), styles: { fillColor: PDF_FELD, fontStyle: "bold", fontSize: 13 } }
+        ]],
+        styles: { font: "helvetica", textColor: PDF_TEXT, cellPadding: { top: 2.5, bottom: 2.5, left: 3, right: 3 }, valign: "middle" }
+      });
+
+      // WER: eigene Tabelle mit fünf Spalten
+      const members = memberRows().filter(r => r.any);
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 4,
+        margin: { left: PDF_RAND, right: PDF_RAND, top: PDF_RAND, bottom: PDF_RAND + 6 },
+        theme: "plain",
+        head: [
+          [{ content: "WER – Unsere Projektgruppe", colSpan: 5,
+            styles: { fillColor: PDF_BLAU, textColor: 255, fontStyle: "bold", fontSize: 11 } }],
+          ["Nr.", "Vorname", "Name", "Klasse", "Warum bin ich dabei?"].map(t => pdfLabel(t))
+        ],
+        body: members.length
+          ? members.map((r, idx) => [String(idx + 1), ...r.vals.map(v => v || "—")].map(v => pdfFeld(v)))
+          : [[pdfFeld("—", 5)]],
+        showHead: "firstPage",
+        rowPageBreak: "avoid",
+        pageBreak: "avoid",
+        styles: { font: "helvetica", fontSize: 10, textColor: PDF_TEXT, cellPadding: 2, lineColor: 255, lineWidth: 0.6, valign: "top" },
+        columnStyles: { 0: { cellWidth: 10 }, 1: { cellWidth: 30 }, 2: { cellWidth: 30 }, 3: { cellWidth: 18 } }
+      });
+
+      const was = [
+        [pdfLabel("Wo ist das Problem?"), pdfLabel("Wie wollt ihr es lösen?")],
+        [pdfFeld(getValue("problem")), pdfFeld(getValue("solution"))],
+        [pdfLabel("Was wir dazu brauchen"), pdfLabel("Ist-Stand")],
+        [pdfFeld(getValue("needs")), pdfFeld(getValue("currentState"))]
+      ];
+      if (isProduct) {
+        was.push([pdfLabel("Beschreibung der Produktskizze"), pdfLabel("Benötigte Materialien")]);
+        was.push([pdfFeld(getValue("sketchDesc")), pdfFeld(getValue("materials"))]);
+        if (skizze) {
+          const h = Math.min(60, (PDF_BREITE - 4) * skizze.h / skizze.w);
+          was.push([{ content: "", colSpan: 2, bild: skizze, styles: { fillColor: PDF_FELD, minCellHeight: h + 4 } }]);
+        } else {
+          was.push([pdfFeld("(Skizze auf Papier liegt bei)", 2)]);
+        }
+      }
+      was.push([pdfLabel("Was wir noch recherchieren/lernen/können müssen", 2)]);
+      was.push([pdfFeld(getValue("toLearn"), 2)]);
+      pdfBlock(doc, "WAS", was, {
+        pageBreak: "auto",
+        didDrawCell: data => {
+          const bild = data.section === "body" && data.cell.raw && data.cell.raw.bild;
+          if (!bild) return;
+          const h = data.cell.height - 4;
+          const w = Math.min(data.cell.width - 4, h * bild.w / bild.h);
+          doc.addImage(bild.url, "JPEG", data.cell.x + 2, data.cell.y + 2, w, h);
+        }
+      });
+
+      pdfBlock(doc, "WARUM", [
+        [pdfLabel("Ziele"), pdfLabel("Nutzen")],
+        [pdfFeld(pdfListe(["goal1", "goal2", "goal3"])), pdfFeld(pdfListe(["benefit1", "benefit2"]))],
+        [pdfLabel("Chancen", 2)],
+        [pdfFeld(pdfListe(["chance1", "chance2"]), 2)]
+      ]);
+
+      pdfBlock(doc, "Ideenprüfung", [
+        [pdfLabel("1. Unsere Projektidee"), pdfLabel("Begründung")],
+        [pdfFeld(getValue("projectIdea")), pdfFeld(getValue("reason"))],
+        [pdfLabel("2. Was wollen wir herstellen oder erreichen?"), pdfLabel("Für wen ist unser Projekt?")],
+        [pdfFeld(getValue("achieve")), pdfFeld(getValue("targetGroup"))],
+        [pdfLabel("Was soll am Ende sichtbar sein?"), pdfLabel("Unser Projekt soll am Ende …")],
+        [pdfFeld(getValue("visibleResult")), pdfFeld(getCheckedValues("goalType"))],
+        [pdfLabel("Genaues Ziel", 2)],
+        [pdfFeld(getValue("preciseGoal"), 2)]
+      ], { pageBreak: "auto" });
+
+      const expert = getValue("expertName") + (filled("expertRole") ? ` (${getValue("expertRole")})` : "");
+      pdfBlock(doc, "Zielprüfung mit Experte", [
+        [pdfLabel("Experte", 2)],
+        [pdfFeld(expert, 2)],
+        ...checkQuestions.map(q => [pdfFeld(q[2]),
+          Object.assign(pdfFeld(getRadioValue(q[0])), { styles: { fillColor: PDF_FELD, fontStyle: "bold" } })]),
+        [pdfLabel("Tipps und Rückmeldung des Experten", 2)],
+        [pdfFeld(getValue("expertFeedback"), 2)],
+        [Object.assign(pdfFeld("", 2), { styles: { fillColor: PDF_FELD, minCellHeight: 16 } })],
+        [pdfLabel("Unterschrift Experte", 2)]
+      ]);
+
+      // Fußzeile auf jeder Seite
+      const seiten = doc.getNumberOfPages();
+      const fuss = pdfText(titel !== "—" ? `Unsere Projektidee · ${titel}` : "Unsere Projektidee");
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(...PDF_GRAU);
+      for (let i = 1; i <= seiten; i++) {
+        doc.setPage(i);
+        doc.text(doc.splitTextToSize(fuss, PDF_BREITE - 30)[0], PDF_RAND, 297 - PDF_RAND + 4);
+        doc.text(`Seite ${i} von ${seiten}`, 210 - PDF_RAND, 297 - PDF_RAND + 4, { align: "right" });
+      }
+      return doc;
+    }
+
+    async function downloadPdf() {
+      updateSteckbrief(true);
+      if (getMissing().length) {
+        document.getElementById("missingBox").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      const button = document.getElementById("pdfButton");
+      const label = button.textContent;
+      button.disabled = true;
+      button.textContent = "PDF wird erstellt …";
+      try {
+        await ladeJsPdf();
+        const doc = await buildSteckbriefPdf();
+        doc.save(fileBaseName() + ".pdf");
+      } catch (e) {
+        alert("Das PDF konnte nicht erstellt werden. Nutzt stattdessen „Drucken“ und wählt dort „Als PDF speichern“.");
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    }
+
+    // ---------- Word ----------
+    function downloadWord() {
+      updateSteckbrief(true);
+      if (getMissing().length) document.getElementById("missingBox").scrollIntoView({ behavior: "smooth", block: "center" });
+      const content = toWordTables(document.getElementById("steckbrief").innerHTML);
+      const html = `
+        <!DOCTYPE html>
+        <html lang="de">
+        <head>
+          <meta charset="UTF-8">
+          <title>Unsere Projektidee</title>
+          <style>
+            body { font-family: Calibri, Arial, sans-serif; color: #333333; font-size: 11pt; }
+            h2 { color: #00509E; margin: 0; }
+            .sb-title-label { background: #00509E; color: #ffffff; font-weight: bold; font-size: 15pt; padding: 3px 8px; }
+            .sb-title-value { background: #F0F1F3; font-weight: bold; font-size: 13pt; padding: 4px 8px; }
+            .sb-head { background: #00509E; color: #ffffff; font-weight: bold; font-size: 12pt; padding: 2px 6px; margin-top: 10px; }
+            table { width: 100%; border-collapse: collapse; }
+            td { vertical-align: top; padding: 4px 6px; }
+            td.lab, th { background: #EDF6FF; color: #00509E; font-size: 9pt; padding: 1px 6px; text-align: left; font-weight: normal; }
+            td.fld, .sb-members td, .sb-check td { background: #F0F1F3; border-top: 2px solid #ffffff; }
+            td.sign { background: #F0F1F3; height: 50px; vertical-align: bottom; font-size: 9pt; }
+            ul { margin: 0; padding-left: 18px; }
+            p { margin: 0 0 4px; }
+            .small { color: #5F5F5F; }
+          </style>
+        </head>
+        <body>${content}</body>
+        </html>`;
+      const blob = new Blob(["﻿", html], { type: "application/msword" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileBaseName() + ".doc";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Word versteht kein CSS-Grid: Kopf und Zeilen in Tabellen umwandeln
+    function toWordTables(content) {
+      const wrap = document.createElement("div");
+      wrap.innerHTML = content;
+      const head = wrap.querySelector(".out-head");
+      if (head) {
+        const t = document.createElement("table");
+        t.innerHTML = `<tr><td><h2>Unsere Projektidee</h2></td><td style="text-align:right;width:80px"><img src="${LOGO}" width="56" height="56"></td></tr>`;
+        head.replaceWith(t);
+      }
+      const title = wrap.querySelector(".sb-title");
+      if (title) {
+        const t = document.createElement("table");
+        t.innerHTML = `<tr><td class="sb-title-label" style="width:25%">Projektname</td><td class="sb-title-value">${title.querySelector(".sb-title-value").innerHTML}</td></tr>`;
+        title.replaceWith(t);
+      }
+      wrap.querySelectorAll(".sb-row").forEach(r => {
+        const t = document.createElement("table");
+        const tr = document.createElement("tr");
+        Array.from(r.children).forEach(cell => {
+          const td = document.createElement("td");
+          td.className = cell.classList.contains("sb-label") ? "lab" : (cell.classList.contains("sb-sign") ? "sign" : "fld");
+          td.style.width = r.children.length === 2 ? "50%" : "100%";
+          td.innerHTML = cell.innerHTML;
+          tr.appendChild(td);
+        });
+        t.appendChild(tr);
+        r.replaceWith(t);
+      });
+      return wrap.innerHTML;
+    }
+
+    // Nach Laden, Import oder Zurücksetzen: Zeilen und Produktblock passend zeigen
+    function nachWiederherstellung() {
+      rowsFromValues();
+      toggleProductBlock();
+    }
+
+    showRows();
+    updateProgress();
+  </script>
+
+  <script src="assets/persist.js"></script>
+  <script>
+    // Autosave, Wiederherstellung, Sicherung und Import.
+    // Die Feldschluessel kommen aus id bzw. name der Felder in
+    // .steps-card - diese Kennungen nie nachtraeglich umbenennen.
+    // Das Foto der Produktskizze (Datei-Feld) wird bewusst nicht gespeichert.
+    SLPPersist.init({
+      seite: 'unsere-projektidee',
+      bereich: '.steps-card',
+      ziel: '#sicherung',
+      nachWiederherstellung: nachWiederherstellung,
+      klartextQuelle: function () { return buildSteckbriefHtml(true); },
+      dateiname: 'Unsere_Projektidee'
+    });
+  </script>
+</body>
+</html>
