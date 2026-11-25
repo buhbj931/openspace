@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projektevaluationsbogen · Open Space</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
+  <link rel="stylesheet" href="assets/bogen.css" />
+</head>
+<body>
+  <header>
+    <div class="head-inner">
+      <img src="assets/openspace-logo.png" alt="Open-Space-Logo" width="72" height="72" />
+      <div>
+        <h1>Projektevaluationsbogen</h1>
+        <p>Open Space · Klasse 7 · Grundlage für Halbjahres- und Jahresnote (Projektbegleitung in Absprache mit den Experten)</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="topline">
+        <span class="badge">Halbjahr & Schuljahresende</span>
+        <span class="small">15 Kriterien für die Gruppe + Einzelbewertung jedes Mitglieds</span>
+      </div>
+      <h2 class="slp-rule">So funktioniert der Bogen</h2>
+      <ul class="stars-list">
+        <li>Oben Projekt und Datum eintragen und alle Mitglieder der Projektgruppe mit ihrer Klasse erfassen (über „+ Gruppenmitglied hinzufügen“ beliebig erweiterbar).</li>
+        <li>Für jedes Kriterium eine Stufe wählen: <strong>0 Sterne kaum · 1 Stern teilweise · 2 Sterne gut · 3 Sterne sehr gut</strong>.</li>
+        <li>Eingaben werden automatisch in diesem Browser zwischengespeichert. Mit <strong>„Als Datei speichern“</strong> den Bogen dauerhaft sichern.</li>
+        <li><strong>„Als PDF herunterladen“</strong> erzeugt den ausgefüllten Bogen als PDF, z.&nbsp;B. für EduMaps oder die Schülerakte.</li>
+      </ul>
+    </section>
+
+    <!-- Angaben, Abschnitte und Abschluss baut assets/bogen.js auf -->
+    <div id="bogen"></div>
+  </main>
+
+  <footer>
+    Open Space · Pé „Mut tut gut“ · Deutsch-Luxemburgisches Schengen-Lyzeum Perl
+    <!-- Rechtslinks slp-tools.de: statisch, absolut, nicht per JavaScript -->
+    <nav aria-label="Rechtliche Angaben" style="margin-top: 0.5em;">
+      <a href="https://slp-tools.de/impressum.html">Impressum</a> ·
+      <a href="https://slp-tools.de/datenschutz.html">Datenschutz</a> ·
+      <a href="https://slp-tools.de/barrierefreiheit.html">Barrierefreiheit</a>
+    </nav>
+  </footer>
+
+  <script src="assets/bogen.js"></script>
+  <script>
+    // Inhalt des Bogens (aus der Vorlage übernommen). ids nicht umbenennen,
+    // sonst passen gespeicherte Dateien nicht mehr.
+    SLPBogen.init({
+        "id": "projektevaluation",
+        "title": "Projektevaluationsbogen",
+        "filePrefix": "Projektevaluation",
+        "head": [
+          {
+            "id": "projekt",
+            "label": "Projekt",
+            "type": "text",
+            "required": true,
+            "placeholder": "Titel des Projekts"
+          },
+          {
+            "id": "datum",
+            "label": "Datum",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "bewerter",
+            "label": "Projektbegleiter*in",
+            "type": "text",
+            "required": true
+          },
+          {
+            "id": "experten",
+            "label": "Beteiligte Experten",
+            "type": "text",
+            "required": false
+          },
+          {
+            "id": "anlass",
+            "label": "Anlass",
+            "type": "choice",
+            "required": true,
+            "options": [
+              "1. Projektfortschrittsevaluation (Halbjahr)",
+              "Jahresevaluation (Schuljahresende)"
+            ]
+          },
+          {
+            "id": "mitglieder",
+            "label": "Projektgruppe",
+            "type": "members",
+            "required": true,
+            "options": [
+              "7a",
+              "7b",
+              "7c",
+              "7d",
+              "7e"
+            ],
+            "minRows": 2
+          }
+        ],
+        "sections": [
+          {
+            "type": "rating",
+            "title": "Kompetenzerwerb der Gruppe",
+            "groups": [
+              {
+                "title": "Fachkompetenz",
+                "sub": "Wissen, Problemlösung",
+                "items": [
+                  {
+                    "id": "f1",
+                    "text": "Qualität der abgegebenen Projektdokumentation"
+                  },
+                  {
+                    "id": "f2",
+                    "text": "Fachliche und inhaltliche Angemessenheit"
+                  },
+                  {
+                    "id": "f3",
+                    "text": "Zielorientierte Nutzung der Materialien und Quellen"
+                  },
+                  {
+                    "id": "f4",
+                    "text": "Vertrautheit der Gruppe mit dem Thema"
+                  },
+                  {
+                    "id": "f5",
+                    "text": "Erwerb neuer Kompetenzen in der Gruppe"
+                  },
+                  {
+                    "id": "f6",
+                    "text": "Fähigkeit der Gruppe zum Transfer des Projektprodukts in andere Kontexte"
+                  }
+                ]
+              },
+              {
+                "title": "Methodenkompetenz",
+                "sub": "Planung, Recherche, Dokumentation",
+                "items": [
+                  {
+                    "id": "m1",
+                    "text": "Absprachen wurden getroffen und eingehalten"
+                  },
+                  {
+                    "id": "m2",
+                    "text": "Der vorgegebene Zeitrahmen wurde eingehalten"
+                  },
+                  {
+                    "id": "m3",
+                    "text": "Es wurde strukturiert und zielorientiert gearbeitet"
+                  }
+                ]
+              },
+              {
+                "title": "Sozialkompetenz",
+                "sub": "Teamarbeit, Kommunikation, Konfliktlösung",
+                "items": [
+                  {
+                    "id": "s1",
+                    "text": "Konstruktive Kommunikation innerhalb der Gruppe"
+                  },
+                  {
+                    "id": "s2",
+                    "text": "Reflexion des Arbeits- und Gruppenprozesses in der Projektdurchführung"
+                  }
+                ]
+              },
+              {
+                "title": "Selbstkompetenz",
+                "sub": "Eigeninitiative, Zuverlässigkeit, Reflexion",
+                "items": [
+                  {
+                    "id": "k1",
+                    "text": "Gemeinsame Entwicklung der Projektidee und der Projektplanung"
+                  },
+                  {
+                    "id": "k2",
+                    "text": "Aufgaben werden in der Gruppe verteilt und verlässlich übernommen"
+                  },
+                  {
+                    "id": "k3",
+                    "text": "Eigenständiges Arbeiten der Gruppe"
+                  },
+                  {
+                    "id": "k4",
+                    "text": "Reflexion des gemeinsamen Lernprozesses"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "individual",
+            "id": "einzel",
+            "title": "Einzelbewertung der Gruppenmitglieder",
+            "intro": "Für jedes Gruppenmitglied die vier Kompetenzbereiche einzeln bewerten. Die Blöcke erscheinen automatisch, sobald oben die Gruppenmitglieder eingetragen sind.",
+            "competences": [
+              {
+                "key": "Fachkompetenz",
+                "label": "Fachkompetenz",
+                "sub": "Wissen, Problemlösung"
+              },
+              {
+                "key": "Methodenkompetenz",
+                "label": "Methodenkompetenz",
+                "sub": "Planung, Recherche, Dokumentation"
+              },
+              {
+                "key": "Sozialkompetenz",
+                "label": "Sozialkompetenz",
+                "sub": "Teamarbeit, Kommunikation, Konfliktlösung"
+              },
+              {
+                "key": "Selbstkompetenz",
+                "label": "Selbstkompetenz",
+                "sub": "Eigeninitiative, Zuverlässigkeit, Reflexion"
+              }
+            ],
+            "noteLabel": "Note (0–15 Punkte)",
+            "noteOptions": [
+              "15 Punkte",
+              "14 Punkte",
+              "13 Punkte",
+              "12 Punkte",
+              "11 Punkte",
+              "10 Punkte",
+              "9 Punkte",
+              "8 Punkte",
+              "7 Punkte",
+              "6 Punkte",
+              "5 Punkte",
+              "4 Punkte",
+              "3 Punkte",
+              "2 Punkte",
+              "1 Punkt",
+              "0 Punkte"
+            ]
+          },
+          {
+            "type": "fields",
+            "title": "Ergebnis",
+            "fields": [
+              {
+                "id": "bemerkung",
+                "label": "Bemerkungen / Begründung zur Gruppe",
+                "type": "textarea",
+                "required": false,
+                "short": true,
+                "placeholder": "Stärken, Entwicklungsfelder, Absprachen mit den Experten …"
+              }
+            ]
+          }
+        ],
+        "scale": [
+          {
+            "v": 1,
+            "label": "kaum",
+            "stars": 0
+          },
+          {
+            "v": 2,
+            "label": "teilweise",
+            "stars": 1
+          },
+          {
+            "v": 3,
+            "label": "gut",
+            "stars": 2
+          },
+          {
+            "v": 4,
+            "label": "sehr gut",
+            "stars": 3
+          }
+        ]
+      });
+  </script>
+</body>
+</html>

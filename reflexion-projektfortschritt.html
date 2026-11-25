@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reflexionsbogen zum Projektfortschritt · Open Space</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
+  <link rel="stylesheet" href="assets/bogen.css" />
+</head>
+<body>
+  <header>
+    <div class="head-inner">
+      <img src="assets/openspace-logo.png" alt="Open-Space-Logo" width="72" height="72" />
+      <div>
+        <h1>Reflexionsbogen zum Projektfortschritt</h1>
+        <p>Open Space · Klasse 7 · Schaut als Projektgruppe auf eure Projektwoche zurück</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="topline">
+        <span class="badge">Für die Projektgruppe</span>
+        <span class="small">5 Fragen · ca. 15 Minuten</span>
+      </div>
+      <h2 class="slp-rule">So arbeitet ihr mit dem Bogen</h2>
+      <ul class="stars-list">
+        <li>Tragt oben euer Projekt und das Datum ein. Schreibt alle Gruppenmitglieder mit ihrer Klasse auf.</li>
+        <li>Beantwortet die <strong>5 Fragen</strong> gemeinsam in ganzen Sätzen. Seid ehrlich – es gibt keine falschen Antworten.</li>
+        <li>Klickt am Ende auf <strong>„Als PDF herunterladen“</strong> und ladet das PDF in EduMaps hoch.</li>
+        <li>Mit <strong>„Als Datei speichern“</strong> könnt ihr später weiterschreiben.</li>
+      </ul>
+    </section>
+
+    <!-- Angaben, Abschnitte und Abschluss baut assets/bogen.js auf -->
+    <div id="bogen"></div>
+  </main>
+
+  <footer>
+    Open Space · Pé „Mut tut gut“ · Deutsch-Luxemburgisches Schengen-Lyzeum Perl
+    <!-- Rechtslinks slp-tools.de: statisch, absolut, nicht per JavaScript -->
+    <nav aria-label="Rechtliche Angaben" style="margin-top: 0.5em;">
+      <a href="https://slp-tools.de/impressum.html">Impressum</a> ·
+      <a href="https://slp-tools.de/datenschutz.html">Datenschutz</a> ·
+      <a href="https://slp-tools.de/barrierefreiheit.html">Barrierefreiheit</a>
+    </nav>
+  </footer>
+
+  <script src="assets/bogen.js"></script>
+  <script>
+    // Inhalt des Bogens (aus der Vorlage übernommen). ids nicht umbenennen,
+    // sonst passen gespeicherte Dateien nicht mehr.
+    SLPBogen.init({
+        "id": "reflexion-schueler",
+        "title": "Reflexionsbogen zum Projektfortschritt",
+        "filePrefix": "Reflexion",
+        "head": [
+          {
+            "id": "projekt",
+            "label": "Projekt",
+            "type": "text",
+            "required": true,
+            "placeholder": "Titel des Projekts"
+          },
+          {
+            "id": "datum",
+            "label": "Datum",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "mitglieder",
+            "label": "Projektgruppe",
+            "type": "members",
+            "required": true,
+            "options": [
+              "7a",
+              "7b",
+              "7c",
+              "7d",
+              "7e"
+            ],
+            "minRows": 2
+          }
+        ],
+        "sections": [
+          {
+            "type": "fields",
+            "title": "Unsere Woche im Projekt",
+            "fields": [
+              {
+                "id": "q1",
+                "label": "1. Was haben wir diese Woche in unserem Projekt gelernt?",
+                "type": "textarea",
+                "required": true,
+                "placeholder": "Diese Woche haben wir gelernt, dass …"
+              },
+              {
+                "id": "q2",
+                "label": "2. Was haben wir gut gemacht und worauf sind wir stolz?",
+                "type": "textarea",
+                "required": true,
+                "placeholder": "Wir sind stolz darauf, dass …"
+              },
+              {
+                "id": "q3",
+                "label": "3. Wo hatten wir Schwierigkeiten und wie sind wir damit umgegangen?",
+                "type": "textarea",
+                "required": true,
+                "placeholder": "Schwierig war … Wir haben dann …"
+              },
+              {
+                "id": "q4",
+                "label": "4. Wie haben wir in der Gruppe und mit unseren Partnern zusammengearbeitet?",
+                "type": "textarea",
+                "required": true,
+                "placeholder": "In unserer Gruppe … / Mit unseren Partnern …"
+              },
+              {
+                "id": "q5",
+                "label": "5. Was wollen wir in der nächsten Woche verbessern oder anders machen?",
+                "type": "textarea",
+                "required": true,
+                "placeholder": "Nächste Woche wollen wir …"
+              }
+            ]
+          }
+        ],
+        "scale": [
+          {
+            "v": 1,
+            "label": "kaum",
+            "stars": 0
+          },
+          {
+            "v": 2,
+            "label": "teilweise",
+            "stars": 1
+          },
+          {
+            "v": 3,
+            "label": "gut",
+            "stars": 2
+          },
+          {
+            "v": 4,
+            "label": "sehr gut",
+            "stars": 3
+          }
+        ]
+      });
+  </script>
+</body>
+</html>

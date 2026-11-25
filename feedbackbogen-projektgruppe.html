@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedbackbogen Projektgruppe · Open Space</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
+  <link rel="stylesheet" href="assets/bogen.css" />
+</head>
+<body>
+  <header>
+    <div class="head-inner">
+      <img src="assets/openspace-logo.png" alt="Open-Space-Logo" width="72" height="72" />
+      <div>
+        <h1>Feedbackbogen Projektgruppe</h1>
+        <p>Open Space · Klasse 7 · Wöchentliche Rückmeldung der Projektbegleitung an die Projektgruppe zum Arbeitsprozess</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="topline">
+        <span class="badge">Projektbegleitung · wöchentlich</span>
+        <span class="small">8 Kriterien · ca. 3 Minuten</span>
+      </div>
+      <h2 class="slp-rule">So funktioniert der Bogen</h2>
+      <ul class="stars-list">
+        <li>Oben Projekt und Datum eintragen und alle Mitglieder der Projektgruppe mit ihrer Klasse erfassen (über „+ Gruppenmitglied hinzufügen“ beliebig erweiterbar).</li>
+        <li>Für jedes Kriterium eine Stufe wählen: <strong>0 Sterne kaum · 1 Stern teilweise · 2 Sterne gut · 3 Sterne sehr gut</strong>.</li>
+        <li>Eingaben werden automatisch in diesem Browser zwischengespeichert. Mit <strong>„Als Datei speichern“</strong> den Bogen dauerhaft sichern.</li>
+        <li><strong>„Als PDF herunterladen“</strong> erzeugt den ausgefüllten Bogen als PDF, z.&nbsp;B. für EduMaps oder die Schülerakte.</li>
+      </ul>
+    </section>
+
+    <!-- Angaben, Abschnitte und Abschluss baut assets/bogen.js auf -->
+    <div id="bogen"></div>
+  </main>
+
+  <footer>
+    Open Space · Pé „Mut tut gut“ · Deutsch-Luxemburgisches Schengen-Lyzeum Perl
+    <!-- Rechtslinks slp-tools.de: statisch, absolut, nicht per JavaScript -->
+    <nav aria-label="Rechtliche Angaben" style="margin-top: 0.5em;">
+      <a href="https://slp-tools.de/impressum.html">Impressum</a> ·
+      <a href="https://slp-tools.de/datenschutz.html">Datenschutz</a> ·
+      <a href="https://slp-tools.de/barrierefreiheit.html">Barrierefreiheit</a>
+    </nav>
+  </footer>
+
+  <script src="assets/bogen.js"></script>
+  <script>
+    // Inhalt des Bogens (aus der Vorlage übernommen). ids nicht umbenennen,
+    // sonst passen gespeicherte Dateien nicht mehr.
+    SLPBogen.init({
+        "id": "feedback-woche",
+        "title": "Feedbackbogen Projektgruppe",
+        "filePrefix": "Feedback",
+        "head": [
+          {
+            "id": "projekt",
+            "label": "Projekt",
+            "type": "text",
+            "required": true,
+            "placeholder": "Titel des Projekts"
+          },
+          {
+            "id": "datum",
+            "label": "Datum",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "bewerter",
+            "label": "Projektbegleiter*in",
+            "type": "text",
+            "required": false
+          },
+          {
+            "id": "mitglieder",
+            "label": "Projektgruppe",
+            "type": "members",
+            "required": true,
+            "options": [
+              "7a",
+              "7b",
+              "7c",
+              "7d",
+              "7e"
+            ],
+            "minRows": 2
+          }
+        ],
+        "sections": [
+          {
+            "type": "rating",
+            "title": "Kompetenzen der Gruppe in dieser Woche",
+            "groups": [
+              {
+                "title": "Fachkompetenz",
+                "sub": "Wissen, Problemlösung",
+                "items": [
+                  {
+                    "id": "f1",
+                    "text": "Die Gruppe versteht das Thema und arbeitet fachlich richtig"
+                  },
+                  {
+                    "id": "f2",
+                    "text": "Die Gruppe nutzt Materialien und Quellen sinnvoll"
+                  }
+                ]
+              },
+              {
+                "title": "Methodenkompetenz",
+                "sub": "Planung, Recherche, Dokumentation",
+                "items": [
+                  {
+                    "id": "m1",
+                    "text": "Die Gruppe arbeitet planvoll und hält Absprachen ein"
+                  },
+                  {
+                    "id": "m2",
+                    "text": "Die Gruppe geht zielorientiert und selbstständig vor"
+                  }
+                ]
+              },
+              {
+                "title": "Sozialkompetenz",
+                "sub": "Teamarbeit, Kommunikation, Konfliktlösung",
+                "items": [
+                  {
+                    "id": "s1",
+                    "text": "Die Gruppenmitglieder arbeiten fair zusammen und teilen die Aufgaben gerecht auf"
+                  },
+                  {
+                    "id": "s2",
+                    "text": "Die Gruppe kommuniziert konstruktiv miteinander"
+                  }
+                ]
+              },
+              {
+                "title": "Selbstkompetenz",
+                "sub": "Eigeninitiative, Zuverlässigkeit, Reflexion",
+                "items": [
+                  {
+                    "id": "k1",
+                    "text": "Die Gruppe zeigt Eigeninitiative und übernimmt Verantwortung für das Projekt"
+                  },
+                  {
+                    "id": "k2",
+                    "text": "Die Gruppe reflektiert ihren gemeinsamen Lern- und Arbeitsprozess"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "fields",
+            "title": "Rückmeldung",
+            "fields": [
+              {
+                "id": "bemerkung",
+                "label": "Bemerkungen / nächste Schritte",
+                "type": "textarea",
+                "required": false,
+                "short": true,
+                "placeholder": "Was lief in der Gruppe gut? Woran soll die Gruppe in der nächsten Woche arbeiten?"
+              }
+            ]
+          }
+        ],
+        "scale": [
+          {
+            "v": 1,
+            "label": "kaum",
+            "stars": 0
+          },
+          {
+            "v": 2,
+            "label": "teilweise",
+            "stars": 1
+          },
+          {
+            "v": 3,
+            "label": "gut",
+            "stars": 2
+          },
+          {
+            "v": 4,
+            "label": "sehr gut",
+            "stars": 3
+          }
+        ]
+      });
+  </script>
+</body>
+</html>
