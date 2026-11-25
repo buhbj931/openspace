@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bewertungsbogen Projektpräsentation · Open Space</title>
+  <link rel="stylesheet" href="assets/slp-tokens.css" />
+  <link rel="stylesheet" href="assets/bogen.css" />
+</head>
+<body>
+  <header>
+    <div class="head-inner">
+      <img src="assets/openspace-logo.png" alt="Open-Space-Logo" width="72" height="72" />
+      <div>
+        <h1>Bewertungsbogen Projektpräsentation</h1>
+        <p>Open Space · Klasse 7 · Präsentation vor Projektbegleitung und Experten (Ende Mai / Anfang Juni)</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="topline">
+        <span class="badge">Präsentation & Evaluation</span>
+        <span class="small">13 Kriterien für die Gruppe + Einzelbewertung jedes Mitglieds</span>
+      </div>
+      <h2 class="slp-rule">So funktioniert der Bogen</h2>
+      <ul class="stars-list">
+        <li>Oben Projekt und Datum eintragen und alle Mitglieder der Projektgruppe mit ihrer Klasse erfassen (über „+ Gruppenmitglied hinzufügen“ beliebig erweiterbar).</li>
+        <li>Jedes Kriterium hat zwei Pole: links die schwache, rechts die starke Ausprägung. Dazwischen eine der vier Stufen wählen (<strong>kaum bis sehr gut</strong>).</li>
+        <li>Eingaben werden automatisch in diesem Browser zwischengespeichert. Mit <strong>„Als Datei speichern“</strong> den Bogen dauerhaft sichern.</li>
+        <li><strong>„Als PDF herunterladen“</strong> erzeugt den ausgefüllten Bogen als PDF.</li>
+      </ul>
+    </section>
+
+    <!-- Angaben, Abschnitte und Abschluss baut assets/bogen.js auf -->
+    <div id="bogen"></div>
+  </main>
+
+  <footer>
+    Open Space · Pé „Mut tut gut“ · Deutsch-Luxemburgisches Schengen-Lyzeum Perl
+    <!-- Rechtslinks slp-tools.de: statisch, absolut, nicht per JavaScript -->
+    <nav aria-label="Rechtliche Angaben" style="margin-top: 0.5em;">
+      <a href="https://slp-tools.de/impressum.html">Impressum</a> ·
+      <a href="https://slp-tools.de/datenschutz.html">Datenschutz</a> ·
+      <a href="https://slp-tools.de/barrierefreiheit.html">Barrierefreiheit</a>
+    </nav>
+  </footer>
+
+  <script src="assets/bogen.js"></script>
+  <script>
+    // Inhalt des Bogens (aus der Vorlage übernommen). ids nicht umbenennen,
+    // sonst passen gespeicherte Dateien nicht mehr.
+    SLPBogen.init({
+        "id": "projektpraesentation",
+        "title": "Bewertungsbogen Projektpräsentation",
+        "filePrefix": "Praesentation",
+        "head": [
+          {
+            "id": "projekt",
+            "label": "Projekt",
+            "type": "text",
+            "required": true,
+            "placeholder": "Titel des Projekts"
+          },
+          {
+            "id": "datum",
+            "label": "Datum",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "bewerter",
+            "label": "Bewertet von",
+            "type": "text",
+            "required": false,
+            "placeholder": "Projektbegleiter*in, Experten"
+          },
+          {
+            "id": "mitglieder",
+            "label": "Projektgruppe",
+            "type": "members",
+            "required": true,
+            "options": [
+              "7a",
+              "7b",
+              "7c",
+              "7d",
+              "7e"
+            ],
+            "minRows": 2
+          }
+        ],
+        "sections": [
+          {
+            "type": "bipolar",
+            "title": "Bewertung der Präsentation (Gruppe)",
+            "items": [
+              {
+                "id": "p1",
+                "text": "Gliederung",
+                "neg": "Nicht nachvollziehbar, ungeschickt",
+                "pos": "Klar erkennbar, zielgerichtet, hilfreich für Zuhörer"
+              },
+              {
+                "id": "p2",
+                "text": "Sachwissen",
+                "neg": "Schlecht vorbereitet, ungenau oder zu komplex formuliert",
+                "pos": "Fundiertes Wissen, gut formuliertes Projektvorhaben"
+              },
+              {
+                "id": "p3",
+                "text": "Argumentation",
+                "neg": "Unlogisch, Argumente nicht nachvollziehbar",
+                "pos": "Treffend, schlüssig, überzeugend"
+              },
+              {
+                "id": "p4",
+                "text": "Informationsdichte",
+                "neg": "Niedrig, überflüssige Informationen",
+                "pos": "Hoch, sinnvolle Zusatzinformationen"
+              },
+              {
+                "id": "p5",
+                "text": "Selbstreflexion",
+                "neg": "Nicht vorhanden, Lernfortschritt kaum erkennbar",
+                "pos": "Gut dargestellt, überzeugend, Lernfortschritt erkennbar"
+              },
+              {
+                "id": "p6",
+                "text": "Sprache",
+                "neg": "Unverständlich, umständlich, unsicher, unangemessen",
+                "pos": "Verständlich in Satzbau und Wortwahl, sicher im Ausdruck, Verwendung und Erklärung von Fachbegriffen"
+              },
+              {
+                "id": "p7",
+                "text": "Sprechtempo und Sprechweise",
+                "neg": "Zu schnell, keine Pausen, stockend, monotone Stimmführung",
+                "pos": "Angemessen, Pausen im richtigen Moment, gute Betonung"
+              },
+              {
+                "id": "p8",
+                "text": "Gestik / Haltung",
+                "neg": "Verschlossen, verkrampft, nervös, steif",
+                "pos": "Offen, unterstreicht das Gesagte"
+              },
+              {
+                "id": "p9",
+                "text": "Blickkontakt",
+                "neg": "Fehlt, unsicher, vom Blatt abgelesen, nur einige Personen „fixiert“",
+                "pos": "Freie Sprechweise, Mitschüler fühlen sich angesprochen"
+              },
+              {
+                "id": "p10",
+                "text": "Interesse",
+                "neg": "Zuhörer gelangweilt, kein Bezug zum Publikum, Über-/Unterforderung der Hörer",
+                "pos": "Interesse der Mitschüler geweckt, Spannung aufrechterhalten"
+              },
+              {
+                "id": "p11",
+                "text": "Redeziel",
+                "neg": "Redeziel verfehlt, Antwort auf Projektvorhaben unklar, nicht ausreichend",
+                "pos": "Projektvorhaben gut erklärt, die Zuhörer überzeugt"
+              },
+              {
+                "id": "p12",
+                "text": "Medieneinsatz",
+                "neg": "Zu wenig, zu viel, nicht immer sinnvoll, verwirrend",
+                "pos": "Sinnvoll, angemessen, veranschaulichend, leserlich"
+              },
+              {
+                "id": "p13",
+                "text": "Fachliche Rückfragen",
+                "neg": "Fachliches Wissen nicht ausreichend zur Beantwortung zusätzlicher Rückfragen, unsichere Reaktion",
+                "pos": "Kompetent beantwortet, sichere Reaktion"
+              }
+            ]
+          },
+          {
+            "type": "individual",
+            "id": "einzel",
+            "title": "Einzelbewertung der Gruppenmitglieder",
+            "intro": "Für jedes Gruppenmitglied seinen Anteil an der Präsentation in vier Bereichen bewerten. Die Blöcke erscheinen automatisch, sobald oben die Gruppenmitglieder eingetragen sind.",
+            "competences": [
+              {
+                "key": "fach",
+                "label": "Fachwissen & Rückfragen",
+                "sub": "Sachwissen, sichere Antworten auf fachliche Rückfragen"
+              },
+              {
+                "key": "sprache",
+                "label": "Sprache & Sprechweise",
+                "sub": "Verständlich, Fachbegriffe, Tempo, Pausen, Betonung"
+              },
+              {
+                "key": "auftreten",
+                "label": "Auftreten",
+                "sub": "Gestik, Haltung, Blickkontakt, freies Sprechen"
+              },
+              {
+                "key": "reflexion",
+                "label": "Selbstreflexion",
+                "sub": "Eigener Lernfortschritt wird überzeugend dargestellt"
+              }
+            ],
+            "noteLabel": "Note Präsentation (0–15 Punkte)",
+            "noteOptions": [
+              "15 Punkte",
+              "14 Punkte",
+              "13 Punkte",
+              "12 Punkte",
+              "11 Punkte",
+              "10 Punkte",
+              "9 Punkte",
+              "8 Punkte",
+              "7 Punkte",
+              "6 Punkte",
+              "5 Punkte",
+              "4 Punkte",
+              "3 Punkte",
+              "2 Punkte",
+              "1 Punkt",
+              "0 Punkte"
+            ]
+          },
+          {
+            "type": "fields",
+            "title": "Rückmeldung",
+            "fields": [
+              {
+                "id": "bemerkung",
+                "label": "Bemerkungen zur Gruppe",
+                "type": "textarea",
+                "required": false,
+                "short": true,
+                "placeholder": "Besondere Stärken, Tipps für die nächste Präsentation …"
+              }
+            ]
+          }
+        ],
+        "scale": [
+          {
+            "v": 1,
+            "label": "kaum",
+            "stars": 0
+          },
+          {
+            "v": 2,
+            "label": "teilweise",
+            "stars": 1
+          },
+          {
+            "v": 3,
+            "label": "gut",
+            "stars": 2
+          },
+          {
+            "v": 4,
+            "label": "sehr gut",
+            "stars": 3
+          }
+        ]
+      });
+  </script>
+</body>
+</html>
